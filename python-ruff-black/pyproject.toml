@@ -1,11 +1,23 @@
 [tool.ruff]
 line-length = 88
 select = [
-    "E",  # pycodestyle
-    "F",  # pyflakes
-    "UP", # pyupgrade
-    "D",  # pydocstyle
-    "I",  # isort
+    "E",   # pycodestyle
+    "F",   # pyflakes
+    "ANN", # flake8-annotations
+    "B",   # flake8-bugbear
+    "ICN", # flake8-import-conventions
+    "G",   # flake8-logging-format
+    "PIE", # flake8-pie
+    "PYI", # flake8-pyi
+    "SIM", # flake8-simplify
+    "ARG", #flake8-unused-arguments
+    "PD",  # pandas-vet
+    "PL",  # Pyling
+    "NPY", #NumPy-specific rules
+    "RUF", # Ruff-specific rules
+    "UP",  # pyupgrade
+    "D",   # pydocstyle
+    "I",   # isort
 ]
 ignore = []
 include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
