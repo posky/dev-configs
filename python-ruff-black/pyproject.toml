@@ -1,0 +1,30 @@
+[tool.ruff]
+line-length = 88
+select = [
+    "E",  # pycodestyle
+    "F",  # pyflakes
+    "UP", # pyupgrade
+    "D",  # pydocstyle
+    "I",  # isort
+]
+ignore = []
+include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.ruff.isort]
+combine-as-imports = true
+force-wrap-aliases = true
+constants = ["constant"]
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+
+[tool.black]
+line-length = 88
+preview = true
