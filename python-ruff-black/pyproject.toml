@@ -10,10 +10,10 @@ select = [
     "PIE", # flake8-pie
     "PYI", # flake8-pyi
     "SIM", # flake8-simplify
-    "ARG", #flake8-unused-arguments
+    "ARG", # flake8-unused-arguments
     "PD",  # pandas-vet
     "PL",  # Pyling
-    "NPY", #NumPy-specific rules
+    "NPY", # NumPy-specific rules
     "RUF", # Ruff-specific rules
     "UP",  # pyupgrade
     "D",   # pydocstyle
@@ -21,6 +21,41 @@ select = [
 ]
 ignore = []
 include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
+fix = true
+fixable = [
+    "E",
+    "F",
+    "ANN",
+    "B",
+    "ICN",
+    "G",
+    "PIE",
+    "PYI",
+    "SIM",
+    "PD",
+    "PL",
+    "NPY",
+    "RUF",
+    "UP",
+    "D",
+    "I",
+]
+unfixable = [
+    "F401",
+    "F601",
+    "F602",
+    "F841",
+    "PIE794",
+    "D203",
+    "D212",
+    "D215",
+    "D400",
+    "D406",
+    "D407",
+    "D408",
+    "D409",
+    "D413",
+]
 
 [tool.ruff.pydocstyle]
 convention = "google"
