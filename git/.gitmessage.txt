@@ -1,18 +1,18 @@
-# <type>[optional scope]: <description>
 
-# [optional body]
+<type>[scope]: <description>
 
-# [optional footer(s)]
+[body]
 
+[footer(s)]
 
-# build
-# chore
-# ci
-# docs
-# feat
-# fix
-# perf
-# refactor
-# revert
-# style
-# test
+build - about build
+chore - other minor fix
+ci - CI
+docs - edit document
+feat - new feature
+fix - fix bug
+perf - improve performance
+refactor - refactoring code
+revert - to previous commit
+style - code style or formatting
+test - test code
