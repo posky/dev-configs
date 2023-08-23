@@ -1,4 +1,7 @@
 # formatters
+## neovim
+neovim - https://neovim.io/
+
 ## prettier
 prettier - https://github.com/astral-sh/ruff
 
