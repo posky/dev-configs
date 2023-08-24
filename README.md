@@ -1,4 +1,4 @@
-# formatters
+# configs dev
 ## neovim
 neovim - https://neovim.io/
 
