@@ -76,4 +76,15 @@ return {
       table.insert(opts.open_files_do_not_replace_types, "edgy")
     end,
   },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = {
+      filesystem = {
+        filtered_items = {
+          visible = true,
+          hide_dotfiles = false,
+        },
+      },
+    },
+  },
 }
