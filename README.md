@@ -3,7 +3,7 @@
 neovim - https://neovim.io/
 
 ## prettier
-prettier - https://github.com/astral-sh/ruff
+prettier - https://prettier.io/
 
 ## rustfmt
 rustfmt - https://github.com/rust-lang/rustfmt
