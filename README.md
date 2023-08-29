@@ -1,6 +1,7 @@
 # configs dev
 ## neovim
 neovim - https://neovim.io/
+
 lazyvim - https://www.lazyvim.org/
 
 ## prettier
