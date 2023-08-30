@@ -1,4 +1,7 @@
 # configs dev
+## shell
+oh-my-zsh - https://ohmyz.sh/
+
 ## Neovim
 neovim - https://neovim.io/
 
