@@ -1,3 +1,7 @@
+local configs = require "plugins.configs.lspconfig"
+local on_attach = configs.on_attach
+local capabilities = configs.capabilities
+
 local opts = {
   tools = { -- rust-tools options
 
@@ -158,11 +162,17 @@ local opts = {
   -- these override the defaults set by rust-tools.nvim
   -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
   server = {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    -- standalone file support
+    -- setting it to false may improve startup time
+    standalone = true,
     settings = {
-      ["rust-analyzer"] = {
+      ["rust-anlyzer"] = {
         cargo = {
           autoreload = true,
         },
+        checkOnSave = true,
         check = {
           command = "clippy",
         },
@@ -187,4 +197,4 @@ local opts = {
   -- },
 }
 
-return opts
+require("rust-tools").setup(opts)
