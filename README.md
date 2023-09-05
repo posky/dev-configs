@@ -9,6 +9,9 @@ lazyvim - https://www.lazyvim.org/
 
 nvchad - https://nvchad.com/
 
+## Hammerspoon
+hammerspoon - https://www.hammerspoon.org/
+
 ## prettier
 prettier - https://prettier.io/
 
