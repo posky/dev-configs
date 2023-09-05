@@ -18,7 +18,8 @@ remapper:remap(0x39, "rctrl")
 remapper:register()
 
 -- escape key mapping for vim
-local input_eng = "com.apple.keylayout.ABC"
+-- local input_eng = "com.apple.keylayout.ABC"
+local input_eng = "com.apple.keylayout.UnicodeHexInput"
 local esc_bind
 
 function convert_to_eng()
