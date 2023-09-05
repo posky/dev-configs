@@ -1,48 +1,55 @@
 local M = {}
 
 M.general = {
-  n = {
-    [";"] = { ":", "enter command mode", opts = { nowait = true } },
-  },
+	n = {
+		[";"] = { ":", "enter command mode", opts = { nowait = true } },
+	},
 }
 
 M.lspconfig = {
-  n = {
-    ["gd"] = {
-      function()
-	require'telescope.builtin'.lsp_definitions()
-      end,
-      "LSP definition",
-    },
+	n = {
+		["gd"] = {
+			function()
+				require("telescope.builtin").lsp_definitions()
+			end,
+			"LSP definition",
+		},
 
-    ["gi"] = {
-      function()
-	require'telescope.builtin'.lsp_implementations()
-      end,
-      "LSP implementation",
-    },
+		["gi"] = {
+			function()
+				require("telescope.builtin").lsp_implementations()
+			end,
+			"LSP implementation",
+		},
 
-    ["<leader>D"] = {
-      function()
-        require'telescope.builtin'.lsp_type_definitions()
-      end,
-      "LSP definition type",
-    },
+		["<leader>D"] = {
+			function()
+				require("telescope.builtin").lsp_type_definitions()
+			end,
+			"LSP definition type",
+		},
 
-    ["gr"] = {
-      function()
-	require'telescope.builtin'.lsp_references()
-      end,
-      "LSP references",
-    },
+		["gr"] = {
+			function()
+				require("telescope.builtin").lsp_references()
+			end,
+			"LSP references",
+		},
 
-    ["<leader>q"] = {
-      function()
-	require'telescope.builtin'.diagnostics()
-      end,
-      "Diagnostic setloclist",
-    },
-  },
+		["<leader>q"] = {
+			function()
+				require("telescope.builtin").diagnostics()
+			end,
+			"Diagnostic setloclist",
+		},
+
+		["<leader>ss"] = {
+			function()
+				require("telescope.builtin").lsp_document_symbols()
+			end,
+			"Document symbols",
+		},
+	},
 }
 
 return M
