@@ -7,6 +7,8 @@ neovim - https://neovim.io/
 
 lazyvim - https://www.lazyvim.org/
 
+nvchad - https://nvchad.com/
+
 ## prettier
 prettier - https://prettier.io/
 
