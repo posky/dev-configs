@@ -59,6 +59,12 @@ local plugins = {
     "wakatime/vim-wakatime",
     lazy = false,
   },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    event = "BufRead",
+    opts = require "custom.configs.todo-comments",
+  },
 }
 
 return plugins
