@@ -381,7 +381,6 @@ local opts = {
         checkOnSave = true,
         check = {
           command = "clippy",
-          extraArgs = { "--all" },
         },
         inlayHints = {
           bindingModeHints = { enable = true },
