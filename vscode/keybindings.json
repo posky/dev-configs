@@ -5,6 +5,12 @@
         "command": "workbench.action.terminal.focus"
     },
     {
+        "key": "ctrl+;",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "terminalFocus"
+
+    },
+    {
         "key": "ctrl+l",
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "filesExplorerFocus"
@@ -20,12 +26,7 @@
         "when": "filesExplorerFocus"
     },
     {
-        "key": "j",
-        "command": "selectNextCodeAction",
-        "when": "codeActionMenuVisible"
-    },
-    {
-        "key": "k",
+        "key": "ctrl+k",
         "command": "selectPrevCodeAction",
         "when": "codeActionMenuVisible"
     },
@@ -38,5 +39,20 @@
         "key": "enter",
         "command": "-renameFile",
         "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "selectNextCodeAction",
+        "when": "codeActionMenuVisible"
+    },
+    {
+        "key": "j",
+        "command": "editor.action.scrollDownHover",
+        "when": "editorHoverFocused"
+    },
+    {
+        "key": "k",
+        "command": "editor.action.scrollUpHover",
+        "when": "editorHoverFocused"
     }
 ]
