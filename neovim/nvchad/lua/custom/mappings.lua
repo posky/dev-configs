@@ -52,4 +52,26 @@ M.lspconfig = {
   },
 }
 
+M.nvterm = {
+  t = {
+    -- toggle in terminal mode
+    ["<C-;>"] = {
+      function()
+        require("nvterm.terminal").toggle "float"
+      end,
+      "Toggle floating term",
+    },
+  },
+
+  n = {
+    -- toggle in normal mode
+    ["<C-;>"] = {
+      function()
+        require("nvterm.terminal").toggle "float"
+      end,
+      "Toggle floating term",
+    },
+  },
+}
+
 return M
