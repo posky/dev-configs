@@ -13,8 +13,8 @@ local sources = {
   lint.ruff,
   formatting.black,
 
-  -- rust
-  -- formatting.rustfmt,
+  -- toml
+  formatting.taplo,
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})

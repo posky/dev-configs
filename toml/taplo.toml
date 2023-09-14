@@ -1,0 +1,25 @@
+include = ["**/*.toml"]
+exclude = []
+
+[formatting]
+align_entries = false
+align_comments = true
+array_trailing_comma = true
+array_auto_expand = true
+array_auto_collapse = true
+compact_arrays = false
+compact_inline_tables = false
+inline_table_expand = false
+compact_entries = false
+column_width = 80
+indent_tables = false
+indent_entries = false
+trailing_newline = true
+reorder_keys = false
+allowed_blank_lines = 2
+crlf = false
+
+# [schema]
+# https://www.schemastore.org/json/
+# path = "taplo://taplo.toml"
+# enabled = true

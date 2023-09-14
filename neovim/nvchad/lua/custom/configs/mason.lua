@@ -22,6 +22,9 @@ local opts = {
 
     -- rust
     "rust-analyzer",
+
+    -- toml
+    "taplo",
   },
 }
 
