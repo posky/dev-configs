@@ -8,7 +8,6 @@
         "key": "ctrl+;",
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "terminalFocus"
-
     },
     {
         "key": "ctrl+l",
@@ -16,19 +15,19 @@
         "when": "filesExplorerFocus"
     },
     {
-        "key": "n",
+        "key": "ctrl+n",
         "command": "explorer.newFile",
         "when": "filesExplorerFocus"
     },
     {
-        "key": "shift+n",
+        "key": "ctrl+shift+n",
         "command": "explorer.newFolder",
         "when": "filesExplorerFocus"
     },
     {
-        "key": "ctrl+k",
-        "command": "selectPrevCodeAction",
-        "when": "codeActionMenuVisible"
+        "key": "enter",
+        "command": "-renameFile",
+        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
     },
     {
         "key": "r",
@@ -36,9 +35,9 @@
         "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
     },
     {
-        "key": "enter",
-        "command": "-renameFile",
-        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+        "key": "ctrl+k",
+        "command": "selectPrevCodeAction",
+        "when": "codeActionMenuVisible"
     },
     {
         "key": "ctrl+j",
@@ -54,5 +53,10 @@
         "key": "k",
         "command": "editor.action.scrollUpHover",
         "when": "editorHoverFocused"
+    },
+    {
+        "key": "ctrl+shift+/",
+        "command": "autoDocstring.generateDocstring",
+        "when": "editorTextFocus"
     }
 ]
