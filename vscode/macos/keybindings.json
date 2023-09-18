@@ -58,5 +58,15 @@
         "key": "ctrl+shift+/",
         "command": "autoDocstring.generateDocstring",
         "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+o",
+        "command": "notebook.cell.insertCodeCellAbove",
+        "when": "notebookCellListFocused && !inputFocus"
+    },
+    {
+        "key": "o",
+        "command": "notebook.cell.insertCodeCellBelow",
+        "when": "notebookCellListFocused && !inputFocus"
     }
 ]
