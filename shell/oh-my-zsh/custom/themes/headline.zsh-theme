@@ -74,7 +74,8 @@ IS_SSH=$? # 0=true, 1=false
 
 # Info sources (enclose in single quotes as these will be eval'd, use empty string to hide segment)
 HEADLINE_USER_CMD='echo $USER'
-HEADLINE_HOST_CMD='hostname -s' # consider 'basename "$VIRTUAL_ENV"' to replace host with environment
+# HEADLINE_HOST_CMD='hostname -s' # consider 'basename "$VIRTUAL_ENV"' to replace host with environment
+HEADLINE_HOST_CMD='basename "$VIRTUAL_ENV"'
 HEADLINE_PATH_CMD='print -rP "%~"'
 HEADLINE_GIT_BRANCH_CMD='headline_git_branch'
 HEADLINE_GIT_STATUS_CMD='headline_git_status'
