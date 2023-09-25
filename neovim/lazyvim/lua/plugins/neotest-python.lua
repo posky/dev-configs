@@ -1,5 +1,3 @@
 return {
-  {
-    "nvim-neotest/neotest-python",
-  },
+  "nvim-neotest/neotest-python",
 }

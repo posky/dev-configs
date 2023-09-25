@@ -1,5 +1,3 @@
 return {
-  {
-    "rouge8/neotest-rust",
-  },
+  "rouge8/neotest-rust",
 }
