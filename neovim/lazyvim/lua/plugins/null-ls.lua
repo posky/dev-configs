@@ -11,6 +11,8 @@ return {
         nls.builtins.formatting.shfmt,
         -- nls.builtins.diagnostics.flake8,
         nls.builtins.formatting.prettierd,
+        nls.builtins.diagnostics.buf,
+        nls.builtins.formatting.buf,
       },
     }
   end,

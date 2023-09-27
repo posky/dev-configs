@@ -30,6 +30,7 @@ return {
       "yaml",
       "ron",
       "rust",
+      "proto",
     },
     incremental_selection = {
       enable = true,

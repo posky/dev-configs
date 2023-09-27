@@ -1,5 +1,4 @@
 return {
-
   "williamboman/mason.nvim",
   opts = {
     ensure_installed = {
@@ -8,6 +7,15 @@ return {
       -- "flake8",
       "prettierd",
       "codelldb",
+      "eslint-lsp",
+      "json-lsp",
+      "lua-language-server",
+      "pyright",
+      "ruff-lsp",
+      "rust-analyzer",
+      "taplo",
+      "buf-language-server",
+      "buf",
     },
   },
 }
