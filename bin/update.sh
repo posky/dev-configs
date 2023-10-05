@@ -1,6 +1,12 @@
 #!/bin/sh
 BASEDIR="$(dirname "$(realpath "$0")")"
 
+# git
+if [ -f "$HOME/.gitmessage.txt" ]; then
+	echo "Updating git..."
+	sh "$BASEDIR/../git/update.sh"
+fi
+
 # hammerspoon
 if [ -d "$HOME/.hammerspoon" ]; then
 	echo "Updating hammerspoon..."
