@@ -1,4 +1,7 @@
 # configs dev
+## terminal
+kitty - https://sw.kovidgoyal.net/kitty/
+
 ## shell
 oh-my-zsh - https://ohmyz.sh/
 
