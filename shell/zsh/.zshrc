@@ -72,6 +72,7 @@ ZSH_THEME="headline"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
+  rust
   autojump
   zsh-autosuggestions
   zsh-syntax-highlighting
