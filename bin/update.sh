@@ -39,18 +39,18 @@ else
 	echo "Not found oh-my-zsh"
 fi
 
-# vscode
-if [ -f "$HOME/Library/Application Support/Code/User/keybindings.json" ]; then
-	echo "Updating vscode..."
-	sh "$BASEDIR/../vscode/macos/update.sh"
-else
-	echo "Not found vscode"
-fi
-
 # terminal - kitty
 if [ -d "$HOME/.config/kitty" ]; then
 	echo "Updating kitty..."
 	sh "$BASEDIR/../terminal/kitty/update.sh"
 else
 	echo "Not found kitty"
+fi
+
+# vscode
+if [ -f "$HOME/Library/Application Support/Code/User/keybindings.json" ]; then
+	echo "Updating vscode..."
+	sh "$BASEDIR/../vscode/macos/update.sh"
+else
+	echo "Not found vscode"
 fi
