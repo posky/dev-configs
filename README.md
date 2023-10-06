@@ -1,9 +1,6 @@
 # configs dev
-## terminal
-kitty - https://sw.kovidgoyal.net/kitty/
-
-## shell
-oh-my-zsh - https://ohmyz.sh/
+## Hammerspoon
+hammerspoon - https://www.hammerspoon.org/
 
 ## Neovim
 neovim - https://neovim.io/
@@ -12,14 +9,8 @@ lazyvim - https://www.lazyvim.org/
 
 nvchad - https://nvchad.com/
 
-## Hammerspoon
-hammerspoon - https://www.hammerspoon.org/
-
 ## prettier
 prettier - https://prettier.io/
-
-## Rust
-rustfmt - https://github.com/rust-lang/rustfmt
 
 ## Python
 ruff - https://github.com/astral-sh/ruff
@@ -27,3 +18,12 @@ ruff - https://github.com/astral-sh/ruff
 black - https://github.com/psf/black
 
 jupytext - https://jupytext.readthedocs.io/en/latest/
+
+## Rust
+rustfmt - https://github.com/rust-lang/rustfmt
+
+## shell
+oh-my-zsh - https://ohmyz.sh/
+
+## terminal
+kitty - https://sw.kovidgoyal.net/kitty/
