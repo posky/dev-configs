@@ -32,11 +32,11 @@ else
 fi
 
 # shell
-if [ -d "$HOME/.oh-my-zsh" ]; then
-	echo "Updating oh-my-zsh..."
+if [ -f "$HOME/.zshrc" ]; then
+	echo "Updating zsh..."
 	sh "$BASEDIR/../shell/update.sh"
 else
-	echo "Not found oh-my-zsh"
+	echo "Not found zsh"
 fi
 
 # terminal - kitty
