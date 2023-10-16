@@ -24,7 +24,7 @@ return {
     -- add any global capabilities here
     capabilities = {},
     -- Automatically format on save
-    autoformat = true,
+    -- autoformat = true,
     -- Enable this to show formatters used in a notification
     -- Useful for debugging formatter issues
     format_notify = false,
@@ -141,7 +141,7 @@ return {
         opts.capabilities.offsetEncoding = { "utf-16" }
       end,
       eslint = function()
-        require("lazyvim.util").on_attach(function(client)
+        require("lazyvim.util").lsp.on_attach(function(client)
           if client.name == "eslint" then
             client.server_capabilities.documentFormattingProvider = true
           elseif client.name == "tsserver" then
@@ -166,7 +166,7 @@ return {
         })
       end,
       ruff_lsp = function()
-        require("lazyvim.util").on_attach(function(client, _)
+        require("lazyvim.util").lsp.on_attach(function(client, _)
           if client.name == "ruff_lsp" then
             -- Disable hover in favor of Pyright
             client.server_capabilities.hoverProvider = false
