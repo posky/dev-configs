@@ -16,6 +16,7 @@ return {
       "taplo",
       "buf-language-server",
       "buf",
+      "groovy-language-server",
     },
   },
 }
