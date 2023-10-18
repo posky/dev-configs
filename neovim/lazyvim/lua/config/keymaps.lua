@@ -21,7 +21,7 @@ vim.keymap.set("n", ";", ":", {})
 
 -- Terminal
 local lazyterm = function()
-  Util.terminal.open(nil, { cwd = Util.get_root() })
+  Util.terminal.open(nil, { cwd = Util.root.get() })
 end
 map("n", "<c-;>", lazyterm, { desc = "Terminal (root dir)" })
 map("t", "<C-;>", "<cmd>close<cr>", { desc = "Hide Terminal" })
