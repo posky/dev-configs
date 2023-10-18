@@ -21,19 +21,15 @@ return {
         require("luasnip").lsp_expand(args.body)
       end,
     }
-    opts.sources = cmp.config.sources(
-      vim.list_extend(
-        opts.sources,
-        {
-          { name = "emoji" },
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-          { name = "buffer" },
-          { name = "path" },
-          { name = "crates" },
-        }
-      )
-    )
+    opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {
+      { name = "emoji" },
+      { name = "nvim_lsp" },
+      { name = "luasnip" },
+      { name = "buffer" },
+      { name = "path" },
+      { name = "crates" },
+      { name = "groovyls" },
+    }))
     opts.mapping = vim.tbl_extend("force", opts.mapping, {
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then

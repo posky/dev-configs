@@ -31,6 +31,7 @@ return {
       "ron",
       "rust",
       "proto",
+      "groovy",
     },
     incremental_selection = {
       enable = true,

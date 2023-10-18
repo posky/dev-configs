@@ -13,6 +13,8 @@ return {
         nls.builtins.formatting.prettierd,
         nls.builtins.diagnostics.buf,
         nls.builtins.formatting.buf,
+        nls.builtins.diagnostics.npm_groovy_lint,
+        -- nls.builtins.formatting.npm_groovy_lint,
       },
     }
   end,
