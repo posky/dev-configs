@@ -23,8 +23,6 @@ return {
       "toml",
       "query",
       "regex",
-      "tsx",
-      "typescript",
       "vim",
       "vimdoc",
       "yaml",
