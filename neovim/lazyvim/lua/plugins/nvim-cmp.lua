@@ -30,6 +30,11 @@ return {
       { name = "crates" },
       { name = "groovyls" },
     }))
+    table.insert(opts.sources, 1, {
+      name = "codeium",
+      group_index = 1,
+      priority = 100,
+    })
     opts.mapping = vim.tbl_extend("force", opts.mapping, {
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
