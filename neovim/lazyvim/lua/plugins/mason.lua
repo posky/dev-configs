@@ -17,6 +17,7 @@ return {
       "buf-language-server",
       "buf",
       "groovy-language-server",
+      "js-debug-adapter",
     },
   },
 }
