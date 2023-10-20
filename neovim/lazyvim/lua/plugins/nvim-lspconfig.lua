@@ -126,6 +126,8 @@ return {
       },
       bufls = {},
       groovyls = {},
+      dockerls = {},
+      docker_compose_language_service = {},
     },
     -- you can do any additional lsp server setup here
     -- return true if you don't want this server to be setup with lspconfig

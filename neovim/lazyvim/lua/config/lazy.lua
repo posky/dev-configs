@@ -21,6 +21,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.editor.mini-files" },
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.rust" },
+    { import = "lazyvim.plugins.extras.lang.docker" },
     -- import/override with your plugins
     { import = "plugins" },
   },

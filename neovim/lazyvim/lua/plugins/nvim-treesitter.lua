@@ -30,6 +30,7 @@ return {
       "rust",
       "proto",
       "groovy",
+      "dockerfile",
     },
     incremental_selection = {
       enable = true,
