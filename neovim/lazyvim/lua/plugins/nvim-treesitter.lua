@@ -31,6 +31,8 @@ return {
       "proto",
       "groovy",
       "dockerfile",
+      "typescript",
+      "tsx",
     },
     incremental_selection = {
       enable = true,

@@ -5,6 +5,7 @@ return {
       "stylua",
       "shfmt",
       -- "flake8",
+      "prettier",
       "prettierd",
       "codelldb",
       "eslint-lsp",
@@ -18,6 +19,7 @@ return {
       "buf",
       "groovy-language-server",
       "hadolint",
+      "js-debug-adapter",
     },
   },
 }
