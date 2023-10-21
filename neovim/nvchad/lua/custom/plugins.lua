@@ -1,6 +1,9 @@
 local plugins = {
   {
     "nvim-treesitter/nvim-treesitter",
+    build = function()
+      require("nvim-treesitter.install").update { with_sync = true }()
+    end,
     opts = require "custom.configs.treesitter",
   },
   {
@@ -22,7 +25,19 @@ local plugins = {
     opts = require "custom.configs.mason",
   },
   {
+    "hrsh7th/nvim-cmp",
+    opts = require "custom.configs.cmp",
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = require "custom.configs.nvimtree",
+  },
+  {
     "linux-cultist/venv-selector.nvim",
+    dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim", "mfussenegger/nvim-dap-python" },
     cmd = "VenvSelect",
     opts = require "custom.configs.venv-selector",
   },
@@ -48,14 +63,6 @@ local plugins = {
     config = function()
       require "custom.configs.crates"
     end,
-  },
-  {
-    "hrsh7th/nvim-cmp",
-    opts = require "custom.configs.cmp",
-  },
-  {
-    "nvim-tree/nvim-tree.lua",
-    opts = require "custom.configs.nvimtree",
   },
   {
     "Exafunction/codeium.vim",
