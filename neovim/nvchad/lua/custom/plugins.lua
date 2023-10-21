@@ -9,9 +9,9 @@ local plugins = {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "jose-elias-alvarez/null-ls.nvim",
+      "nvimtools/none-ls.nvim",
       config = function()
-        require "custom.configs.null-ls"
+        require "custom.configs.none-ls"
       end,
     },
 
