@@ -30,10 +30,10 @@ local plugins = {
     "simrat39/rust-tools.nvim",
     ft = { "rust" },
     dependencies = {
-      "rust-lang/rust.vim",
       "neovim/nvim-lspconfig",
-      "mfussenegger/nvim-dap",
+      "rust-lang/rust.vim",
       "nvim-lua/plenary.nvim",
+      "mfussenegger/nvim-dap",
     },
     config = function()
       require "custom.configs.rust-tools"
