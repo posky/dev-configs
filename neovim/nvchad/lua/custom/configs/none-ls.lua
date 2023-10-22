@@ -14,7 +14,12 @@ local sources = {
   formatting.black,
 
   -- toml
-  formatting.taplo,
+  formatting.taplo.with {
+    extra_args = {
+      "--option",
+      "inline_table_expand=false",
+    },
+  },
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
