@@ -23,6 +23,7 @@ local opts = {
 
     -- python
     "python",
+    "ninja",
 
     -- rust
     "ron",
