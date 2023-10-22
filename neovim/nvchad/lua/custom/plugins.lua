@@ -78,6 +78,14 @@ local plugins = {
     event = "BufRead",
     opts = require "custom.configs.todo-comments",
   },
+  {
+    "kylechui/nvim-surround",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup()
+    end,
+  },
 }
 
 return plugins
