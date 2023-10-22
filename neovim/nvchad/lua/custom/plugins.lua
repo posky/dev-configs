@@ -101,6 +101,10 @@ local plugins = {
     config = function()
       require "custom.configs.vim-illuminate"
     end,
+    keys = {
+      { "]]", desc = "Next Reference" },
+      { "[[", desc = "Prev Reference" },
+    },
   },
   {
     "folke/flash.nvim",
