@@ -75,6 +75,7 @@ local plugins = {
   {
     "Exafunction/codeium.vim",
     event = "BufEnter",
+    build = ":Codeium Auth",
   },
   {
     "wakatime/vim-wakatime",
