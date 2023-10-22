@@ -7,6 +7,14 @@ local plugins = {
     opts = require "custom.configs.treesitter",
   },
   {
+    "nvim-treesitter/nvim-treesitter-context",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    event = "BufRead",
+    config = function()
+      require "custom.configs.treesitter-context"
+    end,
+  },
+  {
     "neovim/nvim-lspconfig",
     dependencies = {
       "nvimtools/none-ls.nvim",
