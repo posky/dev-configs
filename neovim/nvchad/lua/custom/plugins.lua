@@ -94,6 +94,7 @@ local plugins = {
       require("nvim-surround").setup()
     end,
   },
+  { "folke/neodev.nvim", opts = {} },
 }
 
 return plugins
