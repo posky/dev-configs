@@ -32,6 +32,7 @@ local opts = {
   },
   indent = {
     enable = true,
+    disable = { "rust" },
   },
 }
 
