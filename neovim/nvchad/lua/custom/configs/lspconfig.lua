@@ -18,6 +18,7 @@ lspconfig["groovyls"].setup {
   cmd = {
     "java",
     "-jar",
-    "/Users/mac/.local/share/nvim/mason/packages/groovy-language-server/build/libs/groovy-language-server-all.jar",
+    os.getenv "HOME"
+      .. "/.local/share/nvim/mason/packages/groovy-language-server/build/libs/groovy-language-server-all.jar",
   },
 }
