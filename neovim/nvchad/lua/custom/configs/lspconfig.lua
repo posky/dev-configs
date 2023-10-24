@@ -11,3 +11,13 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+
+lspconfig["groovyls"].setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  cmd = {
+    "java",
+    "-jar",
+    "/Users/mac/.local/share/nvim/mason/packages/groovy-language-server/build/libs/groovy-language-server-all.jar",
+  },
+}

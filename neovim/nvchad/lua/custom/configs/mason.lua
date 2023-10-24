@@ -25,6 +25,9 @@ local opts = {
 
     -- toml
     "taplo",
+
+    -- groovy
+    "groovy-language-server",
   },
 }
 

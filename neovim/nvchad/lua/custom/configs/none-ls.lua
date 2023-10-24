@@ -20,6 +20,10 @@ local sources = {
       "inline_table_expand=false",
     },
   },
+
+  -- groovy
+  lint.npm_groovy_lint,
+  -- formatting.npm_groovy_lint,
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})

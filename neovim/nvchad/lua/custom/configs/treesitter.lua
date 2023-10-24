@@ -29,6 +29,9 @@ local opts = {
     "ron",
     "rust",
     "toml",
+
+    -- groovy
+    "groovy",
   },
   indent = {
     enable = true,
