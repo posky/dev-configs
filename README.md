@@ -27,3 +27,5 @@ oh-my-zsh - https://ohmyz.sh/
 
 ## terminal
 kitty - https://sw.kovidgoyal.net/kitty/
+
+wezterm - https://wezfurlong.org/wezterm/
