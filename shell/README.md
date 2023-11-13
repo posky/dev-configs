@@ -11,3 +11,6 @@
 ### zsh-autosuggestions - https://github.com/zsh-users/zsh-autosuggestions
 
 ### zsh-syntax-highlighting - https://github.com/zsh-users/zsh-syntax-highlighting
+
+## How to apply upgrade custom plugins and themes
+* append upgrade.sh contents to $ZSH/tools/upgrade.sh
