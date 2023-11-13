@@ -47,6 +47,14 @@ else
 	echo "Not found kitty"
 fi
 
+# terminal - wezterm
+if [ -f "$HOME/.wezterm.lua" ]; then
+  echo "Updating wezterm..."
+  sh "$BASEDIR/../terminal/wezterm/update.sh"
+else
+  echo "Not found wezterm"
+fi
+
 # vscode
 if [ -f "$HOME/Library/Application Support/Code/User/keybindings.json" ]; then
 	echo "Updating vscode..."
