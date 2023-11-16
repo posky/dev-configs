@@ -22,11 +22,13 @@ local plugins = {
         require "custom.configs.none-ls"
       end,
     },
-
     config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
     end,
+  },
+  {
+    "tamago324/nlsp-settings.nvim",
   },
   {
     "williamboman/mason.nvim",

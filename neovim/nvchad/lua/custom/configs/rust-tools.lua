@@ -380,6 +380,7 @@ local opts = {
         },
         checkOnSave = true,
         check = {
+          allTargets = true,
           command = "clippy",
           extraArgs = { "--no-deps" },
         },
