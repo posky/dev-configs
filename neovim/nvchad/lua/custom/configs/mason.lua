@@ -28,6 +28,10 @@ local opts = {
 
     -- groovy
     "groovy-language-server",
+
+    -- jsonls
+    "json-lsp",
+    "jsonlint",
   },
 }
 

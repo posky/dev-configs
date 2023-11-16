@@ -24,6 +24,9 @@ local sources = {
   -- groovy
   lint.npm_groovy_lint,
   -- formatting.npm_groovy_lint,
+
+  -- json
+  lint.jsonlint,
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
