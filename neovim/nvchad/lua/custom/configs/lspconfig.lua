@@ -12,7 +12,7 @@ nlspsettings.setup {
 }
 
 local lspconfig = require "lspconfig"
-local servers = { "html", "cssls", "clangd", "pyright", "ruff_lsp", "taplo", "jsonls", "bufls" }
+local servers = { "html", "cssls", "clangd", "pyright", "ruff_lsp", "taplo", "jsonls", "bufls", "groovyls" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -22,8 +22,6 @@ for _, lsp in ipairs(servers) do
 end
 
 lspconfig["groovyls"].setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
   cmd = {
     "java",
     "-jar",
