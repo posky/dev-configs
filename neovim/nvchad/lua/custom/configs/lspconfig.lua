@@ -21,6 +21,12 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+lspconfig["clangd"].setup {
+  capabilities = {
+    offsetEncoding = { "utf-16" },
+  },
+}
+
 lspconfig["groovyls"].setup {
   cmd = {
     "java",
