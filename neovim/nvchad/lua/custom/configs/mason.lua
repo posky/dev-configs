@@ -32,6 +32,11 @@ local opts = {
     -- jsonls
     "json-lsp",
     "jsonlint",
+
+    -- protobufs
+    "buf-language-server",
+    "protolint",
+    "buf",
   },
 }
 

@@ -12,7 +12,7 @@ nlspsettings.setup {
 }
 
 local lspconfig = require "lspconfig"
-local servers = { "html", "cssls", "clangd", "pyright", "ruff_lsp", "taplo", "jsonls" }
+local servers = { "html", "cssls", "clangd", "pyright", "ruff_lsp", "taplo", "jsonls", "bufls" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {

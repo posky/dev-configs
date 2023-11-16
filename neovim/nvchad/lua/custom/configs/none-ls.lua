@@ -27,6 +27,10 @@ local sources = {
 
   -- json
   lint.jsonlint,
+
+  -- protobufs
+  lint.protolint,
+  formatting.buf,
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
