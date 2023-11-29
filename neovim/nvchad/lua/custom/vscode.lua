@@ -1,4 +1,8 @@
+local opt = vim.opt
 local vscode = require "vscode-neovim"
+
+opt.ignorecase = true
+opt.smartcase = true
 
 -- keybindings
 vim.g.mapleader = " "
