@@ -1,5 +1,11 @@
 local plugins = {
   {
+    "NvChad/nvterm",
+    config = function()
+      require "custom.configs.nvterm"
+    end,
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     build = function()
       require("nvim-treesitter.install").update { with_sync = true }()
