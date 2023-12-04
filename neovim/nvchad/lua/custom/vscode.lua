@@ -5,6 +5,7 @@ local vscode = require "vscode-neovim"
 
 opt.ignorecase = true
 opt.smartcase = true
+opt.clipboard = "unnamedplus"
 
 -- keybindings
 g.mapleader = " "
