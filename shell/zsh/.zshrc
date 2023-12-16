@@ -77,6 +77,7 @@ plugins=(
   autojump
   zsh-autosuggestions
   zsh-syntax-highlighting
+  zsh-autocomplete
   pdm
 )
 
@@ -108,3 +109,8 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim=nvim
+
+# walk
+function lk {
+  cd "$(walk "$@")"
+}
