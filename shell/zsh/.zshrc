@@ -79,6 +79,8 @@ plugins=(
   zsh-syntax-highlighting
   zsh-autocomplete
   pdm
+  docker
+  docker-compose
 )
 
 source $ZSH/oh-my-zsh.sh
