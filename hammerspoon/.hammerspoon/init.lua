@@ -25,7 +25,7 @@ local esc_bind
 function convert_to_eng()
 	local cur_input = hs.keycodes.currentSourceID()
 	if not (cur_input == input_eng) then
-		hs.eventtap.keyStroke({}, "right")
+		-- hs.eventtap.keyStroke({}, "right")
 		hs.keycodes.currentSourceID(input_eng)
 	end
 	esc_bind:disable()
