@@ -14,6 +14,7 @@ end
 
 -- https://wezfurlong.org/wezterm/colorschemes/index.html
 config.color_scheme = "Snazzy"
+config.window_background_opacity = 0.95
 
 -- https://wezfurlong.org/wezterm/config/launch.html#the-launcher-menu
 
