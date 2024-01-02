@@ -1,6 +1,10 @@
 -- Pull in the wezterm API
 local wezterm = require("wezterm")
 
+wezterm.on("update-right-status", function(window, pane)
+	window:set_right_status(window:active_workspace())
+end)
+
 -- This table will hold the configuration.
 local config = {}
 
