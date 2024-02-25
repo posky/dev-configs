@@ -1,0 +1,43 @@
+theme = "onedark"
+
+[editor]
+line-number = "absolute"
+auto-completion = true
+auto-format = true
+auto-save = false
+true-color = true
+rulers = [80]
+bufferline = "always"
+color-modes = true
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]
+center = []
+right = ["diagnostics", "selections", "register", "position", "file-encoding", "file-line-ending", "file-type"]
+
+[editor.lsp]
+enable = true
+display-messages = true
+display-inlay-hints = true
+snippets = true
+goto-reference-include-declaration = true
+
+[editor.file-picker]
+hidden = false
+follow-symlinks = true
+deduplicate-links = true
+parents = true
+ignore = true
+git-ignore = true
+git-global = true
+git-exclude = true
+
+[editor.search]
+smart-case = true
+wrap-around = true
+
+[editor.indent-guides]
+render = true
+
+[editor.soft-wrap]
+enable = true
