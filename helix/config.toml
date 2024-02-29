@@ -41,10 +41,10 @@ hidden = false
 follow-symlinks = true
 deduplicate-links = true
 parents = true
-ignore = true
-git-ignore = true
-git-global = true
-git-exclude = true
+ignore = false
+git-ignore = false
+git-global = false
+git-exclude = false
 
 [editor.search]
 smart-case = true
