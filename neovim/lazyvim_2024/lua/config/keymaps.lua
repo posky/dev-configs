@@ -5,6 +5,7 @@ if vim.g.vscode then
   local keymap = vim.keymap
   local vscode = require("vscode-neovim")
 
+  -- LSP
   keymap.set({ "n", "v" }, "gD", function()
     vscode.action("editor.action.revealDefinitionAside", {})
   end)
@@ -13,6 +14,18 @@ if vim.g.vscode then
   end)
   keymap.set({ "n", "v" }, "gr", function()
     vscode.action("editor.action.goToReferences", {})
+  end)
+  keymap.set({ "n", "v" }, "gy", function()
+    vscode.action("editor.action.goToTypeDefinition", {})
+  end)
+  keymap.set({ "n" }, "gK", function()
+    vscode.action("editor.action.triggerParameterHints", {})
+  end)
+  keymap.set({ "i" }, "<C-k>", function()
+    vscode.action("editor.action.triggerParameterHints", {})
+  end)
+  keymap.set({ "n" }, "<leader>sS", function()
+    vscode.action("workbench.action.showAllSymbols", {})
   end)
   keymap.set({ "n", "v" }, "<leader>cr", function()
     vscode.action("editor.action.rename", {})
