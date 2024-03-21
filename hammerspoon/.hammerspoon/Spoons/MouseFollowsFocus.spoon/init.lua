@@ -43,7 +43,8 @@ function obj:start()
 	self.window_filter:subscribe({
 		hs.window.filter.windowFocused,
 	}, function(window)
-		local input_eng = "com.apple.keylayout.UnicodeHexInput"
+		-- local input_eng = "com.apple.keylayout.UnicodeHexInput"
+		local input_eng = "com.apple.keylayout.ABC"
 		hs.keycodes.currentSourceID(input_eng)
 		self:updateMouse(window)
 	end)
