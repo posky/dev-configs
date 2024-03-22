@@ -18,7 +18,10 @@ end
 -- This is where you actually apply your config choices
 
 -- https://wezfurlong.org/wezterm/colorschemes/index.html
-config.color_scheme = "Snazzy"
+config.color_scheme = "Dracula (Official)"
+config.tab_bar_at_bottom = true
+config.use_fancy_tab_bar = false
+config.window_decorations = "RESIZE"
 config.window_background_opacity = 0.95
 
 -- https://wezfurlong.org/wezterm/config/launch.html#the-launcher-menu
