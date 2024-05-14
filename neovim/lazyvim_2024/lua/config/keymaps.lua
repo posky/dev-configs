@@ -5,6 +5,8 @@ if vim.g.vscode then
   local keymap = vim.keymap
   local vscode = require("vscode-neovim")
 
+  keymap.del({ "n", "x" }, "<C-/>")
+
   -- LSP
   keymap.set({ "n", "v" }, "gD", function()
     vscode.action("editor.action.revealDefinitionAside", {})
