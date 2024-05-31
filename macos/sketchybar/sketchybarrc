@@ -293,7 +293,7 @@ sketchybar --add item seperator.r2 right                  \
 
 sketchybar --add item swap right                        \
            --set      swap script="$PLUGIN_DIR/swap.sh" \
-                           update_freq=60               \
+                           update_freq=5                \
                            padding_left=2               \
                            padding_right=8              \
                            background.border_width=0    \
@@ -304,7 +304,7 @@ sketchybar --add item swap right                        \
                                                         \
            --add item ram right                         \
            --set      ram script="$PLUGIN_DIR/ram.sh"   \
-                          update_freq=60                \
+                          update_freq=5                 \
                           padding_left=2                \
                           padding_right=2               \
                           background.border_width=0     \
@@ -315,7 +315,7 @@ sketchybar --add item swap right                        \
                                                         \
            --add item disk right                        \
            --set      disk script="$PLUGIN_DIR/disk.sh" \
-                           update_freq=60               \
+                           update_freq=5                \
                            padding_left=2               \
                            padding_right=2              \
                            background.border_width=0    \
@@ -326,7 +326,7 @@ sketchybar --add item swap right                        \
                                                         \
            --add item cpu right                         \
            --set      cpu script="$PLUGIN_DIR/cpu.sh"   \
-                          update_freq=60                \
+                          update_freq=5                 \
                           padding_left=8                \
                           padding_right=2               \
                           background.border_width=0     \
