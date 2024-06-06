@@ -1,182 +1,98 @@
-# ################################################################ #
-# THE FOLLOWING IS AN EXPLANATION OF THE GRAMMAR THAT SKHD PARSES. #
-# FOR SIMPLE EXAMPLE MAPPINGS LOOK FURTHER DOWN THIS FILE..        #
-# ################################################################ #
+## Navigation (lalt - ...)
+# Space Navigation (four spaces per display): lalt - {1, 2, 3, 4}
+lalt - 1 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[1] ]] && yabai -m space --focus $SPACES[1]
+lalt - 2 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[2] ]] && yabai -m space --focus $SPACES[2]
+lalt - 3 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[3] ]] && yabai -m space --focus $SPACES[3]
+lalt - 4 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[4] ]] && yabai -m space --focus $SPACES[4]
 
-# A list of all built-in modifier and literal keywords can
-# be found at https://github.com/koekeishiya/skhd/issues/1
-#
-# A hotkey is written according to the following rules:
-#
-#   hotkey       = <mode> '<' <action> | <action>
-#
-#   mode         = 'name of mode' | <mode> ',' <mode>
-#
-#   action       = <keysym> '[' <proc_map_lst> ']' | <keysym> '->' '[' <proc_map_lst> ']'
-#                  <keysym> ':' <command>          | <keysym> '->' ':' <command>
-#                  <keysym> ';' <mode>             | <keysym> '->' ';' <mode>
-#
-#   keysym       = <mod> '-' <key> | <key>
-#
-#   mod          = 'modifier keyword' | <mod> '+' <mod>
-#
-#   key          = <literal> | <keycode>
-#
-#   literal      = 'single letter or built-in keyword'
-#
-#   keycode      = 'apple keyboard kVK_<Key> values (0x3C)'
-#
-#   proc_map_lst = * <proc_map>
-#
-#   proc_map     = <string> ':' <command> | <string>     '~' |
-#                  '*'      ':' <command> | '*'          '~'
-#
-#   string       = '"' 'sequence of characters' '"'
-#
-#   command      = command is executed through '$SHELL -c' and
-#                  follows valid shell syntax. if the $SHELL environment
-#                  variable is not set, it will default to '/bin/bash'.
-#                  when bash is used, the ';' delimeter can be specified
-#                  to chain commands.
-#
-#                  to allow a command to extend into multiple lines,
-#                  prepend '\' at the end of the previous line.
-#
-#                  an EOL character signifies the end of the bind.
-#
-#   ->           = keypress is not consumed by skhd
-#
-#   *            = matches every application not specified in <proc_map_lst>
-#
-#   ~            = application is unbound and keypress is forwarded per usual, when specified in a <proc_map>
-#
-# A mode is declared according to the following rules:
-#
-#   mode_decl = '::' <name> '@' ':' <command> | '::' <name> ':' <command> |
-#               '::' <name> '@'               | '::' <name>
-#
-#   name      = desired name for this mode,
-#
-#   @         = capture keypresses regardless of being bound to an action
-#
-#   command   = command is executed through '$SHELL -c' and
-#               follows valid shell syntax. if the $SHELL environment
-#               variable is not set, it will default to '/bin/bash'.
-#               when bash is used, the ';' delimeter can be specified
-#               to chain commands.
-#
-#               to allow a command to extend into multiple lines,
-#               prepend '\' at the end of the previous line.
-#
-#               an EOL character signifies the end of the bind.
+# Window Navigation (through display borders): lalt - {j, k, l, ö}
+lalt - h : yabai -m window --focus west  || yabai -m display --focus west
+lalt - j : yabai -m window --focus south || yabai -m display --focus south
+lalt - k : yabai -m window --focus north || yabai -m display --focus north
+lalt - l : yabai -m window --focus east  || yabai -m display --focus east
 
-# ############################################################### #
-# THE FOLLOWING SECTION CONTAIN SIMPLE MAPPINGS DEMONSTRATING HOW #
-# TO INTERACT WITH THE YABAI WM. THESE ARE SUPPOSED TO BE USED AS #
-# A REFERENCE ONLY, WHEN MAKING YOUR OWN CONFIGURATION..          #
-# ############################################################### #
+# Extended Window Navigation: lalt - {h, ä}
+# lalt -    h : yabai -m window --focus first
+# lalt - 0x27 : yabai -m window --focus  last
 
-# focus window
-alt - h : yabai -m window --focus west
-alt - j : yabai -m window --focus south
-alt - k : yabai -m window --focus north
-alt - l : yabai -m window --focus east
+# Float / Unfloat window: lalt - space
+lalt - t : yabai -m window --toggle float
 
-# swap managed window
-alt + shift - h : yabai -m window --swap west
-alt + shift - j : yabai -m window --swap south
-alt + shift - k : yabai -m window --swap north
-alt + shift - l : yabai -m window --swap east
+# Make window zoom to fullscreen: shift + lalt - f
+shift + lalt - f : yabai -m window --toggle zoom-fullscreen
 
-# move managed window and split
-# cmd + shift - h : yabai -m window --warp west
-# cmd + shift - j : yabai -m window --warp south
-# cmd + shift - k : yabai -m window --warp north
-# cmd + shift - l : yabai -m window --warp east
+# Make window zoom to parent node: lalt - f 
+lalt - f : yabai -m window --toggle zoom-parent
 
-# rotate layout clockwise
-# alt + shift - r : yabai -m space --rotate 270
+## Window Movement (shift + lalt - ...)
+# Moving windows in spaces: shift + lalt - {j, k, l, ö}
+shift + lalt - h : yabai -m window --warp west || $(yabai -m window --display west && yabai -m display --focus west && yabai -m window --warp last) || yabai -m window --move rel:-10:0
+shift + lalt - j : yabai -m window --warp south || $(yabai -m window --display south && yabai -m display --focus south) || yabai -m window --move rel:0:10
+shift + lalt - k : yabai -m window --warp north || $(yabai -m window --display north && yabai -m display --focus north) || yabai -m window --move rel:0:-10
+shift + lalt - l : yabai -m window --warp east || $(yabai -m window --display east && yabai -m display --focus east && yabai -m window --warp first) || yabai -m window --move rel:10:0
 
-# flip layout
-# alt + shift - x : yabai -m space --mirror x-axis
-# alt + shift - y : yabai -m space --mirror y-axis
+# Toggle split orientation of the selected windows node: shift + lalt - s
+shift + lalt - s : yabai -m window --toggle split
 
-# increase window size
-# alt + shift - a : yabai -m window --resize left:-48:0
-# alt + shift - d : yabai -m window --resize right:48:0
-# alt + shift - w : yabai -m window --resize top:0:-48
-# alt + shift - s : yabai -m window --resize bottom:0:48
+# Moving windows between spaces: shift + lalt - {1, 2, 3, 4, p, n } (Assumes 4 Spaces Max per Display)
+shift + lalt - 1 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[1] ]] \
+                  && yabai -m window --space $SPACES[1]
 
-# decrease window size
-# cmd + shift - a : yabai -m window --resize left:48:0
-# cmd + shift - d : yabai -m window --resize right:-48:0
-# cmd + shift - w : yabai -m window --resize top:0:48
-# cmd + shift - s : yabai -m window --resize bottom:0:-48
+shift + lalt - 2 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[2] ]] \
+                  && yabai -m window --space $SPACES[2]
 
-# toggle window zoom
-# alt - d : yabai -m window --toggle zoom-parent
-# alt - f : yabai -m window --toggle zoom-fullscreen
+shift + lalt - 3 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[3] ]] \
+                  && yabai -m window --space $SPACES[3]
 
-# balance size of windows
-shift + alt - 0 : yabai -m space --balance
+shift + lalt - 4 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[4] ]] \
+                  && yabai -m window --space $SPACES[4]
 
-# -----------------------------------------------------------------------------
-
-# float / unfloat window and center on screen
-# alt - t : yabai -m window --toggle float --grid 8:8:1:1:6:6
-
-# make floating window fill screen
-# shift + alt - up : yabai -m window --grid 1:1:0:0:1:1
-# make floating window fill left-half of screen
-# shift + alt - left   : yabai -m window --grid 1:2:0:0:1:1
-
-# toggle sticky(+float), topmost, picture-in-picture
-# alt - p : yabai -m window --toggle sticky --toggle topmost --toggle pip
-
-# move floating window
-# ctrl + shift - a : yabai -m window --move rel:-12:0
-# ctrl + shift - d : yabai -m window --move rel:12:0
-# ctrl + shift - w : yabai -m window --move rel:0:-12
-# ctrl + shift - s : yabai -m window --move rel:0:12
-
-# make floating window fill screen
-# ctrl + alt - up     : yabai -m window --grid 1:1:0:0:1:1
-# ctrl + alt - down     : yabai -m window --grid 8:8:1:1:6:6
-# ctrl + alt - left   : yabai -m window --grid 1:2:0:0:1:1
-# ctrl + alt - right   : yabai -m window --grid 1:2:1:0:1:1
-
-# -----------------------------------------------------------------------------
-
-# create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
-# shift + cmd - n : yabai -m space --create && \
-#                   index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
-#                   yabai -m window --space "${index}" && \
-#                   yabai -m space --focus "${index}"
-
-# fast focus desktop
-# cmd + alt - x : yabai -m space --focus recent
-# cmd + alt - 1 : yabai -m space --focus 1
-
-# toggle window split type
-alt - e : yabai -m window --toggle split
-
-# send window to desktop and follow focus
-# ctrl + alt - left : yabai -m window --space prev || yabai -m window --space last; yabai -m space --focus prev || yabai -m space --focus last
-# ctrl + alt - right : yabai -m window --space next || yabai -m window --space first; yabai -m space --focus next || yabai -m space --focus first
-ctrl + alt - left : yabai -m window --space prev --focus || yabai -m window --space last --focus
+ctrl + alt - left  : yabai -m window --space prev --focus || yabai -m window --space last --focus
 ctrl + alt - right : yabai -m window --space next --focus || yabai -m window --space first --focus
 
-# focus monitor
-# ctrl + alt - z  : yabai -m display --focus prev
-# ctrl + alt - 3  : yabai -m display --focus 3
-
 # send window to monitor and follow focus
-ctrl + cmd - right  : yabai -m window --display next --focus || yabai -m window --display first --focus
+ctrl + cmd - right : yabai -m window --display next --focus || yabai -m window --display first --focus
 ctrl + cmd - left  : yabai -m window --display prev --focus || yabai -m window --display last --focus
-# ctrl + cmd - 1  : yabai -m window --display 1; yabai -m display --focus 1
 
-# set insertion point in focused container
-# ctrl + alt - h : yabai -m window --insert west
+# Mirror Space on X and Y Axis: shift + lalt - {x, y}
+shift + lalt - x : yabai -m space --mirror x-axis
+shift + lalt - y : yabai -m space --mirror y-axis
 
-# open a new iTerm window
-# alt - return : osascript -e 'tell application "iTerm2" to create window with default profile command ""' || open -na iTerm
+## Stacks (shift + ctrl - ...)
+# Add the active window to the window or stack to the {direction}: shift + ctrl - {j, k, l, ö}
+shift + ctrl - h : yabai -m window  west --stack $(yabai -m query --windows --window | jq -r '.id')
+shift + ctrl - j : yabai -m window south --stack $(yabai -m query --windows --window | jq -r '.id')
+shift + ctrl - k : yabai -m window north --stack $(yabai -m query --windows --window | jq -r '.id')
+shift + ctrl - l : yabai -m window  east --stack $(yabai -m query --windows --window | jq -r '.id')
+
+# Stack Navigation: shift + ctrl - {n, p}
+shift + ctrl - n : yabai -m window --focus stack.next
+shift + ctrl - p : yabai -m window --focus stack.prev
+
+## Resize (ctrl + lalt - ...)
+# Resize windows: ctrl + lalt - {j, k, l, ö}
+ctrl + lalt - h : yabai -m window --resize right:-100:0 || yabai -m window --resize left:-100:0
+ctrl + lalt - j : yabai -m window --resize bottom:0:100 || yabai -m window --resize top:0:100
+ctrl + lalt - k : yabai -m window --resize bottom:0:-100 || yabai -m window --resize top:0:-100
+ctrl + lalt - l : yabai -m window --resize right:100:0 || yabai -m window --resize left:100:0
+
+# Equalize size of windows: ctrl + lalt - e
+ctrl + lalt - e : yabai -m space --balance
+
+# Enable / Disable gaps in current workspace: ctrl + lalt - g
+ctrl + lalt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
+
+## Insertion (shift + ctrl + lalt - ...)
+# Set insertion point for focused container: shift + ctrl + lalt - {j, k, l, ö, s}
+shift + ctrl + lalt - h : yabai -m window --insert west
+shift + ctrl + lalt - j : yabai -m window --insert south
+shift + ctrl + lalt - k : yabai -m window --insert north
+shift + ctrl + lalt - l : yabai -m window --insert east
+shift + ctrl + lalt - s : yabai -m window --insert stack
+
+# New window in hor./ vert. splits for all applications with yabai
+lalt - s : yabai -m window --insert east;  skhd -k "cmd - n"
+lalt - v : yabai -m window --insert south; skhd -k "cmd - n"
+
+# Toggle sketchybar
+shift + lalt - space : sketchybar --bar hidden=toggle
