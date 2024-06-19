@@ -18,5 +18,10 @@ dependencies = ["update"]
 command = "cargo"
 args = ["clippy", "--", "--no-deps"]
 
+[tasks.bench]
+command = "cargo"
+args = ["bench"]
+dependencies = ["update"]
+
 [env]
 CARGO_MAKE_EXTEND_WORKSPACE_MAKEFILE = true
