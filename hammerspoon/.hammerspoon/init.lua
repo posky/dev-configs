@@ -14,7 +14,7 @@ local remapper = FRemap.new()
 -- syntax
 -- :remap(fromKey, toKey)
 remapper:remap("rcmd", "f18")
-remapper:remap(0x39, "rctrl")
+remapper:remap(0x39, "lctrl")
 remapper:register()
 
 -- escape key mapping for vim
