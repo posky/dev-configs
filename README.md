@@ -32,6 +32,8 @@ rustfmt - <https://github.com/rust-lang/rustfmt>
 
 oh-my-zsh - <https://ohmyz.sh/>
 
+starship - 
+
 ## terminal
 
 kitty - <https://sw.kovidgoyal.net/kitty/>
