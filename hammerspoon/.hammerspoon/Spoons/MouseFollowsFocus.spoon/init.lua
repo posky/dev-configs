@@ -45,7 +45,10 @@ function obj:start()
 	}, function(window)
 		-- local input_eng = "com.apple.keylayout.UnicodeHexInput"
 		local input_eng = "com.apple.keylayout.ABC"
-		hs.keycodes.currentSourceID(input_eng)
+		local cur_input = hs.keycodes.currentSourceID()
+		if not (cur_input == input_eng) then
+			hs.keycodes.currentSourceID(input_eng)
+		end
 		self:updateMouse(window)
 	end)
 end
@@ -64,10 +67,10 @@ end
 --- Method
 --- Moves the mouse to the center of the given window unless it's already inside the window
 function obj:updateMouse(window)
-	local current_pos = hs.geometry(hs.mouse.getAbsolutePosition())
+	local current_pos = hs.geometry(hs.mouse.absolutePosition())
 	local frame = window:frame()
 	if not current_pos:inside(frame) then
-		hs.mouse.setAbsolutePosition(frame.center)
+		hs.mouse.absolutePosition(frame.center)
 	end
 end
 
