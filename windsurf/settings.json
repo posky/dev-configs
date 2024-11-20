@@ -1,0 +1,17 @@
+{
+  "windsurf.autocompleteSpeed": "fast",
+  "editor.fontFamily": "'JetBrains Mono', Hack, Menlo, Monaco, 'Courier New', monospace",
+  "windsurf.enableConfig": {
+    "*": true
+  },
+  "editor.formatOnSave": true,
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "workbench.colorTheme": "Catppuccin Mocha",
+  "workbench.iconTheme": "catppuccin-mocha"
+}
