@@ -2,4 +2,7 @@
 BASEDIR="$(dirname "$(realpath "$0")")"
 SETTING_PATH="$HOME/Library/Application Support/Windsurf/User/settings.json"
 
-code --diff "$SETTING_PATH" "$BASEDIR/settings.json"
+if [ -f "$SETTING_PATH" ]; then
+  echo "Updating Windsurf setting"
+  code --diff "$SETTING_PATH" "$BASEDIR/settings.json"
+fi
