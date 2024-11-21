@@ -1,5 +1,5 @@
 {
-  "[typescript][typescriptreact]": {
+  "[javascript][typescript][typescriptreact]": {
     "editor.tabSize": 2
   },
   "editor.fontFamily": "'JetBrains Mono', Hack, Menlo, Monaco, 'Courier New', monospace",
@@ -14,6 +14,21 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
+  "javascript.format.semicolons": "insert",
+  "javascript.inlayHints.enumMemberValues.enabled": true,
+  "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "javascript.inlayHints.parameterNames.enabled": "all",
+  "javascript.inlayHints.parameterTypes.enabled": true,
+  "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "javascript.inlayHints.variableTypes.enabled": true,
+  "javascript.preferences.organizeImports": {
+    "caseFirst": "default",
+    "caseSensitivity": "auto",
+    "typeOrder": "auto"
+  },
+  "javascript.referencesCodeLens.enabled": true,
+  "javascript.referencesCodeLens.showOnAllFunctions": true,
+  "javascript.suggest.completeFunctionCalls": true,
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.format.semicolons": "insert",
   "typescript.implementationsCodeLens.enabled": true,
