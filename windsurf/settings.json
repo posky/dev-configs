@@ -13,5 +13,11 @@
     "asvetliakov.vscode-neovim": 1
   },
   "workbench.colorTheme": "Catppuccin Mocha",
-  "workbench.iconTheme": "catppuccin-mocha"
+  "workbench.iconTheme": "catppuccin-mocha",
+  "[typescript][typescriptreact]": {
+    "editor.tabSize": 2
+  },
+  "editor.rulers": [
+    80
+  ]
 }
