@@ -1,23 +1,42 @@
 {
-  "windsurf.autocompleteSpeed": "fast",
-  "editor.fontFamily": "'JetBrains Mono', Hack, Menlo, Monaco, 'Courier New', monospace",
-  "windsurf.enableConfig": {
-    "*": true
+  "[typescript][typescriptreact]": {
+    "editor.tabSize": 2
   },
+  "editor.fontFamily": "'JetBrains Mono', Hack, Menlo, Monaco, 'Courier New', monospace",
   "editor.formatOnSave": true,
+  "editor.rulers": [
+    80
+  ],
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
-  "extensions.experimental.affinity": {
-    "asvetliakov.vscode-neovim": 1
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.format.semicolons": "insert",
+  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.implementationsCodeLens.showOnInterfaceMethods": true,
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.variableTypes.enabled": true,
+  "typescript.locale": "en",
+  "typescript.preferences.organizeImports": {
+    "caseFirst": "default",
+    "caseSensitivity": "auto",
+    "typeOrder": "auto"
+  },
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.referencesCodeLens.showOnAllFunctions": true,
+  "typescript.surveys.enabled": false,
+  "windsurf.autocompleteSpeed": "fast",
+  "windsurf.enableConfig": {
+    "*": true
   },
   "workbench.colorTheme": "Catppuccin Mocha",
-  "workbench.iconTheme": "catppuccin-mocha",
-  "[typescript][typescriptreact]": {
-    "editor.tabSize": 2
-  },
-  "editor.rulers": [
-    80
-  ]
+  "workbench.iconTheme": "catppuccin-mocha"
 }
