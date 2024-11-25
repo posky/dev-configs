@@ -1,12 +1,18 @@
 {
-  "[javascript][typescript][typescriptreact]": {
+  "[html]": {
     "editor.tabSize": 2
   },
+  "[javascript][typescript][typescriptreact]": {
+    "editor.formatOnSave": false,
+    "editor.tabSize": 2
+  },
+  "codesnap.realLineNumbers": true,
   "editor.fontFamily": "'JetBrains Mono', Hack, Menlo, Monaco, 'Courier New', monospace",
   "editor.formatOnSave": true,
   "editor.rulers": [
     80
   ],
+  "editor.wordWrap": "on",
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
