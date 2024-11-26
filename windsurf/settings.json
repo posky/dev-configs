@@ -3,7 +3,11 @@
     "editor.tabSize": 2
   },
   "[javascript][typescript][typescriptreact]": {
-    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    },
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnSave": true,
     "editor.tabSize": 2
   },
   "codesnap.realLineNumbers": true,
@@ -35,6 +39,9 @@
   "javascript.referencesCodeLens.enabled": true,
   "javascript.referencesCodeLens.showOnAllFunctions": true,
   "javascript.suggest.completeFunctionCalls": true,
+  "prettier.jsxSingleQuote": false,
+  "prettier.requireConfig": true,
+  "prettier.singleQuote": true,
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.format.semicolons": "insert",
   "typescript.implementationsCodeLens.enabled": true,
