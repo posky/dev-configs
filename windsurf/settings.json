@@ -2,7 +2,7 @@
   "[html]": {
     "editor.tabSize": 2
   },
-  "[javascript][typescript][typescriptreact]": {
+  "[javascript][typescript][typescriptreact][css][scss]": {
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit"
     },
