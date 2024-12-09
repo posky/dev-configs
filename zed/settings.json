@@ -49,6 +49,9 @@
     "include_ignored": false,
     "regex": true
   },
+  "project_panel": {
+    "indent_size": 15
+  },
   "soft_wrap": "editor_width",
   "telemetry": {
     "diagnostics": false,
@@ -74,6 +77,12 @@
     "share_on_join": false
   },
   "languages": {
+    "CSS": {
+      "tab_size": 2
+    },
+    "SCSS": {
+      "tab_size": 2
+    },
     "JavaScript": {
       "prettier": {
         "allowed": false
