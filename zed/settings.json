@@ -29,6 +29,7 @@
   },
   "format_on_save": "on",
   "formatter": "auto",
+  "always_treat_brackets_as_autoclosed": true,
   "indent_guides": {
     "show": "always",
     "coloring": "indent_aware",
