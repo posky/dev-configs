@@ -1,6 +1,6 @@
 {
   "features": {
-    "inline_completion_provider": "copilot"
+    "inline_completion_provider": "supermaven"
   },
   "assistant": {
     "default_model": {
@@ -88,27 +88,45 @@
       "prettier": {
         "allowed": false
       },
-      "code_actions_on_format": {
-        "source.fixAll.eslint": true
-      },
+      "formatter": [
+        {
+          "language_server": { "name": "vtsls" }
+        },
+        {
+          "code_actions": {
+            "source.fixAll.eslint": true
+          }
+        }
+      ],
       "tab_size": 2
     },
     "TSX": {
       "prettier": {
         "allowed": false
       },
-      "code_actions_on_format": {
-        "source.fixAll.eslint": true
-      },
+      "formatter": [
+        {
+          "code_actions": {
+            "source.fixAll.eslint": true
+          }
+        }
+      ],
       "tab_size": 2
     },
     "TypeScript": {
       "prettier": {
         "allowed": false
       },
-      "code_actions_on_format": {
-        "source.fixAll.eslint": true
-      },
+      "formatter": [
+        {
+          "language_server": { "name": "vtsls" }
+        },
+        {
+          "code_actions": {
+            "source.fixAll.eslint": true
+          }
+        }
+      ],
       "tab_size": 2
     },
     "Markdown": {
