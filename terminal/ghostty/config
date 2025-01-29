@@ -1,2 +1,9 @@
-theme = catppuccin-mocha
+theme = Ayu Mirage
 background-opacity = 0.9
+cursor-style = block
+auto-update = download
+
+font-family = ""
+font-family = "JetBrainsMono Nerd Font"
+font-family = "D2CodingLigature Nerd Font"
+
