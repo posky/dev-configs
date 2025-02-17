@@ -1,6 +1,7 @@
 {
+  "icon_theme": "Material Icon Theme",
   "features": {
-    "inline_completion_provider": "supermaven"
+    "edit_prediction_provider": "zed"
   },
   "assistant": {
     "default_model": {
