@@ -1,0 +1,14 @@
+[branch]
+	sort = -committerdate
+[init]
+	defaultBranch = main
+[diff]
+	algorithm = histogram
+	mnemonicPrefix = true
+	renames = true
+[fetch]
+	prune = true
+[help]
+	autocorrect = prompt
+[commit]
+	verbose = true
