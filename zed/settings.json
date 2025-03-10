@@ -171,6 +171,13 @@
         // }
       }
     },
+    "ruff": {
+      "initialization_options": {
+        "settings": {
+          // Ruff server settings goes here
+        }
+      }
+    },
     "rust-analyzer": {
       "initialization_options": {
         "inlayHints": {
