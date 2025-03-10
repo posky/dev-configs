@@ -7,44 +7,44 @@ select = [
 
   "FAST", # FastAPI
 
-  "YTT", # flake8-2020
-  "ANN", # flake8-annotations
+  "YTT",   # flake8-2020
+  "ANN",   # flake8-annotations
   "ASYNC", # flake8-async
-  "S", # flake8-bandit
-  "BLE", # flake8-blind-except
-  "FBT", # flake8-boolean-trap
-  "B", # flake8-bugbear
-  "A", # flake8-builtins
-  "COM", # flake8-commas
-  "C4", # flake8-comprehensions
-  "DTZ", # flake8-datetimez
-  "T10", # flake8-debugger
-  "DJ", # flake8-django
-  "EM", # flake8-errmsg
-  "EXE", # flake8-executable
-  "FIX", # flake8-fixme
-  "FA", # flake8-future-annotations
-  "INT", # flake8-gettext
-  "ISC", # flake8-implicit-str-concat
-  "ICN", # flake8-import-conventions
-  "LOG", # flake8-logging
-  "G", # flake8-logging-format
-  "INP", # flake8-no-pep420
-  "PIE", # flake8-pie
-  "T201", # flake8-print
-  "PYI", # flake8-pyi
-  "PT", # flake8-pytest-style
-  "Q", # flake8-quotes
-  "RSE", # flake8-raise
-  "RET", # flake8-return
-  "SLF", # flake8-self
-  "SIM", # flake8-simplify
-  "SLOT", # flake8-slots
-  "TID", # flake8-tidy-imports
-  "TD", # flake8-todos
-  "TC", # flake8-type-checking
-  "ARG", # flake8-unused-arguments
-  "PTH", # flake8-use-pathlib
+  "S",     # flake8-bandit
+  "BLE",   # flake8-blind-except
+  "FBT",   # flake8-boolean-trap
+  "B",     # flake8-bugbear
+  "A",     # flake8-builtins
+  "COM",   # flake8-commas
+  "C4",    # flake8-comprehensions
+  "DTZ",   # flake8-datetimez
+  "T10",   # flake8-debugger
+  "DJ",    # flake8-django
+  "EM",    # flake8-errmsg
+  "EXE",   # flake8-executable
+  "FIX",   # flake8-fixme
+  "FA",    # flake8-future-annotations
+  "INT",   # flake8-gettext
+  "ISC",   # flake8-implicit-str-concat
+  "ICN",   # flake8-import-conventions
+  "LOG",   # flake8-logging
+  "G",     # flake8-logging-format
+  "INP",   # flake8-no-pep420
+  "PIE",   # flake8-pie
+  "T201",  # flake8-print
+  "PYI",   # flake8-pyi
+  "PT",    # flake8-pytest-style
+  "Q",     # flake8-quotes
+  "RSE",   # flake8-raise
+  "RET",   # flake8-return
+  "SLF",   # flake8-self
+  "SIM",   # flake8-simplify
+  "SLOT",  # flake8-slots
+  "TID",   # flake8-tidy-imports
+  "TD",    # flake8-todos
+  "TC",    # flake8-type-checking
+  "ARG",   # flake8-unused-arguments
+  "PTH",   # flake8-use-pathlib
 
   "FLY", # flynt
 
@@ -53,23 +53,23 @@ select = [
   "C90", # mccabe
 
   "NPY", # NumPy-specific rules
-  "PD", # pandas-vet
+  "PD",  # pandas-vet
 
   "N", #pep8-naming
 
   "PERF", # Perflint
 
-  "E", # pycodestyle Error
-  "W", # pycodestyle Warning
+  "E",   # pycodestyle Error
+  "W",   # pycodestyle Warning
   "DOC", # pydoclint
-  "D", # pydocstyle
-  "F", # PyFlakes
+  "D",   # pydocstyle
+  "F",   # PyFlakes
   "PGH", # pygrep-hooks
   "PLC", # Pylint Convention
   "PLE", # Pylint Error
   "PLR", # Pylint Refactor
   "PLW", # Pylint Warning
-  "UP", # pyupgrade
+  "UP",  # pyupgrade
 
   "FURB", # refurb
 
@@ -77,18 +77,9 @@ select = [
 
   "TRY", # tryceratops
 ]
-ignore = [
-  "TD002",
-  "TD003"
-]
-fixable = [
-  "ALL"
-]
-unfixable = [
-  "ASYNC116",
-  "T20",
-  "F401",
-]
+ignore = ["TD002", "TD003"]
+fixable = ["ALL"]
+unfixable = ["ASYNC116", "T20", "F401"]
 preview = true
 
 [lint.isort]
@@ -108,5 +99,6 @@ section-order = [
 convention = "google"
 
 [format]
+preview = true
 quote-style = "double"
 indent-style = "space"
