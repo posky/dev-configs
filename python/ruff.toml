@@ -77,7 +77,7 @@ select = [
 
   "TRY", # tryceratops
 ]
-ignore = ["TD002", "TD003"]
+ignore = ["COM812", "TD002", "TD003"]
 fixable = ["ALL"]
 unfixable = ["ASYNC116", "T20", "F401"]
 preview = true
