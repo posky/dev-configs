@@ -134,5 +134,20 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+# mac update script
+function macUpdate() {
+  if [ -f ~/.local/bin/update ]; then
+    ~/.local/bin/update
+  fi
+  omz update
+}
+
+# zellij attach with list
+function za() {
+  if [ -f ~/.local/bin/zellij ]; then
+    ~/.local/bin/zellij
+  fi
+}
+
 # fastfetch
 fastfetch
