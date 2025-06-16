@@ -1,100 +1,69 @@
 {
-  "icon_theme": "Zed (Default)",
-  "features": {
-    "edit_prediction_provider": "zed"
-  },
-  "assistant": {
-    "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-7-sonnet-latest"
-    },
-    "version": "2"
-  },
   "active_pane_modifiers": {
     "inactive_opacity": 0.9
   },
+  "agent": {
+    "default_model": {
+      "model": "claude-opus-4-thinking",
+      "provider": "zed.dev"
+    },
+    "default_profile": "ask",
+    "inline_assistant_model": {
+      "model": "claude-opus-4-thinking",
+      "provider": "zed.dev"
+    },
+    "version": "2"
+  },
+  "always_treat_brackets_as_autoclosed": true,
   "autosave": "off",
   "base_keymap": "VSCode",
-  "buffer_font_family": "JetBrains Mono",
+  "buffer_font_fallbacks": [
+    "JetBrains Mono",
+    "D2Coding"
+  ],
+  "buffer_font_family": "Fira Code",
   "buffer_font_features": {
-    "calt": false
+    "calt": true
   },
-  "buffer_font_fallbacks": ["JetBrains Mono", "D2Coding"],
   "buffer_font_size": 14,
-  "confirm_quit": false,
-  "tabs": {
-    "git_status": true,
-    "close_position": "right",
-    "file_icons": true,
-    "activate_on_close": "history"
-  },
-  "format_on_save": "on",
-  "formatter": "auto",
-  "always_treat_brackets_as_autoclosed": true,
-  "indent_guides": {
-    "show": "always",
-    "coloring": "indent_aware",
-    "background_coloring": "indent_aware"
-  },
-  "inlay_hints": {
-    "enabled": true,
-    "show_type_hints": true,
-    "show_parameter_hints": true,
-    "show_other_hints": true,
-    "show_background": false,
-    "edit_debounce_ms": 700,
-    "scroll_debounce_ms": 50
-  },
-  "search": {
-    "whole_word": false,
-    "case_sensitive": false,
-    "include_ignored": false,
-    "regex": true
-  },
-  "project_panel": {
-    "indent_size": 15
-  },
-  "soft_wrap": "editor_width",
-  "telemetry": {
-    "diagnostics": false,
-    "metrics": false
-  },
-  "terminal": {
-    "font_family": "JetBrainsMono Nerd Font",
-    "font_fallbacks": ["D2CodingLigature Nerd Font"],
-    "font_features": {
-      "calt": false
-    },
-    "toolbar": {
-      "breadcrumbs": true
-    }
-  },
-  "theme": {
-    "mode": "dark",
-    "light": "Ayu Light",
-    "dark": "Ayu Mirage"
-  },
   "calls": {
     "mute_on_join": true,
     "share_on_join": false
   },
+  "confirm_quit": false,
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
+  "format_on_save": "on",
+  "formatter": "auto",
+  "icon_theme": "Catppuccin Mocha",
+  "indent_guides": {
+    "background_coloring": "indent_aware",
+    "coloring": "indent_aware",
+    "show": "always"
+  },
+  "inlay_hints": {
+    "edit_debounce_ms": 700,
+    "enabled": true,
+    "scroll_debounce_ms": 50,
+    "show_background": false,
+    "show_other_hints": true,
+    "show_parameter_hints": true,
+    "show_type_hints": true
+  },
   "languages": {
-    "HTML": {
-      "tab_size": 2
-    },
     "CSS": {
       "tab_size": 2
     },
-    "SCSS": {
+    "HTML": {
       "tab_size": 2
     },
     "JavaScript": {
-      "prettier": {
-        "allowed": false
-      },
       "formatter": [
         {
-          "language_server": { "name": "vtsls" }
+          "language_server": {
+            "name": "vtsls"
+          }
         },
         {
           "code_actions": {
@@ -102,53 +71,26 @@
           }
         }
       ],
-      "tab_size": 2
-    },
-    "TSX": {
       "prettier": {
         "allowed": false
       },
-      "formatter": [
-        {
-          "code_actions": {
-            "source.fixAll.eslint": true
-          }
-        }
-      ],
-      "tab_size": 2
-    },
-    "TypeScript": {
-      "prettier": {
-        "allowed": false
-      },
-      "formatter": [
-        {
-          "language_server": { "name": "vtsls" }
-        },
-        {
-          "code_actions": {
-            "source.fixAll.eslint": true
-          }
-        }
-      ],
       "tab_size": 2
     },
     "Markdown": {
       "format_on_save": "on",
-      "use_on_type_format": false,
       "prettier": {
         "allowed": true
       },
-      "remove_trailing_whitespace_on_save": true
+      "remove_trailing_whitespace_on_save": true,
+      "use_on_type_format": false
     },
     "Python": {
-      "language_servers": ["pyright", "ruff"],
       "format_on_save": "on",
       "formatter": [
         {
           "code_actions": {
-            "source.organizeImports.ruff": true,
-            "source.fixAll.ruff": true
+            "source.fixAll.ruff": true,
+            "source.organizeImports.ruff": true
           }
         },
         {
@@ -156,9 +98,47 @@
             "name": "ruff"
           }
         }
+      ],
+      "language_servers": [
+        "pyright",
+        "ruff"
       ]
     },
+    "SCSS": {
+      "tab_size": 2
+    },
     "TOML": {
+      "tab_size": 2
+    },
+    "TSX": {
+      "formatter": [
+        {
+          "code_actions": {
+            "source.fixAll.eslint": true
+          }
+        }
+      ],
+      "prettier": {
+        "allowed": false
+      },
+      "tab_size": 2
+    },
+    "TypeScript": {
+      "formatter": [
+        {
+          "language_server": {
+            "name": "vtsls"
+          }
+        },
+        {
+          "code_actions": {
+            "source.fixAll.eslint": true
+          }
+        }
+      ],
+      "prettier": {
+        "allowed": false
+      },
       "tab_size": 2
     }
   },
@@ -183,22 +163,50 @@
     },
     "rust-analyzer": {
       "initialization_options": {
-        "inlayHints": {
-          "maxLength": null,
-          "lifetimeElisionHints": {
-            "enable": "skip_trivial",
-            "useParameterNames": true
-          },
-          "closureReturnTypeHints": {
-            "enable": "always"
-          }
-        },
+        "checkOnSave": true,
         "diagnostics": {
           "experimental": {
             "enable": true
           }
         },
-        "checkOnSave": true
+        "inlayHints": {
+          "closureReturnTypeHints": {
+            "enable": "always"
+          },
+          "lifetimeElisionHints": {
+            "enable": "skip_trivial",
+            "useParameterNames": true
+          },
+          "maxLength": null
+        },
+        "rustfmt": {
+          "extraArgs": [
+            "+nightly"
+          ]
+        }
+      }
+    },
+    "taplo": {
+      "settings": {
+        "align_comments": true,
+        "align_entries": false,
+        "allowed_blank_lines": 2,
+        "array_auto_collapse": true,
+        "array_auto_expand": true,
+        "array_trailing_comma": true,
+        "column_width": 80,
+        "compact_arrays": false,
+        "compact_entries": false,
+        "compact_inline_tables": false,
+        "crlf": false,
+        "indent_entries": false,
+        "indent_string": "  ",
+        "indent_tables": false,
+        "inline_table_expand": true,
+        "reorder_arrays": false,
+        "reorder_inline_tables": false,
+        "reorder_keys": false,
+        "trailing_newline": true
       }
     },
     "vtsls": {
@@ -206,6 +214,12 @@
         // For JavaScript:
         "javascript": {
           "inlayHints": {
+            "enumMemberValues": {
+              "enabled": true
+            },
+            "functionLikeReturnTypes": {
+              "enabled": true
+            },
             "parameterNames": {
               "enabled": "all",
               "suppressWhenArgumentMatchesName": false
@@ -213,24 +227,24 @@
             "parameterTypes": {
               "enabled": true
             },
-            "variableTypes": {
-              "enabled": true,
-              "suppressWhenTypeMatchesName": true
-            },
             "propertyDeclarationTypes": {
               "enabled": true
             },
-            "functionLikeReturnTypes": {
-              "enabled": true
-            },
-            "enumMemberValues": {
-              "enabled": true
+            "variableTypes": {
+              "enabled": true,
+              "suppressWhenTypeMatchesName": true
             }
           }
         },
         // For TypeScript:
         "typescript": {
           "inlayHints": {
+            "enumMemberValues": {
+              "enabled": true
+            },
+            "functionLikeReturnTypes": {
+              "enabled": true
+            },
             "parameterNames": {
               "enabled": "all",
               "suppressWhenArgumentMatchesName": false
@@ -238,18 +252,12 @@
             "parameterTypes": {
               "enabled": true
             },
-            "variableTypes": {
-              "enabled": true,
-              "suppressWhenTypeMatchesName": true
-            },
             "propertyDeclarationTypes": {
               "enabled": true
             },
-            "functionLikeReturnTypes": {
-              "enabled": true
-            },
-            "enumMemberValues": {
-              "enabled": true
+            "variableTypes": {
+              "enabled": true,
+              "suppressWhenTypeMatchesName": true
             }
           }
         }
@@ -258,40 +266,65 @@
     "yaml-language-server": {
       "settings": {
         "yaml": {
-          "keyOrdering": false,
           "format": {
             "singleQuote": true
           },
+          "keyOrdering": false,
           "schemas": {
-            "http://json.schemastore.org/composer": ["/*"],
-            "../relative/path/schema.json": ["/config*.yaml"]
+            "../relative/path/schema.json": [
+              "/config*.yaml"
+            ],
+            "http://json.schemastore.org/composer": [
+              "/*"
+            ]
           }
         }
       }
-    },
-    "taplo": {
-      "settings": {
-        "align_entries": false,
-        "align_comments": true,
-        "array_trailing_comma": true,
-        "array_auto_expand": true,
-        "array_auto_collapse": true,
-        "compact_arrays": false,
-        "compact_inline_tables": false,
-        "inline_table_expand": true,
-        "compact_entries": false,
-        "column_width": 80,
-        "indent_tables": false,
-        "indent_entries": false,
-        "indent_string": "  ",
-        "trailing_newline": true,
-        "reorder_keys": false,
-        "reorder_arrays": false,
-        "reorder_inline_tables": false,
-        "allowed_blank_lines": 2,
-        "crlf": false
-      }
     }
+  },
+  "minimap": {
+    "current_line_highlight": null,
+    "show": "auto",
+    "thumb": "always",
+    "thumb_border": "left_open"
+  },
+  "project_panel": {
+    "indent_size": 15
+  },
+  "search": {
+    "case_sensitive": false,
+    "include_ignored": false,
+    "regex": true,
+    "whole_word": false
+  },
+  "soft_wrap": "editor_width",
+  "tabs": {
+    "activate_on_close": "history",
+    "close_position": "right",
+    "file_icons": true,
+    "git_status": true
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "terminal": {
+    "font_fallbacks": [
+      "JetBrainsMono Nerd Font",
+      "D2CodingLigature Nerd Font"
+    ],
+    "font_family": "FiraCode Nerd Font Mono",
+    "font_features": {
+      "calt": false
+    },
+    "toolbar": {
+      "breadcrumbs": true
+    }
+  },
+  "theme": {
+    "dark": "Catppuccin Mocha",
+    "light": "Ayu Light",
+    "mode": "dark"
   },
   "vim_mode": true
 }
