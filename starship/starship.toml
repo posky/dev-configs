@@ -1,4 +1,6 @@
-palette = "catppuccin_frappe"
+"$schema" = 'https://starship.rs/config-schema.json'
+
+palette = "catppuccin_mocha"
 right_format = """
 $memory_usage\
 $status\
@@ -12,8 +14,17 @@ symbol = "  "
 [buf]
 symbol = " "
 
+[bun]
+symbol = " "
+
 [c]
 symbol = " "
+
+[cpp]
+symbol = " "
+
+[cmake]
+symbol = " "
 
 [conda]
 symbol = " "
@@ -23,6 +34,9 @@ symbol = " "
 
 [dart]
 symbol = " "
+
+[deno]
+symbol = " "
 
 [directory]
 read_only = " 󰌾"
@@ -42,8 +56,15 @@ symbol = " "
 [fossil_branch]
 symbol = " "
 
+[gcloud]
+symbol = "  "
+
 [git_branch]
 symbol = " "
+
+[git_commit]
+tag_symbol = '  '
+tag_disabled = false
 
 [golang]
 symbol = " "
@@ -77,8 +98,9 @@ symbol = " "
 
 [memory_usage]
 symbol = "󰍛 "
+threshold = 70
+format = 'via $symbol [${ram} (${ram_pct})( | ${swap})]($style) '
 disabled = false
-threshold = 30
 
 [meson]
 symbol = "󰔷 "
@@ -103,6 +125,7 @@ Amazon = " "
 Android = " "
 Arch = " "
 Artix = " "
+CachyOS = " "
 CentOS = " "
 Debian = " "
 DragonFly = " "
@@ -124,6 +147,7 @@ MidnightBSD = " "
 Mint = " "
 NetBSD = " "
 NixOS = " "
+Nobara = " "
 OpenBSD = "󰈺 "
 openSUSE = " "
 OracleLinux = "󰌷 "
@@ -152,6 +176,9 @@ symbol = " "
 [pijul_channel]
 symbol = " "
 
+[pixi]
+symbol = "󰏗 "
+
 [python]
 symbol = " "
 
@@ -162,7 +189,7 @@ symbol = "󰟔 "
 symbol = " "
 
 [rust]
-symbol = " "
+symbol = "󱘗 "
 
 [scala]
 symbol = " "
@@ -173,14 +200,19 @@ symbol = " "
 [zig]
 symbol = " "
 
-[time]
-use_12hr = false
-disabled = false
+[gradle]
+symbol = " "
+
+[cmd_duration]
+min_time = 500
+show_milliseconds = true
+show_notifications = true
 
 [git_status]
 conflicted = "=$count"
 ahead = "⇡$count"
 behind = "⇣$count"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 untracked = "?$count"
 stashed = "\\$$count"
 modified = "!$count"
@@ -188,33 +220,38 @@ staged = "+$count"
 renamed = "»$count"
 deleted = "✘$count"
 
-[status]
+[time]
+use_12hr = false
 disabled = false
 
-[palettes.catppuccin_frappe]
-rosewater = "#f2d5cf"
-flamingo = "#eebebe"
-pink = "#f4b8e4"
-mauve = "#ca9ee6"
-red = "#e78284"
-maroon = "#ea999c"
-peach = "#ef9f76"
-yellow = "#e5c890"
-green = "#a6d189"
-teal = "#81c8be"
-sky = "#99d1db"
-sapphire = "#85c1dc"
-blue = "#8caaee"
-lavender = "#babbf1"
-text = "#c6d0f5"
-subtext1 = "#b5bfe2"
-subtext0 = "#a5adce"
-overlay2 = "#949cbb"
-overlay1 = "#838ba7"
-overlay0 = "#737994"
-surface2 = "#626880"
-surface1 = "#51576d"
-surface0 = "#414559"
-base = "#303446"
-mantle = "#292c3c"
-crust = "#232634"
+[status]
+map_symbol = true
+disabled = false
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
