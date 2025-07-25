@@ -1,10 +1,12 @@
-theme = Ayu Mirage
+theme = catppuccin-mocha
 background-opacity = 0.9
 cursor-style = block
 auto-update = download
 macos-option-as-alt = true
 
 font-family = ""
+font-family = "FiraCode Nerd Font Mono"
 font-family = "JetBrainsMono Nerd Font"
 font-family = "D2CodingLigature Nerd Font"
 
+link-url = true
