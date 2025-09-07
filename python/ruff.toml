@@ -1,12 +1,23 @@
 line-length = 88
 indent-width = 4
+preview = true
+target-version = "py312"
 
 [lint]
+unfixable = [
+  "PIE794",
+  "PIE804",
+  "T20",
+  "SIM112",
+  "F401",
+  "F601",
+  "F602",
+  "F841",
+]
+future-annotations = true
+ignore = ["TD001", "TD002", "TD003"]
 select = [
-  "ERA", # eradicate
-
-  "FAST", # FastAPI
-
+  "FAST",  # FastAPI
   "YTT",   # flake8-2020
   "ANN",   # flake8-annotations
   "ASYNC", # flake8-async
@@ -22,7 +33,6 @@ select = [
   "DJ",    # flake8-django
   "EM",    # flake8-errmsg
   "EXE",   # flake8-executable
-  "FIX",   # flake8-fixme
   "FA",    # flake8-future-annotations
   "INT",   # flake8-gettext
   "ISC",   # flake8-implicit-str-concat
@@ -31,10 +41,9 @@ select = [
   "G",     # flake8-logging-format
   "INP",   # flake8-no-pep420
   "PIE",   # flake8-pie
-  "T201",  # flake8-print
+  "T20",   # flake8-print
   "PYI",   # flake8-pyi
   "PT",    # flake8-pytest-style
-  "Q",     # flake8-quotes
   "RSE",   # flake8-raise
   "RET",   # flake8-return
   "SLF",   # flake8-self
@@ -45,60 +54,51 @@ select = [
   "TC",    # flake8-type-checking
   "ARG",   # flake8-unused-arguments
   "PTH",   # flake8-use-pathlib
-
-  "FLY", # flynt
-
-  "I", # isort
-
-  "C90", # mccabe
-
-  "NPY", # NumPy-specific rules
-  "PD",  # pandas-vet
-
-  "N", #pep8-naming
-
-  "PERF", # Perflint
-
-  "E",   # pycodestyle Error
-  "W",   # pycodestyle Warning
-  "DOC", # pydoclint
-  "D",   # pydocstyle
-  "F",   # PyFlakes
-  "PGH", # pygrep-hooks
-  "PLC", # Pylint Convention
-  "PLE", # Pylint Error
-  "PLR", # Pylint Refactor
-  "PLW", # Pylint Warning
-  "UP",  # pyupgrade
-
-  "FURB", # refurb
-
-  "RUF", # Ruff-specific rules
-
-  "TRY", # tryceratops
+  "FLY",   # flynt
+  "I",     # isort
+  "C90",   # mccabe
+  "NPY",   # NumPy-specific rules
+  "PD",    # pandas-vet
+  "N",     # pep8-naming
+  "PERF",  # Perflint
+  "E",     # pycodestyle Error
+  "W",     # pycodestyle Warning
+  "D",     # pydocstyle
+  "F",     # Pyflakes
+  "PLC",   # Pylint Convention
+  "PLE",   # Pylint Error
+  "PLR",   # Pylint Refactor
+  "PLW",   # Pylint Warning
+  "UP",    # pyupgrade
+  "FURB",  # refurb
+  "RUF",   # Ruff-specific rules
+  "TRY",   # tryceratops
 ]
-ignore = ["COM812", "TD002", "TD003"]
-fixable = ["ALL"]
-unfixable = ["ASYNC116", "T20", "F401"]
-preview = true
+
+[lint.per-file-ignores]
+"**/tests/**" = [
+  "ANN",
+  "S101",
+  "ARG",
+  "D",
+  "PLR2004",
+  "PLR0913",
+  "SLF001",
+  "T20",
+  "E402",
+]
 
 [lint.isort]
 combine-as-imports = true
-force-wrap-aliases = true
-length-sort = true
-lines-between-types = 1
-section-order = [
-  "future",
-  "standard-library",
-  "third-party",
-  "first-party",
-  "local-folder",
-]
+
+[lint.mccabe]
+max-complexity = 10
 
 [lint.pydocstyle]
 convention = "google"
 
 [format]
-preview = true
-quote-style = "double"
+docstring-code-format = true
 indent-style = "space"
+line-ending = "lf"
+quote-style = "double"
