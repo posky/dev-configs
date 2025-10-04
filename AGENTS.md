@@ -1,222 +1,191 @@
 # AGENTS.md
 
-Problem definition -> small, safe change -> change review -> refactor -> repeat the loop.
-
-This guide standardizes how we think, design, code, test, and document changes.
+Small, safe change -> code review -> refactor -> repeat.
 
 ---
 
-## 1) Working Loop and Scope
+## 0) Scope & Placement
 
-* Define the problem, propose small and safe changes, get review, refactor, and iterate.
-* Prefer incremental changes over big-bang rewrites.
+- **Single source of truth for agents.** Keep build/test commands, code style, and conventions here so agents can act consistently.
+- **Monorepos:** You may place additional `AGENTS.md` files in subpackages. The nearest file to the edited code takes precedence. Explicit chat prompts override file content.
+- **Living document:** Update this file as workflows evolve.
 
 ---
 
-## 2) Core Rules
+## 1) Working Loop
 
-* Read all relevant files end to end before changing anything.
-* Keep tasks, commits, and PRs small.
-* Record all assumptions in Issue/PR/ADR.
-* Never commit or log secrets; validate inputs and normalize or encode outputs.
-* Avoid premature abstraction; use intention-revealing names.
-* Compare at least two options before deciding; write one line each for pros, cons, and risks, then choose the simplest option that works.
-* Commit messages must follow Conventional Commits and be written in English (see Section 9 and templates).
+1. Define the problem.
+2. Propose a **small, safe** change.
+3. Get review.
+4. Refactor.
+5. Repeat.
+
+Prefer increments over big-bang rewrites.
+
+---
+
+## 2) Mandatory Rules
+
+- **Read before you change:** Open and read relevant files **end-to-end**, including definitions, references, call sites, related tests, config/flags.
+- Keep tasks/commits/PRs **small**.
+- Record assumptions in the Issue/PR/ADR.
+- **No secrets** in code/logs/tickets; validate inputs; **normalize/encode** outputs.
+- Avoid premature abstraction; use **intention-revealing names**.
+- Compare at least **two options** before deciding; note 1-line pros/cons/risks; pick the **simplest** that works.
 
 ---
 
 ## 3) Mindset
 
-* Think like a senior engineer.
-* Do not rush or guess; verify by reading and by running minimal experiments.
-* Prefer clarity over cleverness; choose boring and proven approaches when adequate.
+- Think like a senior engineer. Don’t guess; verify by reading and small experiments.
+- Prefer clarity over cleverness; choose **boring, proven** solutions.
+- Write code you can delete later; isolate side-effects.
 
 ---
 
-## 4) Code and Reference Hygiene
+## 4) Code & File Reference Rules
 
-* Read files thoroughly from start to finish (no partial reads).
-* Before modifying a symbol, run a global search to understand preconditions and postconditions; leave a 1 to 3 line impact note in the PR.
-* Trace definitions, references, call sites, related tests, docs, configs, and flags.
+- Read entire files (no partial reads).
+- Before editing a symbol, **global-search** its usages to learn pre/post-conditions; leave a 1–3 line **impact note** in the PR describing what could break and why.
+- Keep changes **localized**; avoid cross-cutting edits unless necessary.
 
 ---
 
-## 5) Coding Standards
+## 5) Required Coding Rules
 
-* Write a Problem 1-Pager before coding: Context, Problem, Goal, Non-Goals, Constraints, Options, Chosen and Why, Risks.
-* Complexity limits:
-
-  * File <= 300 LOC; Function <= 50 LOC; Parameters <= 5; Cyclomatic complexity <= 10.
-  * If a limit is temporarily exceeded, add a TODO with a tracking issue and link it in the PR; schedule refactor in the next iteration.
-* Prefer explicit code; avoid hidden magic.
-* Follow DRY after duplication is clear (3 or more occurrences or demonstrated pain).
-* Isolate side effects (I or O, network, global state) at the boundary layer.
-* Catch specific exceptions; present clear user-facing messages.
-* Use structured logging; do not log sensitive data; propagate request or correlation IDs.
-* Account for time zones and daylight saving time.
+- **Problem One-Pager** before coding: _Context / Problem / Goal / Non-Goals / Constraints_.
+- Enforce soft limits: file <= **300 LOC**, function <= **50 LOC**, params <= **5**, cyclomatic complexity <= **10** (refactor/split if exceeded).
+- Prefer explicit code over “magic”.
+- **DRY** with restraint; duplication is allowed **until** the abstraction is obvious.
+- Isolate I/O, network, and global state at boundaries.
+- Catch **specific** exceptions; return **clear** user-facing errors.
+- Use **structured logging**; propagate correlation/request IDs; never log sensitive data.
+- Be **time-zone** and **DST** aware.
 
 ---
 
 ## 6) Testing Rules
 
-* New code requires new tests; bug fixes include a regression test written to fail first.
-* Tests must be deterministic and independent; replace external systems with fakes or contract tests.
-* Include at least one happy path and at least one failure path in end to end tests.
-* Assess risks from concurrency, locks, retries, duplication, and deadlocks.
+- New code -> **new tests**. Bug fixes must include a **failing test first** (regression).
+- Tests are **deterministic** and **independent**; replace externals with fakes/contracts.
+- Include >=1 **happy path** and >=1 **failure path** in e2e.
+- Assess concurrency risks (duplication, deadlocks, retries, idempotency).
 
 ---
 
-## 7) Security and Privacy
+## 7) Security Rules
 
-* Never leave secrets in code, logs, or tickets; run secret scanning locally and in CI.
-* Validate, normalize, and encode inputs; use parameterized operations.
-* Apply the Principle of Least Privilege (tokens, roles, database grants); scope and rotate secrets on a schedule.
-* Mask personally identifiable information in logs; set retention periods for logs, metrics, and traces.
+- Secrets never appear in code/logs/tickets.
+- Validate, normalize, and encode inputs; use parameterized operations.
+- Apply **Least Privilege** (scopes, roles, keys, network policies).
 
 ---
 
 ## 8) Clean Code Rules
 
-* Use intention-revealing names.
-* Each function should do one thing.
-* Keep side effects at the boundary.
-* Prefer guard clauses first.
-* Symbolize constants; avoid magic numbers or strings.
-* Structure code as Input -> Process -> Return.
-* Report failures with specific errors and messages.
-* Make tests serve as usage examples; include boundary and failure cases.
+- Intention-revealing names; one thing per function.
+- Guard clauses first; keep side-effects at boundaries.
+- Symbolize constants (no magic numbers).
+- Structure: **Input -> Process -> Return**.
+- Fail loudly with specific errors/messages.
+- Let tests double as **usage examples**; include boundary/failure cases.
 
 ---
 
-## 9) Commit Granularity
+## 9) Anti-Patterns (Never Do)
 
-* One logical change per commit: feature, bug fix, refactor, or doc update.
-* Each commit must:
-  * Compile and pass tests (green state).
-  * Be understandable in isolation.
-  * Be safely revertible.
-* Do not mix concerns (e.g., feature + style + unrelated fix).
-* For work-in-progress, use draft PRs or feature flags instead of committing half-baked code.
+- Modify code without reading its full context.
+- Expose secrets.
+- Ignore failures or warnings.
+- Add unjustified optimizations/abstractions.
+- Swallow exceptions broadly.
 
 ---
 
-## 10) Conventional Commits (English-only)
+## 10) Conventional Commits (ENGLISH ONLY)
 
-Every commit message must be written in English and follow Conventional Commits.
-
-Format: `type(scope)!: short summary`
-
-Allowed types (common): `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
-
-Rules
-
-* Subject in imperative mood, 72 characters or fewer.
-* Add `!` for breaking changes and include a `BREAKING CHANGE:` footer.
-* Body explains what and why, not code diffs. Use bullet points if needed.
-* Reference issues as `Closes #123` or `Refs #123`.
-
-Examples
-
-* `feat(auth): add device-bound refresh tokens`
-* `fix(api)!: return 400 for invalid date format`
-* `refactor(service): extract payment adapter interface`
-* `test(rules): add concurrency retry and lock e2e cases`
-* `docs: add ADR for multi-tenant routing`
-
-Breaking change footer example
+Write **all commit messages in English** using the Conventional Commits format:
 
 ```
-BREAKING CHANGE: /v1/orders create now requires `client_id`.
-Migration: set client_id in all callers; see docs/migrations/2025-10-orders.md
+<type>(<scope>)!?: <short summary in lowercase/imperative>
+
+[optional body: motivation, contrast, alternatives]
+
+[optional footer(s): issue refs, BREAKING CHANGE: details]
 ```
 
----
+**Common types:**
+`feat` (feature), `fix` (bug fix), `docs`, `style` (no logic), `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
 
-## 11) Anti-Patterns (Do Not)
+**Rules**
 
-* Modify code without reading the whole context.
-* Expose secrets or personally identifiable information in code, logs, or tickets.
-* Ignore failures or warnings; swallow exceptions.
-* Introduce unjustified optimization or abstraction.
-* Overuse broad exceptions such as `Exception` or `Throwable`.
+- Limit the first line to **<= 72 chars**; use **imperative** tone ("add", "fix", "refactor").
+- **Scope** is optional (`api`, `auth`, `ui`, `payments`, etc.).
+- Put details, rationale, and trade-offs in the **body** (wrap at ~72 cols).
+- Reference issues in **footers**: `Fixes #123`, `Refs PROJ-45`.
+- **Breaking changes:** add `!` after type/scope **and/or** a footer starting with `BREAKING CHANGE:` followed by a description. Tools use these to automate changelogs and versioning.
 
----
-
-## 12) Decision Records and Docs
-
-* Each Problem 1-Pager links to an ADR (Architecture Decision Record).
-* ADR template: Title, Context, Decision, Status, Consequences, Alternatives.
-* Link ADRs from PRs and Issues; tag with components.
-
----
-
-## 13) Templates
-
-### 13.1 Problem 1-Pager
-
-* Context:
-* Problem:
-* Goal and Non-Goals:
-* Constraints (time, performance, regulation, legacy):
-* Options A and B (plus C if useful): each 1-line Pros, Cons, Risks
-* Chosen and Why (1 line):
-* Risks:
-* Impact:
-
-### 13.2 Impact Note (1 to 3 lines)
+**Examples**
 
 ```
-Symbol: FooService.process()
-Pre to Post: timeout default 5s to 2s; clarified error types
-Ripple: BarJob, api/v1/orders callers (refs attached)
+feat(api): add rate limiting with token bucket
+
+Introduce per-tenant token bucket middleware to reduce 429 spikes.
+Configurable via RATE_LIMIT_RPS. Defaults are conservative to avoid
+false positives in bursty workloads.
+
+Refs #482
 ```
 
-### 13.3 PR Description
-
 ```
-## What
-- ...
+fix(auth): handle expired refresh tokens gracefully
 
-## Why
-- ...
+Return 401 with machine-readable error code; preserve old behavior for
+valid sessions and add contract test to prevent regression.
 
-## Options considered
-- A and B (plus C): Pros, Cons, Risks (1 line each)
-
-## Tests
-- Unit: happy and failure
-- Contract: provider and consumer
-- E2E: at least one happy and at least one failure
-- Concurrency: retry, lock, idempotency
-
-## Notes
-- Impact Note or migrations or dashboards links
-- Closes #123
+Fixes #519
 ```
 
-### 13.4 Conventional Commit Examples (copy and paste)
-
 ```
-feat(auth): add device-bound refresh tokens
-fix(api)!: return 400 for invalid date format
-refactor(db): split repository by aggregate
-perf(cache): reduce cold start by warming LRU on boot
-test(queue): add retry backoff e2e scenarios
-docs(adr): document multi-tenant routing decision
-ci: enforce commitlint and english-only via regex
-build(deps): bump prisma to 6.13
-chore: remove dead code in legacy cron job
-revert: revert "feat(auth): add device-bound refresh tokens"
+refactor(ui)!: remove legacy dashboard widgets
+
+BREAKING CHANGE: Old /v1/widgets/* routes are removed. Use the new
+/v2/dashboard endpoints. See migration guide in docs/migrations/2025-10.md.
 ```
 
 ---
 
-## 14) Glossary
+## 11) PR Expectations
 
-* ADR: Architecture Decision Record.
-* Idempotency: Safe to retry an operation without additional side effects.
-* SLO: Service Level Objective for reliability or latency.
+- CI must pass: **lint**/**typecheck**/**tests** green locally before pushing.
+- PR title uses the same **Conventional Commits** style where practical.
+- Provide a scope, motivation, alternatives considered, risks, and **impact note**.
+- Link issues and add screenshots for UI changes.
+- Keep PRs reviewable (< ~300 lines changed when possible).
 
 ---
 
-Own the loop: define -> change small -> review -> refactor -> repeat.
+## 12) Local Commands (customize for your repo)
+
+- **Install deps:** `pnpm install`
+- **Typecheck/Lint:** `pnpm typecheck && pnpm lint`
+- **Test:** `pnpm test`
+- **Dev server:** `pnpm dev`
+
+Agents may attempt to execute commands listed here to verify changes; include everything needed to check work.
+
+---
+
+## 13) Large Repos & Subprojects
+
+For monorepos, add package-level `AGENTS.md` files with package-specific build/test tips. Agents read the **nearest** file; keep top-level guidance short and push details down to subprojects.
+
+---
+
+## 14) Keeping This File Healthy
+
+- Update when a test/build convention changes.
+- Trim obsolete sections; prefer links to long prose.
+- Periodically review sections with the most agent friction (setup, tests, CI).
+
+---
