@@ -88,7 +88,19 @@ This guide standardizes how we think, design, code, test, and document changes.
 
 ---
 
-## 9) Conventional Commits (English-only)
+## 9) Commit Granularity
+
+* One logical change per commit: feature, bug fix, refactor, or doc update.
+* Each commit must:
+  * Compile and pass tests (green state).
+  * Be understandable in isolation.
+  * Be safely revertible.
+* Do not mix concerns (e.g., feature + style + unrelated fix).
+* For work-in-progress, use draft PRs or feature flags instead of committing half-baked code.
+
+---
+
+## 10) Conventional Commits (English-only)
 
 Every commit message must be written in English and follow Conventional Commits.
 
@@ -120,7 +132,7 @@ Migration: set client_id in all callers; see docs/migrations/2025-10-orders.md
 
 ---
 
-## 10) Anti-Patterns (Do Not)
+## 11) Anti-Patterns (Do Not)
 
 * Modify code without reading the whole context.
 * Expose secrets or personally identifiable information in code, logs, or tickets.
@@ -130,7 +142,7 @@ Migration: set client_id in all callers; see docs/migrations/2025-10-orders.md
 
 ---
 
-## 11) Decision Records and Docs
+## 12) Decision Records and Docs
 
 * Each Problem 1-Pager links to an ADR (Architecture Decision Record).
 * ADR template: Title, Context, Decision, Status, Consequences, Alternatives.
@@ -138,9 +150,9 @@ Migration: set client_id in all callers; see docs/migrations/2025-10-orders.md
 
 ---
 
-## 12) Templates
+## 13) Templates
 
-### 12.1 Problem 1-Pager
+### 13.1 Problem 1-Pager
 
 * Context:
 * Problem:
@@ -151,7 +163,7 @@ Migration: set client_id in all callers; see docs/migrations/2025-10-orders.md
 * Risks:
 * Impact:
 
-### 12.2 Impact Note (1 to 3 lines)
+### 13.2 Impact Note (1 to 3 lines)
 
 ```
 Symbol: FooService.process()
@@ -159,7 +171,7 @@ Pre to Post: timeout default 5s to 2s; clarified error types
 Ripple: BarJob, api/v1/orders callers (refs attached)
 ```
 
-### 12.3 PR Description
+### 13.3 PR Description
 
 ```
 ## What
@@ -182,7 +194,7 @@ Ripple: BarJob, api/v1/orders callers (refs attached)
 - Closes #123
 ```
 
-### 12.4 Conventional Commit Examples (copy and paste)
+### 13.4 Conventional Commit Examples (copy and paste)
 
 ```
 feat(auth): add device-bound refresh tokens
@@ -199,7 +211,7 @@ revert: revert "feat(auth): add device-bound refresh tokens"
 
 ---
 
-## 13) Glossary
+## 14) Glossary
 
 * ADR: Architecture Decision Record.
 * Idempotency: Safe to retry an operation without additional side effects.
