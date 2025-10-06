@@ -8,6 +8,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# Theme disabled (to use starship)
 ZSH_THEME=""
 
 # Set list of themes to pick from when loading at random
@@ -60,10 +61,22 @@ zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
+
+# zsh-autosuggestions
+typeset -ga ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244,bold'
+
+# zsh-autocomplete
+zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
+zstyle ':completion:*:*' matcher-list 'm:{[:lower:]-}={[:upper:]_}' '+r:|[.]=**'
+zstyle ':autocomplete:*' delay 0.1  # seconds (float)
+zstyle ':autocomplete:*' timeout 2.0  # seconds (float)
+zstyle ':autocomplete:*' min-input 2
+zstyle -e ':autocomplete:*:*' list-lines 'reply=( $(( LINES / 3 )) )'
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -71,19 +84,17 @@ zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
-  rust
-  docker
-  rye
-  zsh-syntax-highlighting
-  zsh-autosuggestions
-  zsh-autocomplete
+    git
+    rust
+    zsh-autosuggestions
+    zsh-autocomplete
+    zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
 
-# starship
-eval "$(starship init zsh)"
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+
 
 # User configuration
 
@@ -91,6 +102,11 @@ eval "$(starship init zsh)"
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
+
+# starship
+case $- in
+  *i*) eval "$(starship init zsh)";;
+esac
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -114,32 +130,20 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim=nvim
-
-# zsh-autocomplete
-# all Tab widgets
-zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
-# Insert prefix instead of substring
-zstyle ':completion:*:*' matcher-list 'm:{[:lower:]-}={[:upper:]_}' '+r:|[.]=**'
-
-# fnm
-eval "$(fnm env --use-on-cd --shell zsh)"
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza'
+  alias ll='eza -lah --group-directories-first --icons'
+  alias la='eza -a --icons'
+fi
 
 # yazi
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
 	fi
 	rm -f -- "$tmp"
-}
-
-# mac update script
-function macUpdate() {
-  if [ -f ~/.local/bin/update ]; then
-    ~/.local/bin/update
-  fi
-  omz update
 }
 
 # zellij attach with list
@@ -149,5 +153,21 @@ function za() {
   fi
 }
 
+# fnm
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env --use-on-cd --shell zsh --corepack-enabled)"
+fi
+
 # fastfetch
-fastfetch
+case $- in
+  *i*) command -v fastfetch >/dev/null 2>&1 && fastfetch;;
+esac
+
+function macUpdate() {
+  if [ -f ~/.local/bin/update ]; then
+    ~/.local/bin/update
+  fi
+  omz update
+}
+
+[[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env" 2>/dev/null || true
