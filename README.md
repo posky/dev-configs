@@ -2,7 +2,7 @@
 
 ## Directory Structure Plan
 
-- Following the **Option 1 (Category-First)** approach: keep top-level tool buckets and prefer documented manual sync steps over bespoke scripts.
+- Following the **Option 1 (Category-First)** approach: group dev tooling under `dev/` (languages vs tooling) and prefer documented manual sync steps over bespoke scripts.
 - See `docs/structure.md` for the full inventory, status, and iteration queue (updated October 7, 2025).
 - Immediate focus: evaluate Neovim symlink helpers (see iteration queue) after documenting the Git merge FAQ.
 - Legacy profile `neovim/lazyvim_2024` was removed on October 7, 2025; scan for 남은 참조를 정리하세요.

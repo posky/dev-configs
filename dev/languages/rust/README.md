@@ -7,24 +7,24 @@
 
 ## 레포 → 프로젝트 적용
 ```sh
-cp rust/rustfmt.toml /path/to/project/rustfmt.toml
-cp rust/Makefile.toml /path/to/project/Makefile.toml
+cp dev/languages/rust/rustfmt.toml /path/to/project/rustfmt.toml
+cp dev/languages/rust/Makefile.toml /path/to/project/Makefile.toml
 mkdir -p /path/to/project/config
-cp rust/log4rs.yaml /path/to/project/config/log4rs.yaml
+cp dev/languages/rust/log4rs.yaml /path/to/project/config/log4rs.yaml
 ```
 - `cargo-make`를 사용할 경우 프로젝트 루트에 `Makefile.toml`이 존재해야 합니다.
 
 ## 프로젝트 → 레포 백업
 ```sh
-cp /path/to/project/rustfmt.toml rust/rustfmt.toml
-cp /path/to/project/Makefile.toml rust/Makefile.toml
-cp /path/to/project/config/log4rs.yaml rust/log4rs.yaml
+cp /path/to/project/rustfmt.toml dev/languages/rust/rustfmt.toml
+cp /path/to/project/Makefile.toml dev/languages/rust/Makefile.toml
+cp /path/to/project/config/log4rs.yaml dev/languages/rust/log4rs.yaml
 ```
 
 ## 차이 비교
 ```sh
-code --diff rust/rustfmt.toml /path/to/project/rustfmt.toml
-code --diff rust/Makefile.toml /path/to/project/Makefile.toml
+code --diff dev/languages/rust/rustfmt.toml /path/to/project/rustfmt.toml
+code --diff dev/languages/rust/Makefile.toml /path/to/project/Makefile.toml
 ```
 
 ## 참고

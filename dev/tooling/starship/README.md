@@ -5,18 +5,18 @@
 
 ## 레포 → 로컬 적용
 ```sh
-cp starship/starship.toml ~/.config/starship.toml
+cp dev/tooling/starship/starship.toml ~/.config/starship.toml
 ```
 - 기존 설정이 있다면 `cp ~/.config/starship.toml ~/.config/starship.toml.backup.$(date +%Y%m%d%H%M)`으로 백업 후 덮어쓰세요.
 
 ## 로컬 → 레포 백업
 ```sh
-cp ~/.config/starship.toml starship/starship.toml
+cp ~/.config/starship.toml dev/tooling/starship/starship.toml
 ```
 
 ## 차이 비교
 ```sh
-code --diff starship/starship.toml ~/.config/starship.toml
+code --diff dev/tooling/starship/starship.toml ~/.config/starship.toml
 # 또는
-vim -d starship/starship.toml ~/.config/starship.toml
+vim -d dev/tooling/starship/starship.toml ~/.config/starship.toml
 ```

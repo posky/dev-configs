@@ -7,8 +7,8 @@
 ## 레포 → 로컬 적용
 ```sh
 mkdir -p ~/.config/zellij
-cp zellij/config.kdl ~/.config/zellij/config.kdl
-cp zellij/zellij ~/.local/bin/zellij
+cp dev/tooling/zellij/config.kdl ~/.config/zellij/config.kdl
+cp dev/tooling/zellij/zellij ~/.local/bin/zellij
 chmod +x ~/.local/bin/zellij
 ```
 - 기존 설정이 있다면 `cp ~/.config/zellij/config.kdl ~/.config/zellij/config.kdl.backup.$(date +%Y%m%d%H%M)`으로 백업하세요.
@@ -16,13 +16,13 @@ chmod +x ~/.local/bin/zellij
 
 ## 로컬 → 레포 백업
 ```sh
-cp ~/.config/zellij/config.kdl zellij/config.kdl
-cp ~/.local/bin/zellij zellij/zellij
+cp ~/.config/zellij/config.kdl dev/tooling/zellij/config.kdl
+cp ~/.local/bin/zellij dev/tooling/zellij/zellij
 ```
 
 ## 차이 비교
 ```sh
-code --diff zellij/config.kdl ~/.config/zellij/config.kdl
+code --diff dev/tooling/zellij/config.kdl ~/.config/zellij/config.kdl
 ```
 
 ## 참고

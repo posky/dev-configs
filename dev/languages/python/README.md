@@ -9,32 +9,32 @@
 ## 레포 → 프로젝트/로컬 적용
 1. Ruff/Black 설정을 프로젝트 루트에 복사합니다.
    ```sh
-   cp python/ruff.toml /path/to/project/ruff.toml
+   cp dev/languages/python/ruff.toml /path/to/project/ruff.toml
    ```
 2. VS Code 워크스페이스에서 Python용 설정을 가져오려면 `.vscode` 폴더에 파일을 배치합니다.
    ```sh
    mkdir -p /path/to/project/.vscode
-   cp python/settings.json /path/to/project/.vscode/settings.json
-   cp python/tasks.json /path/to/project/.vscode/tasks.json
+   cp dev/languages/python/settings.json /path/to/project/.vscode/settings.json
+   cp dev/languages/python/tasks.json /path/to/project/.vscode/tasks.json
    ```
 3. 로깅 예제는 참고용이므로 필요 시 프로젝트에 맞게 복사합니다.
    ```sh
-   cp -R python/logging /path/to/project/tools/logging
+   cp -R dev/languages/python/logging /path/to/project/tools/logging
    ```
 
 ## 프로젝트 → 레포 백업
 ```sh
-cp /path/to/project/ruff.toml python/ruff.toml
-cp /path/to/project/.vscode/settings.json python/settings.json
-cp /path/to/project/.vscode/tasks.json python/tasks.json
+cp /path/to/project/ruff.toml dev/languages/python/ruff.toml
+cp /path/to/project/.vscode/settings.json dev/languages/python/settings.json
+cp /path/to/project/.vscode/tasks.json dev/languages/python/tasks.json
 # 로깅 설정을 수정했다면
-cp -R /path/to/project/tools/logging python/
+cp -R /path/to/project/tools/logging dev/languages/python/
 ```
 
 ## 차이 비교
 ```sh
-code --diff python/ruff.toml /path/to/project/ruff.toml
-code --diff python/settings.json /path/to/project/.vscode/settings.json
+code --diff dev/languages/python/ruff.toml /path/to/project/ruff.toml
+code --diff dev/languages/python/settings.json /path/to/project/.vscode/settings.json
 ```
 
 ## 참고

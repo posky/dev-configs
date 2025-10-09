@@ -9,7 +9,7 @@
 - `themes/Catppuccin Mocha.tmTheme`: Catppuccin 프로젝트에서 제공하는 다크 테마 원본 파일입니다.
 
 ## 동기화 방법
-- 명령은 `bat/` 디렉터리에서 실행한다고 가정합니다.
+- 명령은 `dev/tooling/bat/` 디렉터리에서 실행한다고 가정합니다.
 1. 로컬에 테마를 배치합니다.
    ```sh
    mkdir -p ~/.config/bat/themes
