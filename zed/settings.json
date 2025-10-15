@@ -121,9 +121,6 @@
     },
     "Markdown": {
       "format_on_save": "on",
-      "prettier": {
-        "allowed": false
-      },
       "remove_trailing_whitespace_on_save": true,
       "use_on_type_format": false
     },
@@ -210,9 +207,6 @@
     },
     "YAML": {
       "formatter": "language_server",
-      "prettier": {
-        "allowed": false
-      },
       "tab_size": 2
     }
   },
