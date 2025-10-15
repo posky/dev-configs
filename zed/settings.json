@@ -142,7 +142,7 @@
           }
         }
       ],
-      "language_servers": ["basedpyright", "ruff", "..."]
+      "language_servers": ["basedpyright", "ruff"]
     },
     "SCSS": {
       "tab_size": 2
@@ -248,6 +248,13 @@
     "biome": {
       "settings": {
         "require_config_file": true
+      }
+    },
+    "eslint": {
+      "settings": {
+        "workingDirectory": {
+          "mode": "auto"
+        }
       }
     },
     "ruff": {
@@ -482,9 +489,9 @@
     "metrics": false
   },
   "terminal": {
-    "dock": "right",
+    "dock": "bottom",
     "font_fallbacks": ["JetBrainsMono Nerd Font", "D2CodingLigature Nerd Font"],
-    "font_family": "Fira Code",
+    "font_family": "FiraCode Nerd Font Mono",
     "font_features": {
       "calt": false
     },
