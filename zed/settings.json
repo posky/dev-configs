@@ -108,11 +108,7 @@
             "name": "vtsls"
           }
         },
-        {
-          "code_actions": {
-            "source.fixAll.eslint": true
-          }
-        }
+        { "code_action": "source.fixAll.eslint" }
       ],
       "prettier": {
         "allowed": false
@@ -127,12 +123,8 @@
     "Python": {
       "format_on_save": "on",
       "formatter": [
-        {
-          "code_actions": {
-            "source.fixAll.ruff": true,
-            "source.organizeImports.ruff": true
-          }
-        },
+        { "code_action": "source.fixAll.ruff" },
+        { "code_action": "source.organizeImports.ruff" },
         {
           "language_server": {
             "name": "ruff"
@@ -166,28 +158,22 @@
       "tab_size": 2
     },
     "TSX": {
-      "formatter": [
-        {
-          "code_actions": {
-            "source.fixAll.eslint": true
-          }
-        }
-      ],
+      "formatter": [{ "code_action": "source.fixAll.eslint" }],
       "prettier": {
         "allowed": false
       },
       "tab_size": 2
     },
     "TypeScript": {
-      "code_actions_on_format": {
-        "source.fixAll.biome": true,
-        "source.organizeImport.biome": true
-      },
       "formatter": [
         {
-          "code_actions": {
-            "source.fixAll.eslint": true
-          }
+          "code_action": "source.fixAll.biome"
+        },
+        {
+          "code_action": "source.organizeImport.biome"
+        },
+        {
+          "code_action": "source.fixAll.eslint"
         },
         {
           "language_server": {
@@ -496,7 +482,7 @@
   },
   "theme": {
     "dark": "Tokyo Night",
-    "light": "Catppuccin Latte",
+    "light": "Tokyo Night Light",
     "mode": "dark"
   },
   "title_bar": {
