@@ -108,7 +108,9 @@
             "name": "vtsls"
           }
         },
-        { "code_action": "source.fixAll.eslint" }
+        {
+          "code_action": "source.fixAll.eslint"
+        }
       ],
       "prettier": {
         "allowed": false
@@ -120,11 +122,18 @@
       "remove_trailing_whitespace_on_save": true,
       "use_on_type_format": false
     },
+    "Prisma": {
+      "use_on_type_format": false
+    },
     "Python": {
       "format_on_save": "on",
       "formatter": [
-        { "code_action": "source.fixAll.ruff" },
-        { "code_action": "source.organizeImports.ruff" },
+        {
+          "code_action": "source.fixAll.ruff"
+        },
+        {
+          "code_action": "source.organizeImports.ruff"
+        },
         {
           "language_server": {
             "name": "ruff"
@@ -158,7 +167,9 @@
       "tab_size": 2
     },
     "TSX": {
-      "formatter": [{ "code_action": "source.fixAll.eslint" }],
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      },
       "prettier": {
         "allowed": false
       },
@@ -166,15 +177,6 @@
     },
     "TypeScript": {
       "formatter": [
-        {
-          "code_action": "source.fixAll.biome"
-        },
-        {
-          "code_action": "source.organizeImport.biome"
-        },
-        {
-          "code_action": "source.fixAll.eslint"
-        },
         {
           "language_server": {
             "name": "biome"
@@ -184,6 +186,15 @@
           "language_server": {
             "name": "vtsls"
           }
+        },
+        {
+          "code_action": "source.fixAll.biome"
+        },
+        {
+          "code_action": "source.organizeImport.biome"
+        },
+        {
+          "code_action": "source.fixAll.eslint"
         }
       ],
       "prettier": {
