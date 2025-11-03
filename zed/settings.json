@@ -4,8 +4,13 @@
     "inactive_opacity": 0.75
   },
   "agent": {
+    "default_profile": "ask",
+    "inline_assistant_model": {
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4-5"
+    },
     "default_model": {
-      "model": "claude-sonnet-4-thinking",
+      "model": "claude-sonnet-4-5",
       "provider": "zed.dev"
     }
   },
@@ -123,23 +128,19 @@
       "use_on_type_format": false
     },
     "Prisma": {
-      "use_on_type_format": false
+      "format_on_save": "on",
+      "use_on_type_format": false,
+      "formatter": "language_server"
     },
     "Python": {
+      "code_actions_on_format": {
+        "source.fixAll.ruff": true,
+        "source.organizeImports.ruff": true
+      },
       "format_on_save": "on",
-      "formatter": [
-        {
-          "code_action": "source.fixAll.ruff"
-        },
-        {
-          "code_action": "source.organizeImports.ruff"
-        },
-        {
-          "language_server": {
-            "name": "ruff"
-          }
-        }
-      ],
+      "formatter": {
+        "language_server": { "name": "ruff" }
+      },
       "language_servers": ["basedpyright", "ruff"]
     },
     "SCSS": {
@@ -176,29 +177,13 @@
       "tab_size": 2
     },
     "TypeScript": {
-      "formatter": [
-        {
-          "language_server": {
-            "name": "biome"
-          }
-        },
-        {
-          "language_server": {
-            "name": "vtsls"
-          }
-        },
-        {
-          "code_action": "source.fixAll.biome"
-        },
-        {
-          "code_action": "source.organizeImport.biome"
-        },
-        {
-          "code_action": "source.fixAll.eslint"
-        }
-      ],
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImport.biome": true,
+        "source.fixAll.eslint": true
+      },
       "prettier": {
-        "allowed": false
+        "allowed": true
       },
       "tab_size": 2
     },
@@ -354,6 +339,9 @@
               "enabled": true,
               "suppressWhenTypeMatchesName": true
             }
+          },
+          "format": {
+            "semicolons": "insert"
           }
         },
         // For TypeScript:
@@ -379,6 +367,9 @@
               "enabled": true,
               "suppressWhenTypeMatchesName": true
             }
+          },
+          "format": {
+            "semicolons": "insert"
           }
         }
       }
