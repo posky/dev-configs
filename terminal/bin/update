@@ -1,0 +1,123 @@
+#!/bin/zsh
+
+# =========================
+# helpers
+# =========================
+fail=0
+try() {
+  "$@"
+  local rc=$?
+  if (( rc != 0 )); then
+    echo "⚠️ FAIL: $* (exit=$rc)"
+    ((fail++))
+    return $rc
+  fi
+  return 0
+}
+
+run_if_exists() {
+  local cmd="$1"; shift
+  if command -v "$cmd" >/dev/null 2>&1; then
+    try "$cmd" "$@"
+  else
+    echo "⚠️ skip: $cmd (not found)"
+  fi
+}
+
+echo
+echo "⚡️ Zinit 업데이트를 시작합니다..."
+ZINIT_HOME="$HOME/.local/share/zinit/zinit.git"
+if [[ -r "$ZINIT_HOME/zinit.zsh" ]]; then
+  source "$ZINIT_HOME/zinit.zsh"
+  # zinit은 보통 함수로 로드됨
+  if (( ${+functions[zinit]} )) || command -v zinit >/dev/null 2>&1; then
+    try zinit self-update
+    try zinit update
+  else
+    echo "⚠️ zinit 로드 실패(함수/커맨드 없음)"
+    ((fail++))
+  fi
+else
+  echo "⚠️ zinit 경로 없음: $ZINIT_HOME/zinit.zsh"
+  ((fail++))
+fi
+
+echo
+echo "🍺 Homebrew 업데이트를 시작합니다..."
+run_if_exists brew update
+run_if_exists brew upgrade
+
+echo
+echo "🦀 Rust 및 rustup 업데이트를 시작합니다..."
+run_if_exists rustup update
+
+echo
+echo "📦 Cargo 패키지 업데이트를 시작합니다..."
+# cargo install-update는 별도 설치가 필요할 수 있어 가드
+if command -v cargo >/dev/null 2>&1 && command -v cargo-install-update >/dev/null 2>&1; then
+  try cargo install-update -a
+else
+  echo "⚠️ skip: cargo install-update (cargo 또는 cargo-install-update not found)"
+fi
+
+echo
+echo "🐍 uv 업데이트를 시작합니다..."
+run_if_exists uv self update
+
+echo
+echo "📝 Neovim 플러그인 동기화를 시작합니다..."
+run_if_exists nvim --headless "+Lazy! sync" +qa
+
+echo
+echo "📦 yazi package upgrade"
+run_if_exists ya pkg upgrade
+
+echo ""
+BASE_DIR="/Users/posky/.local/src"
+
+echo
+BASE_DIR="$HOME/.local/src"
+
+# =========================
+# git pull loop (ff-only)
+# =========================
+for dir in "$BASE_DIR"/*(/N); do
+  if [[ -d "$dir/.git" ]]; then
+    echo "==== Pulling in $dir ===="
+    if git -C "$dir" pull --ff-only; then
+      echo "✅ OK"
+    else
+      echo "⚠️ FAIL (확인 필요)"
+      ((fail++))
+    fi
+    echo
+  fi
+done
+
+# =========================
+# completions
+# =========================
+ZSH_COMPLETIONS_DIR="$HOME/.local/share/zsh/completions"
+mkdir -p "$ZSH_COMPLETIONS_DIR"
+
+if command -v uv >/dev/null 2>&1; then
+  try uv generate-shell-completion zsh >| "$ZSH_COMPLETIONS_DIR/_uv"
+fi
+if command -v uvx >/dev/null 2>&1; then
+  try uvx --generate-shell-completion zsh >| "$ZSH_COMPLETIONS_DIR/_uvx"
+fi
+if command -v fnm >/dev/null 2>&1; then
+  try fnm completions --shell zsh >| "$ZSH_COMPLETIONS_DIR/_fnm"
+fi
+if command -v but >/dev/null 2>&1; then
+  try but completions zsh >| "$ZSH_COMPLETIONS_DIR/_but"
+fi
+
+echo
+if (( fail > 0 )); then
+  echo "✅ 완료 (실패 ${fail}건)"
+  exit 1
+else
+  echo "✅ 완료 (전체 성공)"
+  exit 0
+fi
