@@ -1,112 +1,123 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# =========================
+# 기본: 히스토리 / 옵션
+# =========================
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=100000
+SAVEHIST=100000
 
-# Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+setopt HIST_IGNORE_DUPS        # 연속 중복 기록 제거
+setopt HIST_IGNORE_SPACE       # 앞에 공백 있는 명령은 기록 안 함
+setopt HIST_SAVE_NO_DUPS        # 파일 저장 시에도 중복 제거
+setopt HIST_REDUCE_BLANKS       # 불필요 공백 줄이기
+setopt HIST_EXPIRE_DUPS_FIRST   # 히스토리 넘칠 때 중복부터 삭제
+setopt HIST_VERIFY             # !! 등의 확장 결과를 실행 전 보여줌
+setopt SHARE_HISTORY           # 여러 세션에서 히스토리 공유(취향)
+setopt INC_APPEND_HISTORY      # 실행 즉시 히스토리 파일에 반영
+setopt HIST_FCNTL_LOCK
+setopt EXTENDED_HISTORY        # 타임스탬프 포함
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# Theme disabled (to use starship)
-ZSH_THEME=""
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-HIST_STAMPS="yyyy-mm-dd"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# zsh-autosuggestions
-typeset -ga ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244,bold'
-
-# zsh-autocomplete
-zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
-zstyle ':completion:*:*' matcher-list 'm:{[:lower:]-}={[:upper:]_}' '+r:|[.]=**'
-zstyle ':autocomplete:*' delay 0.1  # seconds (float)
-zstyle ':autocomplete:*' timeout 2.0  # seconds (float)
-zstyle ':autocomplete:*' min-input 2
-zstyle -e ':autocomplete:*:*' list-lines 'reply=( $(( LINES / 3 )) )'
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    git
-    rust
-    zsh-autosuggestions
-    zsh-autocomplete
-    zsh-syntax-highlighting
-)
-
-source $ZSH/oh-my-zsh.sh
-
-ZSH_AUTOSUGGEST_USE_ASYNC=1
+unsetopt AUTO_CD                 # 디렉터리명만 쳐도 cd
+setopt AUTO_PUSHD              # cd 시 pushd 처럼 동작(취향)
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+DIRSTACKSIZE=20
+setopt NO_BEEP
 
 
-# User configuration
+# =========================
+# 키바인딩 / 편의
+# =========================
+bindkey -v                      # vi 키바인딩
+KEYTIMEOUT=1   # ESC 지연 줄여서 vi 모드 반응 개선
 
-# export MANPATH="/usr/local/man:$MANPATH"
 
-# You may need to manually set your language environment
+# =========================
+# env
+# =========================
+
+export PATH="$HOME/.local/bin:$PATH"
+
+[[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env" 2>/dev/null || true
+
 export LANG=en_US.UTF-8
 
-# starship
-case $- in
-  *i*) eval "$(starship init zsh)";;
-esac
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env --use-on-cd --shell zsh --corepack-enabled)"
+fi
+
+# psql (postgresql)
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+
+
+# =========================
+# Completions dir
+# =========================
+ZSH_COMPLETIONS_DIR="$HOME/.local/share/zsh/completions"
+mkdir -p "$ZSH_COMPLETIONS_DIR"
+
+fpath=("$ZSH_COMPLETIONS_DIR" $fpath)
+fpath=("$HOME/.local/src/eza/completions/zsh" $fpath)
+
+if command -v uv >/dev/null 2>&1 && [[ ! -s "$ZSH_COMPLETIONS_DIR/_uv" ]]; then
+  uv generate-shell-completion zsh >| "$ZSH_COMPLETIONS_DIR/_uv"
+fi
+if command -v uvx >/dev/null 2>&1 && [[ ! -s "$ZSH_COMPLETIONS_DIR/_uvx" ]]; then
+  uvx --generate-shell-completion zsh >| "$ZSH_COMPLETIONS_DIR/_uvx"
+fi
+if command -v fnm >/dev/null 2>&1 && [[ ! -s "$ZSH_COMPLETIONS_DIR/_fnm" ]]; then
+  fnm completions --shell zsh >| "$ZSH_COMPLETIONS_DIR/_fnm"
+fi
+if command -v but >/dev/null 2>&1 && [[ ! -s "$ZSH_COMPLETIONS_DIR/_but" ]]; then
+  but completions zsh >| "$ZSH_COMPLETIONS_DIR/_but"
+fi
+
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+# autoload -Uz _zinit
+# (( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
+
+
+# zsh-autocomplete (must be before compdef)
+zinit light marlonrichert/zsh-autocomplete
+zstyle ':autocomplete:*' delay 0.2
+zstyle ':autocomplete:*' timeout 1.0
+zstyle ':autocomplete:*' append-semicolon no
+zstyle ':autocomplete:*' min-input 2
+zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
+zstyle ':autocomplete:*history*:*' insert-unambiguous yes
+
+
+# =========================
+# Alias / 기본 유틸
+# =========================
+alias ll='ls -alh'
+alias la='ls -A'
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza'
+  alias ll='eza -lah --group-directories-first --icons'
+  alias la='eza -a --icons'
+fi
+alias vim=nvim
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -115,59 +126,49 @@ else
   export EDITOR='nvim'
 fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
-
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vim=nvim
-if command -v eza >/dev/null 2>&1; then
-  alias ls='eza'
-  alias ll='eza -lah --group-directories-first --icons'
-  alias la='eza -a --icons'
-fi
-
-# yazi
-function yy() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
-
-# zellij attach with list
-function za() {
-  if [ -f ~/.local/bin/zellij ]; then
-    ~/.local/bin/zellij
-  fi
-}
-
-# fnm
-if command -v fnm >/dev/null 2>&1; then
-  eval "$(fnm env --use-on-cd --shell zsh --corepack-enabled)"
-fi
-
-# fastfetch
-case $- in
-  *i*) command -v fastfetch >/dev/null 2>&1 && fastfetch;;
-esac
-
 function macUpdate() {
   if [ -f ~/.local/bin/update ]; then
     ~/.local/bin/update
   fi
-  omz update
 }
 
-[[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env" 2>/dev/null || true
+# tmux attach with list
+ta() {
+  if ! command -v tmux &>/dev/null; then
+    echo "tmux not installed"; return 1
+  fi
+
+  # tmux 서버 자체가 없으면 새로 생성
+  if ! tmux ls &>/dev/null; then
+    tmux new-session -s main
+    return
+  fi
+
+  local session
+  session=$(tmux ls -F "#{session_name}" | fzf --prompt="tmux session > ")
+  [[ -n "$session" ]] || return
+
+  if [[ -n "$TMUX" ]]; then
+    tmux switch-client -t "$session"
+  else
+    tmux attach -t "$session"
+  fi
+}
+
+
+# =========================
+# fastfetch
+# =========================
+case $- in
+  *i*) command -v fastfetch >/dev/null 2>&1 && fastfetch ;;
+esac
+
+# =========================
+# starship
+# =========================
+case $- in
+  *i*) eval "$(starship init zsh)" ;;
+esac
+
+# zsh-syntax-highlighting
+zinit light zsh-users/zsh-syntax-highlighting
