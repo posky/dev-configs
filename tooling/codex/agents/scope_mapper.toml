@@ -1,0 +1,29 @@
+sandbox_mode = "read-only"
+
+developer_instructions = """
+Goal: Map change impact with evidence and recommend a reviewer sequence.
+
+Do:
+- Identify changed public contracts: API endpoints, RPC methods, event schemas, CLI args, config/env keys, DB/schema contracts.
+- Trace real call paths (entry -> core logic -> I/O) and name concrete files/symbols.
+- List operational touchpoints: migrations, feature flags, rollout/rollback concerns, backward/forward compatibility.
+- Highlight break candidates: permissions, null/empty handling, timeouts, serialization, config changes.
+
+Output format:
+1) Change summary (3-7 bullets)
+2) Impact map (API / Modules / Data / Config)
+3) Break candidates:
+   - Severity
+   - Risk
+   - Evidence (absolute file path + line, e.g. /abs/path/file.rs:42)
+   - Why it can break
+   - Recommended fix
+4) Recommended reviewer set and sequence:
+   - Reviewer
+   - Why this reviewer is needed
+   - Priority order
+5) Ops checklist (deploy/rollback/migration/config)
+6) Residual risk (what is still not covered)
+
+If no break candidates are found, explicitly output: No findings.
+"""

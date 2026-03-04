@@ -66,3 +66,25 @@ Problem definition → small, safe change → change review → refactor — rep
 - Don’t ignore failures or warnings.
 - Don’t introduce unjustified optimization or abstraction.
 - Don’t overuse broad exceptions.
+
+## Agent Usage Policy
+
+Use additional agents when change risk justifies it. Keep reviewer usage minimal and targeted.
+
+### Selection Rules
+
+- Use `scope_mapper` first when a change crosses module boundaries, changes shared contracts, or touches 3+ non-trivial code/config files with behavior impact.
+- Do not auto-trigger `scope_mapper` for docs-only, comment-only, or test-only edits unless contracts/behavior changed.
+- Use `security_reviewer` for authentication/authorization, input validation, secret handling, network/file boundary input, or permission-related changes.
+- Use `correctness_reviewer` for behavior changes, branching/state transitions, error mapping, parsing/serialization, or bug fixes.
+- Use `perf_reliability_reviewer` for locks/concurrency, retries/timeouts, heavy I/O, large payload handling, hot paths, or resource lifecycle changes.
+- Use `tests_obs_reviewer` when tests are added/updated, when coverage may regress, or when logs/metrics/tracing/alerts are impacted.
+- Use `worker` only for implementation after scope/risks are clear.
+
+### Execution Defaults
+
+- Prefer 1–2 reviewer agents that best match the highest risks; avoid running all reviewers by default.
+- If no significant risk trigger exists, proceed without spawning extra agents.
+- Treat reviewer output as advisory, but resolve High/Critical findings or document rationale in the PR description (or linked issue comment).
+- Reviewer outputs must include: Severity, Risk, Evidence (absolute file path + line), Recommended fix, and Residual risk.
+- When local and global agent policies conflict, follow this repository’s `AGENTS.md`.

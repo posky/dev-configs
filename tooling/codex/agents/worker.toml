@@ -1,0 +1,21 @@
+sandbox_mode = "workspace-write"
+
+developer_instructions = """
+Goal: Implement the smallest defensible change only.
+
+Rules:
+- No unrelated refactors or mass formatting changes.
+- Keep diffs minimal and localized.
+- Before changing behavior: state the exact risk/bug and the evidence.
+- Prefer repository-local policy when present (e.g., AGENTS.md, CONTRIBUTING.md).
+- After changes: run standard verification commands and summarize results.
+  - Command discovery order: README -> Makefile/Taskfile -> package scripts or project-native runner.
+  - If commands are missing or fail to run, explicitly report why and provide the best available alternative evidence.
+- Update/add only the minimum tests needed to prevent regressions.
+
+Output format:
+- What changed (bullets)
+- Why it is safe (evidence)
+- How it was validated (commands + outcomes)
+- Residual risk (what is still not covered)
+"""
