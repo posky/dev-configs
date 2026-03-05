@@ -11,6 +11,42 @@ Problem definition → small, safe change → change review → refactor — rep
 - Avoid premature abstraction and use intention-revealing names.
 - Compare at least two options before deciding.
 
+## Multi-Agent Collaboration Rules
+
+- Use multi-agent by default for medium/high-risk changes.
+- Start with `scope_mapper` for impact mapping and reviewer routing.
+- Route reviewers conditionally by change type: correctness, security, performance/reliability, and tests/observability.
+- Reviewers are read-only; only `worker` implements code changes.
+- Run independent reviewers in parallel.
+- Resolve conflicts by severity first, then evidence quality.
+- Accept only findings with concrete evidence (`absolute path + line`) and a minimal fix.
+- Allow single `worker` flow only for small low-risk changes, with bypass reason recorded.
+- Respect orchestration limits: `max_threads = 6`, `max_depth = 1`.
+
+## Orchestration Guideline
+
+1. Intake: Capture scope and risk in 1-3 lines.
+2. Map: Use `scope_mapper` to define impact and reviewer set.
+3. Review: Run only required reviewers, in parallel when independent.
+4. Synthesize: Deduplicate findings and prioritize by severity plus evidence.
+5. Execute: Let `worker` implement the smallest safe patch.
+6. Verify: Run standard checks and capture command outcomes.
+7. Report: Provide changes, safety rationale, validation, and residual risk.
+
+### Failure and Exception Handling
+
+- If a reviewer returns `No findings`, keep the result as-is and continue.
+- If a reviewer run fails, retry once, then record the failure and uncovered risk gap.
+- Do not block low-risk delivery when equivalent evidence already covers the risk.
+- Escalate and block when unresolved findings are high severity with reproducible evidence.
+
+### Done Criteria
+
+- Reviewer selection rationale.
+- Findings from selected reviewers, or explicit failure notes.
+- Worker change summary plus verification outcomes.
+- Residual risk and assumptions.
+
 ## Mindset
 
 - Think like a senior engineer.
@@ -66,25 +102,3 @@ Problem definition → small, safe change → change review → refactor — rep
 - Don’t ignore failures or warnings.
 - Don’t introduce unjustified optimization or abstraction.
 - Don’t overuse broad exceptions.
-
-## Agent Usage Policy
-
-Use additional agents when change risk justifies it. Keep reviewer usage minimal and targeted.
-
-### Selection Rules
-
-- Use `scope_mapper` first when a change crosses module boundaries, changes shared contracts, or touches 3+ non-trivial code/config files with behavior impact.
-- Do not auto-trigger `scope_mapper` for docs-only, comment-only, or test-only edits unless contracts/behavior changed.
-- Use `security_reviewer` for authentication/authorization, input validation, secret handling, network/file boundary input, or permission-related changes.
-- Use `correctness_reviewer` for behavior changes, branching/state transitions, error mapping, parsing/serialization, or bug fixes.
-- Use `perf_reliability_reviewer` for locks/concurrency, retries/timeouts, heavy I/O, large payload handling, hot paths, or resource lifecycle changes.
-- Use `tests_obs_reviewer` when tests are added/updated, when coverage may regress, or when logs/metrics/tracing/alerts are impacted.
-- Use `worker` only for implementation after scope/risks are clear.
-
-### Execution Defaults
-
-- Prefer 1–2 reviewer agents that best match the highest risks; avoid running all reviewers by default.
-- If no significant risk trigger exists, proceed without spawning extra agents.
-- Treat reviewer output as advisory, but resolve High/Critical findings or document rationale in the PR description (or linked issue comment).
-- Reviewer outputs must include: Severity, Risk, Evidence (absolute file path + line), Recommended fix, and Residual risk.
-- When local and global agent policies conflict, follow this repository’s `AGENTS.md`.
