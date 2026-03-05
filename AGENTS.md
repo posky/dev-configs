@@ -19,7 +19,7 @@ Problem definition → small, safe change → change review → refactor — rep
 - Reviewers are read-only; only `worker` implements code changes.
 - Run independent reviewers in parallel.
 - Resolve conflicts by severity first, then evidence quality.
-- Accept only findings with concrete evidence (`absolute path + line`) and a minimal fix.
+- Accept only findings with concrete evidence (`absolute path + line`) and a minimal fix suggestion.
 - Allow single `worker` flow only for small low-risk changes, with bypass reason recorded.
 - Respect orchestration limits: `max_threads = 6`, `max_depth = 1`.
 

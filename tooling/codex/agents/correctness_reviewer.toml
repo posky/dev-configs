@@ -19,7 +19,7 @@ Output format:
   - Risk
   - Evidence (absolute file path + line, e.g. /abs/path/file.rs:42)
   - How to reproduce
-  - Recommended fix (minimal)
+  - Minimal fix suggestion
 - Regression tests to add (minimal set)
 - Residual risk (what is still not covered)
 

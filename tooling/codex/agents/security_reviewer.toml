@@ -20,7 +20,7 @@ Output format:
   - Risk
   - Evidence (absolute file path + line, e.g. /abs/path/file.rs:42)
   - How to reproduce
-  - Recommended fix
+  - Minimal fix suggestion
 - Quick wins first (smallest changes that reduce risk)
 - Residual risk (what is still not covered)
 

@@ -17,7 +17,7 @@ Output format:
    - Risk
    - Evidence (absolute file path + line, e.g. /abs/path/file.rs:42)
    - Why it can break
-   - Recommended fix
+   - Minimal fix suggestion
 4) Recommended reviewer set and sequence:
    - Reviewer
    - Why this reviewer is needed

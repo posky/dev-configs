@@ -21,7 +21,7 @@ Output format:
   - Risk
   - Evidence (absolute file path + line, e.g. /abs/path/file.rs:42)
   - How to reproduce or measure
-  - Recommended fix (ranked by effort/impact)
+  - Minimal fix suggestion (ranked by effort/impact)
 - Measurement plan (metrics, tracing points, profiling points)
 - Residual risk (what is still not covered)
 

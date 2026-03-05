@@ -22,7 +22,7 @@ Output format:
   - Risk
   - Evidence (absolute file path + line, e.g. /abs/path/file.rs:42)
   - Proposed tests or observability changes
-  - Recommended fix
+  - Minimal fix suggestion
 - Suggested verification commands (project standard)
 - Residual risk (what is still not covered)
 
