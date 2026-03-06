@@ -1,6 +1,6 @@
 ---
 name: gh-pr-create
-description: Create GitHub pull requests with GitHub CLI using repository rules for pull request templates, issue references, milestone selection, and base branch defaults. Use this skill when Codex needs to prepare or run `gh pr create`, translate `!#123` into close links and `#456` into related links, choose a PR milestone from referenced issues, or apply a repository's `.github` pull request templates.
+description: Create GitHub pull requests with GitHub CLI using repository rules for pull request templates, issue references, milestone selection, repository label selection, and base branch defaults. Use this skill when Codex needs to prepare or run `gh pr create`, translate `!#123` into close links and `#456` into related links, choose a PR milestone from referenced issues, attach appropriate existing labels, or apply a repository's `.github` pull request templates.
 ---
 
 # GitHub PR Create
@@ -33,7 +33,9 @@ Resolve deterministic context first, ask the user only when template selection i
 8. Append issue footer lines at the end of the final PR body in this order:
    - one `close #<number>` line for each entry in `close_issues`
    - one `related #<number>` line for each entry in `related_issues`
-9. Create the PR with explicit flags. Prefer `--body-file` over interactive editing.
+9. Use resolver-selected labels from `labels` when present. Pass them with repeated `--label "<name>"` flags in ascending order.
+10. If the resolver reports non-fatal `warnings`, continue unless the user asks to inspect them.
+11. Create the PR with explicit flags. Prefer `--body-file` over interactive editing.
 
 ## Command Rules
 
@@ -43,6 +45,7 @@ Resolve deterministic context first, ask the user only when template selection i
 - Keep the current checked-out branch as the PR head branch.
 - Before `gh pr create`, verify the current branch has an upstream. If it does not, stop and ask the user before any push-related action.
 - Do not rely on `gh pr create` prompts for title, body, template selection, or milestone selection.
+- Omit `--label` entirely when `labels` is empty.
 
 ## Issue And Milestone Rules
 
@@ -68,9 +71,20 @@ Resolve deterministic context first, ask the user only when template selection i
 - If multiple candidates exist, ask the user to choose one.
 - If no candidate exists, build the PR body from the fallback sections after the resolver step has completed.
 
+## Label Rules
+
+- Query repository labels with `gh label list --json name,description --limit 100 --sort name --order asc`.
+- Treat label selection as conservative and deterministic:
+  - select a label only when its normalized name is an exact phrase match in the request text or a referenced issue title
+  - or when its normalized name exactly matches a changed file path segment or stem from `git diff --name-only <base>...HEAD`
+- Use repository label descriptions for context only; do not select labels from description-only matches.
+- Sort selected labels by label name ascending.
+- If label lookup fails or returns invalid JSON, continue with `labels: []` and review `warnings` if needed.
+- Do not create, edit, or delete labels in this workflow.
+
 ## Escalation Rules
 
-- `gh auth status`, `gh issue view`, and `gh pr create` need network access. Run them with `exec_command` using:
+- `gh auth status`, `gh issue view`, `gh label list`, and `gh pr create` need network access. Run them with `exec_command` using:
   - `sandbox_permissions: "require_escalated"`
   - a short justification that explains the GitHub action
 - If `uv run <skill-dir>/scripts/resolve_pr_context.py ...` will execute `gh`, treat that `uv run` command as networked and escalate it too.
@@ -100,7 +114,7 @@ Resolve deterministic context first, ask the user only when template selection i
 5. Build the final body from the selected template or fallback scaffold.
 6. Create the PR:
    ```bash
-   gh pr create --base develop --title "<title>" --body-file /tmp/pr-body.md [--milestone "<name>"]
+   gh pr create --base develop --title "<title>" --body-file /tmp/pr-body.md [--label "<name>"] [--milestone "<name>"]
    ```
 
 ## Resources
@@ -109,7 +123,16 @@ Resolve deterministic context first, ask the user only when template selection i
 
 Use this helper to resolve deterministic PR context before creating the PR.
 Always run it with `uv run`, and resolve its relative path from the skill directory rather than the target repository.
+It returns `labels` for `gh pr create --label` and non-fatal `warnings` for optional context resolution problems.
+
+### scripts/label_selection.py
+
+This helper contains the conservative label lookup and matching logic used by the resolver.
 
 ### scripts/test_resolve_pr_context.py
 
 Run this regression suite with `uv run <skill-dir>/scripts/test_resolve_pr_context.py`.
+
+### scripts/test_label_selection.py
+
+Run this label-selection regression suite with `uv run <skill-dir>/scripts/test_label_selection.py`.

@@ -8,6 +8,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from label_selection import resolve_labels
+
 ISSUE_PATTERN = re.compile(r"!?#(\d+)")
 
 
@@ -58,19 +60,13 @@ def resolve_head_branch(repo_root):
 
 def has_upstream(repo_root):
     git = tool_path("GIT_BIN", "git")
-    completed = run_command(
-        [git, "-C", str(repo_root), "rev-parse", "--abbrev-ref", "@{upstream}"],
-        repo_root,
-    )
+    completed = run_command([git, "-C", str(repo_root), "rev-parse", "--abbrev-ref", "@{upstream}"], repo_root)
     return completed.returncode == 0
 
 
 def validate_base_branch(repo_root, base_branch):
     git = tool_path("GIT_BIN", "git")
-    completed = run_command(
-        [git, "-C", str(repo_root), "show-ref", "--verify", f"refs/heads/{base_branch}"],
-        repo_root,
-    )
+    completed = run_command([git, "-C", str(repo_root), "show-ref", "--verify", f"refs/heads/{base_branch}"], repo_root)
     if completed.returncode != 0:
         return error("missing_base_branch", f"Base branch '{base_branch}' does not exist locally.")
     return None
@@ -88,7 +84,6 @@ def parse_request_text(text):
     classifications = {}
     mention_order = []
     mentioned_set = set()
-
     for match in ISSUE_PATTERN.finditer(text):
         issue_number = int(match.group(1))
         is_close = match.group(0).startswith("!")
@@ -99,7 +94,6 @@ def parse_request_text(text):
             classifications[issue_number] = "close"
             continue
         classifications.setdefault(issue_number, "related")
-
     close_issues = [issue for issue in mention_order if classifications.get(issue) == "close"]
     related_issues = [issue for issue in mention_order if classifications.get(issue) == "related"]
     return close_issues, related_issues, mention_order
@@ -145,10 +139,7 @@ def resolve_template(repo_root, explicit_template):
 
 def fetch_issue(repo_root, issue_number):
     gh = tool_path("GH_BIN", "gh")
-    completed = run_command(
-        [gh, "issue", "view", str(issue_number), "--json", "milestone,title,url,state"],
-        repo_root,
-    )
+    completed = run_command([gh, "issue", "view", str(issue_number), "--json", "milestone,title,url,state"], repo_root)
     if completed.returncode != 0:
         return None, error("issue_lookup_failed", f"Issue #{issue_number} could not be loaded.")
     try:
@@ -160,8 +151,7 @@ def fetch_issue(repo_root, issue_number):
 def milestone_title(issue_payload):
     milestone = issue_payload.get("milestone")
     if isinstance(milestone, dict):
-        title = milestone.get("title")
-        return title or None
+        return milestone.get("title") or None
     if isinstance(milestone, str) and milestone:
         return milestone
     return None
@@ -172,27 +162,18 @@ def choose_milestone(issue_payloads, close_set, mention_order):
     close_counts = {}
     earliest_index = {}
     mention_index = {issue: index for index, issue in enumerate(mention_order)}
-
     for issue_number, payload in issue_payloads.items():
         title = milestone_title(payload)
         if not title:
             continue
         milestone_counts[title] = milestone_counts.get(title, 0) + 1
         close_counts.setdefault(title, 0)
-        earliest_index[title] = min(
-            earliest_index.get(title, len(mention_order)),
-            mention_index.get(issue_number, len(mention_order)),
-        )
+        earliest_index[title] = min(earliest_index.get(title, len(mention_order)), mention_index.get(issue_number, len(mention_order)))
         if issue_number in close_set:
             close_counts[title] += 1
-
     if not milestone_counts:
         return None
-
-    ranked = sorted(
-        milestone_counts,
-        key=lambda title: (-milestone_counts[title], -close_counts.get(title, 0), earliest_index[title]),
-    )
+    ranked = sorted(milestone_counts, key=lambda title: (-milestone_counts[title], -close_counts.get(title, 0), earliest_index[title]))
     return ranked[0]
 
 
@@ -208,8 +189,20 @@ def build_result(repo_root, base_branch):
         "selected_template": None,
         "needs_template_choice": False,
         "milestone": None,
+        "labels": [],
+        "warnings": [],
         "errors": [],
     }
+
+
+def print_result(result):
+    print(json.dumps(result, indent=2))
+
+
+def fail(result, issue):
+    result["errors"].append(issue)
+    print_result(result)
+    return 1
 
 
 def main():
@@ -220,63 +213,44 @@ def main():
 
     resolved_repo, repo_error = validate_repo(repo_root)
     if repo_error:
-        result["errors"].append(repo_error)
-        print(json.dumps(result, indent=2))
-        return 1
-
+        return fail(result, repo_error)
     head_branch, head_error = resolve_head_branch(resolved_repo)
     if head_error:
-        result["errors"].append(head_error)
-        print(json.dumps(result, indent=2))
-        return 1
+        return fail(result, head_error)
     result["head_branch"] = head_branch
     result["has_upstream"] = has_upstream(resolved_repo)
 
     base_error = validate_base_branch(resolved_repo, args.base)
     if base_error:
-        result["errors"].append(base_error)
-        print(json.dumps(result, indent=2))
-        return 1
-
+        return fail(result, base_error)
     auth_error = check_auth(resolved_repo)
     if auth_error:
-        result["errors"].append(auth_error)
-        print(json.dumps(result, indent=2))
-        return 1
-
+        return fail(result, auth_error)
     if not request_file.is_file():
-        result["errors"].append(error("request_file_missing", "Request file does not exist."))
-        print(json.dumps(result, indent=2))
-        return 1
+        return fail(result, error("request_file_missing", "Request file does not exist."))
 
     request_text = request_file.read_text()
     close_issues, related_issues, mention_order = parse_request_text(request_text)
     result["close_issues"] = close_issues
     result["related_issues"] = related_issues
 
-    selected_template, candidates, needs_choice, template_error = resolve_template(
-        resolved_repo,
-        args.template,
-    )
+    selected_template, candidates, needs_choice, template_error = resolve_template(resolved_repo, args.template)
     result["selected_template"] = selected_template
     result["template_candidates"] = candidates
     result["needs_template_choice"] = needs_choice
     if template_error:
-        result["errors"].append(template_error)
-        print(json.dumps(result, indent=2))
-        return 1
+        return fail(result, template_error)
 
     issue_payloads = {}
     for issue_number in mention_order:
         payload, issue_error = fetch_issue(resolved_repo, issue_number)
         if issue_error:
-            result["errors"].append(issue_error)
-            print(json.dumps(result, indent=2))
-            return 1
+            return fail(result, issue_error)
         issue_payloads[issue_number] = payload
 
     result["milestone"] = choose_milestone(issue_payloads, set(close_issues), mention_order)
-    print(json.dumps(result, indent=2))
+    result["labels"], result["warnings"] = resolve_labels(resolved_repo, args.base, request_text, issue_payloads)
+    print_result(result)
     return 0
 
 
