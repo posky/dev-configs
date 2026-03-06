@@ -1,7 +1,7 @@
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 
-model = "gpt-5.3-codex"
+model = "gpt-5.4"
 model_reasoning_effort = "high"
 plan_mode_reasoning_effort = "high"
 
@@ -9,8 +9,8 @@ web_search = "live"
 personality = "pragmatic"
 
 [features]
-collaboration_modes = true
 multi_agent = true
+collaboration_modes = true
 
 [agents]
 max_threads = 6
@@ -44,11 +44,11 @@ config_file = "agents/worker.toml"
 status_line = [
   "model-with-reasoning",
   "context-remaining",
-  "current-dir",
   "five-hour-limit",
   "weekly-limit",
-  "context-window-size",
   "used-tokens",
+  "context-window-size",
   "total-input-tokens",
-  "total-output-tokens",
+  "total-output-tokens"
 ]
+theme = "catppuccin-mocha"
