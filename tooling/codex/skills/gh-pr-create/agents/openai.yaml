@@ -1,0 +1,7 @@
+interface:
+  display_name: "GitHub PR Create"
+  short_description: "Create GitHub PRs with repo rules"
+  default_prompt: "Use $gh-pr-create to prepare and create a GitHub pull request with template, issue links, and milestone handling."
+
+policy:
+  allow_implicit_invocation: false
