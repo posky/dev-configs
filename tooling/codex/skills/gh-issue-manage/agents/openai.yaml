@@ -1,0 +1,7 @@
+interface:
+  display_name: "GH Issue Manage"
+  short_description: "Manage GitHub issues safely"
+  default_prompt: "Use $gh-issue-manage to list, inspect, create, edit, and manage GitHub issue sub-issue relationships safely."
+
+policy:
+  allow_implicit_invocation: false
