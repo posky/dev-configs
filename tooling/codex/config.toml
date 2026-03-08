@@ -9,46 +9,33 @@ web_search = "live"
 personality = "pragmatic"
 
 [features]
-multi_agent = true
 collaboration_modes = true
+multi_agent = true
 
 [agents]
 max_threads = 6
 max_depth = 1
 
-[agents.scope_mapper]
-description = "Read-only impact mapper and reviewer router (contracts/modules/data/config)."
-config_file = "agents/scope_mapper.toml"
+[agents.explorer]
+description = "Read-only codebase explorer for fast investigation, impact analysis, and evidence gathering."
+config_file = "agents/explorer.toml"
 
-[agents.correctness_reviewer]
-description = "Read-only correctness reviewer (behavior, invariants, regressions, compatibility)."
-config_file = "agents/correctness_reviewer.toml"
-
-[agents.security_reviewer]
-description = "Read-only security reviewer (authn/authz, validation, sensitive data, attack surface)."
-config_file = "agents/security_reviewer.toml"
-
-[agents.perf_reliability_reviewer]
-description = "Read-only performance and reliability reviewer (contention, timeouts/retries, resources, scaling)."
-config_file = "agents/perf_reliability_reviewer.toml"
-
-[agents.tests_obs_reviewer]
-description = "Read-only tests and observability reviewer (coverage, regressions, logs/metrics/tracing, ops readiness)."
-config_file = "agents/tests_obs_reviewer.toml"
+[agents.architect]
+description = "System design and planning specialist for requirements analysis, tradeoffs, and implementation plans."
+config_file = "agents/architect.toml"
 
 [agents.worker]
-description = "Writer agent for minimal, targeted implementation patches."
+description = "Implementation-focused agent for making the smallest defensible code change and validating it."
 config_file = "agents/worker.toml"
 
+[agents.reviewer]
+description = "Code reviewer focused on correctness, regressions, security, and missing tests."
+config_file = "agents/reviewer.toml"
+
+[agents.monitor]
+description = "Long-running task monitor for tests, builds, logs, and command observation."
+config_file = "agents/monitor.toml"
+
 [tui]
-status_line = [
-  "model-with-reasoning",
-  "context-remaining",
-  "five-hour-limit",
-  "weekly-limit",
-  "used-tokens",
-  "context-window-size",
-  "total-input-tokens",
-  "total-output-tokens"
-]
+status_line = ["model-with-reasoning", "context-remaining", "current-dir", "five-hour-limit", "weekly-limit", "context-window-size", "used-tokens", "total-input-tokens", "total-output-tokens"]
 theme = "catppuccin-mocha"
