@@ -101,17 +101,10 @@ def parse_request_text(text):
 
 def discover_templates(repo_root):
     github_dir = repo_root / ".github"
-    candidates = []
-    for name in ("pull_request_template.md", "PULL_REQUEST_TEMPLATE.md"):
-        candidate = github_dir / name
-        if candidate.is_file():
-            candidates.append(candidate)
-    template_dir = github_dir / "PULL_REQUEST_TEMPLATE"
-    if template_dir.is_dir():
-        for candidate in sorted(template_dir.glob("*.md")):
-            if candidate.is_file():
-                candidates.append(candidate)
-    return candidates
+    candidate = github_dir / "PULL_REQUEST_TEMPLATE.md"
+    if candidate.is_file():
+        return [candidate]
+    return []
 
 
 def resolve_template(repo_root, explicit_template):
@@ -132,8 +125,6 @@ def resolve_template(repo_root, explicit_template):
         return relative_selected, candidate_paths, False, None
     if len(candidates) == 1:
         return relative_path(candidates[0], repo_root), candidate_paths, False, None
-    if len(candidates) > 1:
-        return None, candidate_paths, True, None
     return None, candidate_paths, False, None
 
 

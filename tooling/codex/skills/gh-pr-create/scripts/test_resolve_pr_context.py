@@ -216,52 +216,54 @@ class ResolvePrContextTests(unittest.TestCase):
         self.assertEqual(payload["related_issues"], [10, 30, 40])
         self.assertEqual(payload["milestone"], "Sprint Y")
 
-    def test_multiple_templates_require_choice(self):
+    def test_only_uppercase_template_is_discovered(self):
         temp_dir, repo_root, fake_gh, fake_git = self.make_repo()
         self.addCleanup(temp_dir.cleanup)
+        github_dir = repo_root / ".github"
+        github_dir.mkdir(parents=True)
+        (github_dir / "pull_request_template.md").write_text("lower\n")
+        (github_dir / "PULL_REQUEST_TEMPLATE.md").write_text("upper\n")
         template_dir = repo_root / ".github" / "PULL_REQUEST_TEMPLATE"
         template_dir.mkdir(parents=True)
         (template_dir / "feature.md").write_text("feature\n")
         (template_dir / "bugfix.md").write_text("bugfix\n")
         completed, payload = self.run_resolver(repo_root, fake_gh, fake_git, "No issue refs")
         self.assertEqual(completed.returncode, 0)
-        self.assertTrue(payload["needs_template_choice"])
-        self.assertEqual(payload["template_candidates"], [".github/PULL_REQUEST_TEMPLATE/bugfix.md", ".github/PULL_REQUEST_TEMPLATE/feature.md"])
-
+        self.assertFalse(payload["needs_template_choice"])
+        self.assertEqual(payload["selected_template"], ".github/PULL_REQUEST_TEMPLATE.md")
+        self.assertEqual(payload["template_candidates"], [".github/PULL_REQUEST_TEMPLATE.md"])
     def test_explicit_template_selects_candidate(self):
         temp_dir, repo_root, fake_gh, fake_git = self.make_repo()
         self.addCleanup(temp_dir.cleanup)
         github_dir = repo_root / ".github"
         github_dir.mkdir()
-        (github_dir / "pull_request_template.md").write_text("default\n")
+        (github_dir / "PULL_REQUEST_TEMPLATE.md").write_text("default\n")
         completed, payload = self.run_resolver(
             repo_root,
             fake_gh,
             fake_git,
             "No issue refs",
-            extra_args=["--template", ".github/pull_request_template.md", "--base", "main"],
+            extra_args=["--template", ".github/PULL_REQUEST_TEMPLATE.md", "--base", "main"],
         )
         self.assertEqual(completed.returncode, 0)
-        self.assertEqual(payload["selected_template"], ".github/pull_request_template.md")
+        self.assertEqual(payload["selected_template"], ".github/PULL_REQUEST_TEMPLATE.md")
         self.assertEqual(payload["base_branch"], "main")
-
     def test_explicit_template_must_be_candidate(self):
         temp_dir, repo_root, fake_gh, fake_git = self.make_repo()
         self.addCleanup(temp_dir.cleanup)
         github_dir = repo_root / ".github"
         github_dir.mkdir()
-        (github_dir / "pull_request_template.md").write_text("default\n")
-        (github_dir / "not-a-template.md").write_text("notes\n")
+        (github_dir / "PULL_REQUEST_TEMPLATE.md").write_text("default\n")
+        (github_dir / "pull_request_template.md").write_text("lower\n")
         completed, payload = self.run_resolver(
             repo_root,
             fake_gh,
             fake_git,
             "No issue refs",
-            extra_args=["--template", ".github/not-a-template.md"],
+            extra_args=["--template", ".github/pull_request_template.md"],
         )
         self.assertNotEqual(completed.returncode, 0)
         self.assertEqual(payload["errors"][0]["code"], "template_not_candidate")
-
     def test_invalid_auth_fails_early(self):
         temp_dir, repo_root, fake_gh, fake_git = self.make_repo()
         self.addCleanup(temp_dir.cleanup)
@@ -275,7 +277,6 @@ class ResolvePrContextTests(unittest.TestCase):
         )
         self.assertNotEqual(completed.returncode, 0)
         self.assertEqual(payload["errors"][0]["code"], "gh_auth_invalid")
-
     def test_missing_base_branch_fails(self):
         temp_dir, repo_root, fake_gh, fake_git = self.make_repo()
         self.addCleanup(temp_dir.cleanup)
@@ -288,7 +289,6 @@ class ResolvePrContextTests(unittest.TestCase):
         )
         self.assertNotEqual(completed.returncode, 0)
         self.assertEqual(payload["errors"][0]["code"], "missing_base_branch")
-
     def test_missing_issue_lookup_fails(self):
         temp_dir, repo_root, fake_gh, fake_git = self.make_repo()
         self.addCleanup(temp_dir.cleanup)

@@ -1,6 +1,6 @@
 ---
 name: gh-pr-create
-description: Create GitHub pull requests with GitHub CLI using repository rules for pull request templates, issue references, milestone selection, repository label selection, and base branch defaults. Use this skill when Codex needs to prepare or run `gh pr create`, translate `!#123` into close links and `#456` into related links, choose a PR milestone from referenced issues, attach appropriate existing labels, or apply a repository's `.github` pull request templates.
+description: Create GitHub pull requests with GitHub CLI using repository rules for the `.github/PULL_REQUEST_TEMPLATE.md` pull request template, issue references, milestone selection, repository label selection, self-assignment, draft creation, and base branch defaults. Use this skill when Codex needs to prepare or run `gh pr create`, translate `!#123` into close links and `#456` into related links, choose a PR milestone from referenced issues, attach appropriate existing labels, or apply the repository's `.github/PULL_REQUEST_TEMPLATE.md` template.
 ---
 
 # GitHub PR Create
@@ -8,7 +8,7 @@ description: Create GitHub pull requests with GitHub CLI using repository rules 
 ## Overview
 
 Use this skill to prepare and create pull requests with `gh` in a repeatable way.
-Resolve deterministic context first, ask the user only when template selection is ambiguous, then create the PR with explicit flags.
+Resolve deterministic context first, then create the PR with explicit flags.
 
 ## Path Resolution
 
@@ -26,16 +26,15 @@ Resolve deterministic context first, ask the user only when template selection i
 3. Run `gh auth status` before issue lookups or PR creation. If it fails, stop and tell the user to re-authenticate.
 4. Resolve request context with the bundled helper: `uv run <skill-dir>/scripts/resolve_pr_context.py --repo-root <repo> --request-file <file> [--base <branch>] [--template <path>]`.
 5. If the bundled helper exists, do not skip it. Only fall back to a manual process when the helper is actually missing or unreadable.
-6. If `needs_template_choice` is `true`, show the template candidates and ask the user to choose one before continuing.
-7. Use the selected template file as the PR body scaffold. If the resolver completes and no template is selected, use a minimal fallback body with:
+6. Use the selected template file as the PR body scaffold. If the resolver completes and no template is selected, use a minimal fallback body with:
    - `## Summary`
    - `## Testing`
-8. Append issue footer lines at the end of the final PR body in this order:
+7. Append issue footer lines at the end of the final PR body in this order:
    - one `close #<number>` line for each entry in `close_issues`
    - one `related #<number>` line for each entry in `related_issues`
-9. Use resolver-selected labels from `labels` when present. Pass them with repeated `--label "<name>"` flags in ascending order.
-10. If the resolver reports non-fatal `warnings`, continue unless the user asks to inspect them.
-11. Create the PR with explicit flags. Prefer `--body-file` over interactive editing.
+8. Use resolver-selected labels from `labels` when present. Pass them with repeated `--label "<name>"` flags in ascending order.
+9. If the resolver reports non-fatal `warnings`, continue unless the user asks to inspect them.
+10. Create the PR with explicit flags. Prefer `--body-file` over interactive editing.
 
 ## Command Rules
 
@@ -44,6 +43,8 @@ Resolve deterministic context first, ask the user only when template selection i
 - Do not silently fall back to another base branch if `develop` or the requested branch does not exist.
 - Keep the current checked-out branch as the PR head branch.
 - Before `gh pr create`, verify the current branch has an upstream. If it does not, stop and ask the user before any push-related action.
+- Always pass `--draft`.
+- Always pass `--assignee @me`.
 - Do not rely on `gh pr create` prompts for title, body, template selection, or milestone selection.
 - Omit `--label` entirely when `labels` is empty.
 
@@ -63,12 +64,8 @@ Resolve deterministic context first, ask the user only when template selection i
 ## Template Rules
 
 - Only inspect `.github` for pull request templates.
-- Check these paths in order:
-  - `.github/pull_request_template.md`
-  - `.github/PULL_REQUEST_TEMPLATE.md`
-  - `.github/PULL_REQUEST_TEMPLATE/*.md`
-- If exactly one candidate exists, use it automatically.
-- If multiple candidates exist, ask the user to choose one.
+- Check only `.github/PULL_REQUEST_TEMPLATE.md`.
+- If that file exists, use it automatically.
 - If no candidate exists, build the PR body from the fallback sections after the resolver step has completed.
 
 ## Label Rules
@@ -110,11 +107,10 @@ Resolve deterministic context first, ask the user only when template selection i
    uv run /path/to/gh-pr-create/scripts/resolve_pr_context.py --repo-root /path/to/repo --request-file /tmp/pr-request.txt
    ```
 3. Read the JSON result.
-4. If needed, ask the user to choose one template from `template_candidates`.
-5. Build the final body from the selected template or fallback scaffold.
-6. Create the PR:
+4. Build the final body from the selected template or fallback scaffold.
+5. Create the PR:
    ```bash
-   gh pr create --base develop --title "<title>" --body-file /tmp/pr-body.md [--label "<name>"] [--milestone "<name>"]
+   gh pr create --base develop --draft --assignee @me --title "<title>" --body-file /tmp/pr-body.md [--label "<name>"] [--milestone "<name>"]
    ```
 
 ## Resources
