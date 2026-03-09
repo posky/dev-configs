@@ -1,0 +1,7 @@
+interface:
+  display_name: "GH Milestone Manage"
+  short_description: "Manage GitHub milestones safely"
+  default_prompt: "Use $gh-milestone-manage to list, create, update, close, reopen, or delete GitHub repository milestones safely."
+
+policy:
+  allow_implicit_invocation: false
