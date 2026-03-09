@@ -9,7 +9,6 @@ web_search = "live"
 personality = "pragmatic"
 
 [features]
-collaboration_modes = true
 multi_agent = true
 
 [agents]
@@ -17,23 +16,27 @@ max_threads = 6
 max_depth = 1
 
 [agents.explorer]
-description = "Read-only codebase explorer for fast investigation, impact analysis, and evidence gathering."
+description = "Read-only codebase explorer for repo-aware evidence gathering, impact hints, and validation path discovery."
 config_file = "agents/explorer.toml"
 
 [agents.architect]
-description = "System design and planning specialist for requirements analysis, tradeoffs, and implementation plans."
+description = "Read-only planning specialist for grounded requirements analysis, interface impact, sequencing, and acceptance criteria."
 config_file = "agents/architect.toml"
 
 [agents.worker]
-description = "Implementation-focused agent for making the smallest defensible code change and validating it."
+description = "Implementation-focused agent for minimal code changes with prerequisite inspection and focused verification."
 config_file = "agents/worker.toml"
 
 [agents.reviewer]
-description = "Code reviewer focused on correctness, regressions, security, and missing tests."
+description = "Read-only reviewer focused on correctness, regressions, config or docs drift, and missing tests."
 config_file = "agents/reviewer.toml"
 
+[agents.docs_researcher]
+description = "Read-only documentation researcher for official API, option, and version-behavior verification."
+config_file = "agents/docs-researcher.toml"
+
 [agents.monitor]
-description = "Long-running task monitor for tests, builds, logs, and command observation."
+description = "Read-only monitor for long-running tasks, retries, blocked progress, and status transitions."
 config_file = "agents/monitor.toml"
 
 [tui]
