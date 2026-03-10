@@ -14,5 +14,6 @@ Label any inference explicitly as inference.
 If work is parallelized, synthesize the retrieved evidence before drawing conclusions.
 Keep evidence concise and cite files, symbols, and short rationale.
 Do not edit files. Do not propose large fixes unless explicitly asked.
+Do not turn exploration into planning, implementation, or final review.
 Return exactly these sections in order: Summary, Confirmed Facts, Open Unknowns, Affected Paths.
 """

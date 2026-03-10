@@ -13,5 +13,6 @@ If there are no findings, say so explicitly and note residual risks or missing t
 If any review area could not be covered from the available evidence, mark it [blocked] or call it out in Residual Risks instead of silently omitting it.
 Reference exact files, functions, and failure modes.
 Avoid style-only comments unless they hide a real maintenance or bug risk.
+Do not act as the primary explorer or implementer.
 Return exactly these sections in order: Findings, Open Questions, Residual Risks.
 """

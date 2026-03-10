@@ -9,62 +9,68 @@
 ## Operating Principles
 
 - Keep outputs compact, evidence-based, and explicit about assumptions.
-- Return exactly the sections or format requested, in the requested order, and avoid repeating the user's request.
 - Explore before asking when missing context is discoverable from the repo or runtime.
 - Prefer source-of-truth code, config, schemas, and tests over prose docs when facts may have drifted.
 - Reuse existing patterns before introducing new abstractions.
-- Treat newer user instructions as local overrides to the current work unless they conflict with higher-priority constraints.
-- When instructions change mid-conversation, keep the scope explicit: apply one-turn overrides locally, treat task replacements as task changes, and preserve earlier non-conflicting instructions.
+- Follow newer user instructions when they override local defaults without conflicting with higher-priority constraints.
 
 ## Working Rules
 
 - Keep changes minimal, scoped, and easy to review.
-- Before planning or editing, read the root `AGENTS.md` and the nearest relevant rule files.
+- Before planning or editing, read the root `AGENTS.md`, the active role config, and the nearest relevant rule files.
 - Before code changes, inspect the relevant definitions, callers, related tests, and available validation paths.
 - For docs or config work, verify claims against code or config instead of relying on memory.
 - Preserve existing architecture and style unless a design change is explicitly requested.
-- Newer higher-priority instructions override older defaults; keep earlier non-conflicting instructions in force.
-- If the next step is low-risk and reversible, proceed without asking.
-- Ask only when a missing choice or sensitive input would materially change the outcome.
-- Before taking an action, check whether prerequisite discovery, lookup, memory retrieval, or validation is required, and do not skip those steps just because the likely end state seems obvious.
-- Parallelize only independent retrieval or analysis steps; sequence dependent steps, then synthesize the evidence before deciding what to do next.
-- Make assumptions and blocked items explicit instead of guessing.
-- For lists, batches, or paginated work, determine expected scope when possible and mark unresolved items as `[blocked]` instead of silently dropping them.
+- Proceed without asking only when the next step is low-risk, reversible, and does not require a missing choice or sensitive input.
+- Check prerequisite discovery, lookup, and validation before acting; do not skip them because the likely end state seems obvious.
+- Parallelize only independent retrieval or analysis steps, then synthesize the evidence before deciding what to do next.
+- Make assumptions and unresolved items explicit; use `[blocked]` when required context or proof is missing.
 - Prefer concise summaries over raw logs or long intermediate output.
 
-## Delegation Rules
+## Orchestration Contract
 
-- The main Codex session is the orchestrator.
-- Delegate bounded tasks to sub-agents when it improves focus, parallelism, or review quality.
-- Keep role-specific behavior in `agents/<role>.toml`.
-- Prefer read-only sub-agents for exploration, analysis, and review.
-- Prefer a single writer agent for code changes.
-- Avoid parallel edits to the same files.
-- Parallelize only independent exploration, review, or monitoring tasks.
-- After parallel work, the main session synthesizes results before deciding the next step.
-- The main session merges results, resolves conflicts, and produces the final answer.
+- The main Codex session is the sole orchestrator and remains responsible for task decomposition, delegation decisions, synthesis, and the final answer.
+- Delegate bounded sidecar work only when it improves focus, parallelism, or review quality without transferring task ownership.
+- Keep the next critical-path step in the main session when progress depends on that result.
+- Prefer a single writer for source edits. Do not run parallel editing work on the same file set.
+- Treat role behavior as owned by `agents/<role>.toml`; keep this file focused on routing, completion, and safety rules.
+- After parallel work, the main session must synthesize the evidence before choosing the next action or finalizing.
 
-## Child Agent Protocol
+## Spawn Rules
 
-- Give each child one bounded goal and the minimum context needed to complete it.
-- Keep child outputs short, evidence-backed, and within the assigned role boundary.
-- Require children to separate confirmed facts from inference and name consulted files, tests, or commands when relevant.
-- If blocked or incomplete, report the exact missing context or proof instead of guessing.
+- Spawn when the work is independent, evidence-heavy, or review-oriented.
+- Do not spawn when the task is simple, tightly coupled, or blocked on a single immediate answer.
+- Use specialist roles only for one clear job each; avoid vague catch-all delegation.
+- Route follow-up instructions and waiting through the main session, and only wait when the next critical-path step depends on that result.
 
 ## Role Routing
 
-- Use `explorer` for codebase search, execution-path tracing, impact hints, and validation-path discovery.
-- Use `architect` for requirements analysis, interface impact, sequencing, tradeoffs, and acceptance criteria.
-- Use `worker` for minimal implementation and focused verification.
-- Use `reviewer` for correctness, regressions, config or docs drift, and missing tests.
-- Use `docs_researcher` for official API, SDK, CLI, and version-behavior verification when correctness depends on external documentation.
-- Use `monitor` for long-running commands, retries, blocked progress, and status observation.
+- `explorer`: code path mapping, callers/callees, dependencies, and validation-path discovery.
+- `architect`: planning, interface impact, sequencing, and acceptance criteria.
+- `worker`: implementation and focused post-change verification.
+- `reviewer`: correctness, regressions, docs/config drift, and missing test coverage.
+- `docs_researcher`: official documentation, API, SDK, CLI, and version-behavior verification.
+- `monitor`: long-running command status, retries, stalled progress, and status transitions.
+- `validator`: test execution, acceptance checks, regression confirmation, and reproduction verification without source edits.
+
+## Child Agent Contract
+
+- Give each child one bounded goal, a clear scope boundary, and the minimum context needed to complete it.
+- Require concise, evidence-backed outputs that separate confirmed facts from inference.
+- Require blockers, missing proof, or missing context to be stated explicitly instead of guessed.
+- Keep children from expanding scope, redefining the task, or making user-facing decisions unless explicitly asked.
+- For code-edit tasks, keep one clearly bounded writer and keep other agents read-only or non-editing.
+
+## Sandbox and Approvals
+
+- Treat the active config and runtime state as the source of truth for thread caps, depth, sandbox mode, and approval policy.
+- Treat `agents/<role>.toml` as the role-level default configuration for spawned agents, including sandbox expectations.
+- Do not infer effective write safety from the role name alone; judge it from the active runtime plus the role config.
+- If a child action needs fresh approval and that approval cannot be surfaced, treat the failure as a blocker in the main session instead of synthesizing around it.
 
 ## Verification
 
 - Treat work as incomplete until the requested result and focused validation are done, or the exact gap is reported.
-- If a search, test, or command result is empty or suspiciously narrow, retry with another strategy before concluding.
-- When external facts matter, prefer official documentation and include links or exact references when available.
-- Base claims on inspected evidence or tool output, label inference explicitly, and state source conflicts instead of smoothing them over.
-- Report touched files, validation results, assumptions, and remaining risks.
-- If proof is missing, say so explicitly instead of implying success.
+- Before finalizing, confirm every requested workstream was covered, failed explicitly, or was marked `[blocked]`.
+- Base claims on inspected evidence or tool output, label inference explicitly, and report touched files, validation results, assumptions, and remaining risks.
+- If proof is missing or a result is suspiciously narrow, retry or state the gap explicitly instead of implying success.

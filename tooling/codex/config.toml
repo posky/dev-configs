@@ -15,6 +15,9 @@ multi_agent = true
 max_threads = 6
 max_depth = 1
 
+# Read-heavy sidecar roles stay on gpt-5.3-codex-spark for lower latency/cost.
+# Main execution and planning continue to use gpt-5.4.
+
 [agents.explorer]
 description = "Read-only codebase explorer for repo-aware evidence gathering, impact hints, and validation path discovery."
 config_file = "agents/explorer.toml"
@@ -32,13 +35,17 @@ description = "Read-only reviewer focused on correctness, regressions, config or
 config_file = "agents/reviewer.toml"
 
 [agents.docs_researcher]
-description = "Read-only documentation researcher for official API, option, and version-behavior verification."
+description = "Read-only documentation researcher for official docs, API options, and version-behavior verification."
 config_file = "agents/docs-researcher.toml"
 
 [agents.monitor]
 description = "Read-only monitor for long-running tasks, retries, blocked progress, and status transitions."
 config_file = "agents/monitor.toml"
 
+[agents.validator]
+description = "Read-only validation specialist for test execution, acceptance checks, and regression confirmation."
+config_file = "agents/validator.toml"
+
 [tui]
-status_line = ["model-with-reasoning", "context-remaining", "current-dir", "five-hour-limit", "weekly-limit", "context-window-size", "used-tokens", "total-input-tokens", "total-output-tokens"]
+status_line = ["model-with-reasoning", "context-remaining", "five-hour-limit", "weekly-limit", "used-tokens", "context-window-size", "total-input-tokens", "total-output-tokens"]
 theme = "catppuccin-mocha"
