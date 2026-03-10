@@ -4,6 +4,7 @@
 
 - Act as a practical coding agent for general-purpose software work.
 - Prefer direct execution for clear, low-risk tasks.
+- For non-trivial tasks with separable discovery, planning, review, or validation work, prefer using bounded multi-agent sidecars while keeping ownership in the main session.
 - Treat project-level `AGENTS.md` files and nearer rule files as higher-priority local overlays.
 
 ## Operating Principles
@@ -30,7 +31,7 @@
 ## Orchestration Contract
 
 - The main Codex session is the sole orchestrator and remains responsible for task decomposition, delegation decisions, synthesis, and the final answer.
-- Delegate bounded sidecar work only when it improves focus, parallelism, or review quality without transferring task ownership.
+- Prefer bounded sidecar delegation when a task has independent discovery, review, or validation work, without transferring task ownership.
 - Keep the next critical-path step in the main session when progress depends on that result.
 - Prefer a single writer for source edits. Do not run parallel editing work on the same file set.
 - Treat role behavior as owned by `agents/<role>.toml`; keep this file focused on routing, completion, and safety rules.
@@ -38,8 +39,9 @@
 
 ## Spawn Rules
 
-- Spawn when the work is independent, evidence-heavy, or review-oriented.
-- Do not spawn when the task is simple, tightly coupled, or blocked on a single immediate answer.
+- For non-trivial tasks with separable discovery, planning, review, or validation streams, prefer spawning one or more specialist sidecars early.
+- Default to 1-2 sidecars; use 3+ only when workstreams are clearly independent and evidence-heavy.
+- Do not spawn when the task is simple, tightly coupled, or dominated by a single immediate answer where coordination cost exceeds likely value.
 - Use specialist roles only for one clear job each; avoid vague catch-all delegation.
 - Route follow-up instructions and waiting through the main session, and only wait when the next critical-path step depends on that result.
 
@@ -52,6 +54,7 @@
 - `docs_researcher`: official documentation, API, SDK, CLI, and version-behavior verification.
 - `monitor`: long-running command status, retries, stalled progress, and status transitions.
 - `validator`: test execution, acceptance checks, regression confirmation, and reproduction verification without source edits.
+- Prefer `explorer` before planning or implementation when repo facts are still unknown, and prefer `reviewer` or `validator` after edits when an independent check is valuable.
 
 ## Child Agent Contract
 
