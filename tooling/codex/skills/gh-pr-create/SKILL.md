@@ -9,6 +9,7 @@ description: Create GitHub pull requests with GitHub CLI using repository rules 
 
 Use this skill to prepare and create pull requests with `gh` in a repeatable way.
 Resolve deterministic context first, then create the PR with explicit flags.
+Decide the PR title before running `gh pr create`; when the title is written in Korean, use a noun phrase rather than a sentence.
 
 ## Path Resolution
 
@@ -47,6 +48,19 @@ Resolve deterministic context first, then create the PR with explicit flags.
 - Always pass `--assignee @me`.
 - Do not rely on `gh pr create` prompts for title, body, template selection, or milestone selection.
 - Omit `--label` entirely when `labels` is empty.
+
+## Title Rules
+
+- Finalize the PR title before running `gh pr create --title`.
+- When the title is written in Korean, use a concise noun phrase.
+- Prefer Korean noun-phrase titles in Korean-language requests.
+- Allow an English title only when the repository convention is English or the user explicitly asks for English.
+- Good Korean title examples:
+  - `로그인 오류 수정`
+  - `배치 작업 실패 원인 정리`
+- Avoid sentence-style Korean titles such as:
+  - `로그인 오류를 수정합니다`
+  - `배치 작업 실패 원인을 정리했습니다`
 
 ## Issue And Milestone Rules
 
@@ -107,8 +121,9 @@ Resolve deterministic context first, then create the PR with explicit flags.
    uv run /path/to/gh-pr-create/scripts/resolve_pr_context.py --repo-root /path/to/repo --request-file /tmp/pr-request.txt
    ```
 3. Read the JSON result.
-4. Build the final body from the selected template or fallback scaffold.
-5. Create the PR:
+4. Decide the PR title. In Korean contexts, write it as a noun phrase such as `로그인 오류 수정`.
+5. Build the final body from the selected template or fallback scaffold.
+6. Create the PR:
    ```bash
    gh pr create --base develop --draft --assignee @me --title "<title>" --body-file /tmp/pr-body.md [--label "<name>"] [--milestone "<name>"]
    ```

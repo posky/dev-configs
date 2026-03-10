@@ -1,7 +1,7 @@
 interface:
   display_name: "GitHub PR Create"
   short_description: "Create GitHub PRs with repo rules and labels"
-  default_prompt: "Use $gh-pr-create to prepare and create a GitHub pull request with template, issue links, milestone handling, and appropriate existing repository labels."
+  default_prompt: "Use $gh-pr-create to prepare and create a GitHub pull request with template, issue links, milestone handling, appropriate existing repository labels, and a Korean noun-phrase title when writing the PR title in Korean."
 
 policy:
   allow_implicit_invocation: false
