@@ -9,7 +9,7 @@ description: Create GitHub pull requests with GitHub CLI using repository rules 
 
 Use this skill to prepare and create pull requests with `gh` in a repeatable way.
 Resolve deterministic context first, then create the PR with explicit flags.
-Decide the PR title before running `gh pr create`; when the title is written in Korean, use a noun phrase rather than a sentence.
+Decide the PR title before running `gh pr create`; default to a Korean noun phrase unless the user explicitly asks for another language or title style.
 
 ## Path Resolution
 
@@ -52,9 +52,9 @@ Decide the PR title before running `gh pr create`; when the title is written in 
 ## Title Rules
 
 - Finalize the PR title before running `gh pr create --title`.
-- When the title is written in Korean, use a concise noun phrase.
-- Prefer Korean noun-phrase titles in Korean-language requests.
-- Allow an English title only when the repository convention is English or the user explicitly asks for English.
+- Default to a concise Korean noun-phrase title.
+- Use another language or title style only when the user explicitly asks for it.
+- Do not switch to English because of repository convention alone.
 - Good Korean title examples:
   - `로그인 오류 수정`
   - `배치 작업 실패 원인 정리`
@@ -121,7 +121,7 @@ Decide the PR title before running `gh pr create`; when the title is written in 
    uv run /path/to/gh-pr-create/scripts/resolve_pr_context.py --repo-root /path/to/repo --request-file /tmp/pr-request.txt
    ```
 3. Read the JSON result.
-4. Decide the PR title. In Korean contexts, write it as a noun phrase such as `로그인 오류 수정`.
+4. Decide the PR title. Default to a Korean noun phrase such as `로그인 오류 수정` unless the user explicitly asks for another language or style.
 5. Build the final body from the selected template or fallback scaffold.
 6. Create the PR:
    ```bash
