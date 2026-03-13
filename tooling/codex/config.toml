@@ -52,5 +52,16 @@ description = "Read-only, non-mutating validation specialist for test execution,
 config_file = "agents/validator.toml"
 
 [tui]
-status_line = ["model-with-reasoning", "context-remaining", "five-hour-limit", "weekly-limit", "used-tokens", "context-window-size", "total-input-tokens", "total-output-tokens"]
+status_line = [
+  "model-with-reasoning",
+  "context-remaining",
+  "five-hour-limit",
+  "weekly-limit",
+  "used-tokens",
+  "context-window-size",
+  "total-input-tokens",
+  "total-output-tokens",
+  "current-dir",
+  "codex-version",
+]
 theme = "catppuccin-mocha"
