@@ -9,13 +9,26 @@ description: Write and refine Git commit messages using Conventional Commits 1.0
 Use Conventional Commits 1.0.0 to produce clear, machine-readable commit messages.
 Split work into small logical commits before writing commit messages.
 
+## Invocation Defaults
+- When the user invokes only `$conventional-commits` or gives no explicit scope, immediately inspect the current repository state before asking follow-up questions.
+- Start that bare invocation flow with read-only Git inspection in this order:
+  1. Confirm the current directory is a Git repository.
+  2. Run `git status --short`.
+  3. Run `git diff --stat`.
+  4. Run `git diff --cached --stat`.
+  5. Inspect staged and unstaged changed file lists and relevant diffs to infer logical commit groupings.
+- When the user already names specific files, paths, or a change scope, skip the repo-wide scan and inspect only that scope first.
+- If the worktree is clean, report that there are no pending changes to commit and stop cleanly unless the user asks for a different commit-related task.
+- If the current directory is not a Git repository, report the missing repository context and ask for the target repository path instead of idling.
+
 ## Commit Workflow
-1. Inspect all pending changes and group files by one logical concern.
-2. Create one commit per concern; avoid mixing feature, fix, refactor, and docs in one commit unless inseparable.
-3. Write the header in this format: `<type>[optional scope][!]: <description>`.
-4. Write the description in English only.
-5. Add an optional body in Korean or English when extra context is needed.
-6. Add footer lines for references or breaking-change notices.
+1. Start with the invocation-default inspection flow above unless the user already narrowed the scope.
+2. Inspect the relevant pending changes and group files by one logical concern.
+3. Create one commit per concern; avoid mixing feature, fix, refactor, and docs in one commit unless inseparable.
+4. Write the header in this format: `<type>[optional scope][!]: <description>`.
+5. Write the description in English only.
+6. Add an optional body in Korean or English when extra context is needed.
+7. Add footer lines for references or breaking-change notices.
 
 ## Header Rules
 - Use one allowed type per commit:
