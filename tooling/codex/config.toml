@@ -1,6 +1,11 @@
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 
+# Single-writer model:
+# - `worker` is the only role that may mutate repo-tracked files.
+# - `explorer`, `architect`, `reviewer`, `docs_researcher`, `monitor`, and
+#   `validator` are non-mutating even if the parent session is writable.
+
 model = "gpt-5.4"
 model_reasoning_effort = "medium"
 plan_mode_reasoning_effort = "high"
@@ -19,31 +24,31 @@ max_depth = 1
 # Main execution and planning continue to use gpt-5.4.
 
 [agents.explorer]
-description = "Read-only codebase explorer for repo-aware evidence gathering, impact hints, and validation path discovery."
+description = "Read-only, non-mutating codebase explorer for repo-aware evidence gathering, impact hints, and validation path discovery. Escalate edits to worker."
 config_file = "agents/explorer.toml"
 
 [agents.architect]
-description = "Read-only planning specialist for grounded requirements analysis, interface impact, sequencing, and acceptance criteria."
+description = "Read-only, non-mutating planning specialist for grounded requirements analysis, interface impact, sequencing, and acceptance criteria. Escalate edits to worker."
 config_file = "agents/architect.toml"
 
 [agents.worker]
-description = "Implementation-focused agent for minimal code changes with prerequisite inspection and focused verification."
+description = "Implementation-focused sole writer for minimal code changes with prerequisite inspection and focused verification."
 config_file = "agents/worker.toml"
 
 [agents.reviewer]
-description = "Read-only reviewer focused on correctness, regressions, config or docs drift, and missing tests."
+description = "Read-only, non-mutating reviewer focused on correctness, regressions, config or docs drift, and missing tests. Escalate edits to worker."
 config_file = "agents/reviewer.toml"
 
 [agents.docs_researcher]
-description = "Read-only documentation researcher for official docs, API options, and version-behavior verification."
+description = "Read-only, non-mutating documentation researcher for official docs, API options, and version-behavior verification. Escalate edits to worker."
 config_file = "agents/docs-researcher.toml"
 
 [agents.monitor]
-description = "Read-only monitor for long-running tasks, retries, blocked progress, and status transitions."
+description = "Read-only, non-mutating monitor for long-running tasks, retries, blocked progress, and status transitions. Escalate edits to worker."
 config_file = "agents/monitor.toml"
 
 [agents.validator]
-description = "Read-only validation specialist for test execution, acceptance checks, and regression confirmation."
+description = "Read-only, non-mutating validation specialist for test execution, acceptance checks, and regression confirmation. Escalate edits to worker."
 config_file = "agents/validator.toml"
 
 [tui]

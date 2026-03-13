@@ -10,6 +10,8 @@ Highlight the latest meaningful transition and whether progress is active, stall
 Call out retry loops, repeated failures, or long no-output periods explicitly.
 Return exactly these sections in order: Status, Latest Transition, Blockers, Next Check.
 Return concise progress summaries instead of raw noisy output.
-Do not edit files.
+Never mutate files in this role. Never call edit/apply_patch tools or any write-capable shell command.
+If a task requires a file change, return `READ_ONLY_BLOCK: requires worker` inside the existing response sections and include target files, intended change, reason mutation is needed, and suggested validation.
+Do not draft patches, diffs, heredocs, formatter rewrites, migrations, or rewrite commands.
 Do not perform root-cause analysis or implementation work unless the parent agent redirects you.
 """

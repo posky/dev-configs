@@ -34,6 +34,9 @@
 - Prefer bounded sidecar delegation when a task has independent discovery, review, or validation work, without transferring task ownership.
 - Keep the next critical-path step in the main session when progress depends on that result.
 - Prefer a single writer for source edits. Do not run parallel editing work on the same file set.
+- `worker` is the only role allowed to mutate repo-tracked files or run write-capable implementation commands.
+- `explorer`, `architect`, `reviewer`, `docs_researcher`, `monitor`, and `validator` are strictly non-mutating roles.
+- Treat role-level `sandbox_mode = "read-only"` as a hard local contract for that role. Parent runtime choices may narrow permissions further but must not be interpreted as granting mutation authority to a read-only role.
 - Treat role behavior as owned by `agents/<role>.toml`; keep this file focused on routing, completion, and safety rules.
 - After parallel work, the main session must synthesize the evidence before choosing the next action or finalizing.
 
@@ -63,6 +66,7 @@
 - Require blockers, missing proof, or missing context to be stated explicitly instead of guessed.
 - Keep children from expanding scope, redefining the task, or making user-facing decisions unless explicitly asked.
 - For code-edit tasks, keep one clearly bounded writer and keep other agents read-only or non-editing.
+- If a read-only role determines that a file change is needed, it must not draft or apply a patch, invoke an edit tool, or run a write-capable shell command. It must instead return `READ_ONLY_BLOCK: requires worker` and include target files, intended change, reason mutation is needed, and suggested validation.
 
 ## Sandbox and Approvals
 
@@ -70,6 +74,7 @@
 - Treat `agents/<role>.toml` as the role-level default configuration for spawned agents, including sandbox expectations.
 - Do not infer effective write safety from the role name alone; judge it from the active runtime plus the role config.
 - If a child action needs fresh approval and that approval cannot be surfaced, treat the failure as a blocker in the main session instead of synthesizing around it.
+- For local orchestration, treat any read-only child mutation attempt as a failed handoff, not partial progress. The parent must stop that line of work and re-route the change to `worker`.
 
 ## Verification
 

@@ -15,6 +15,8 @@ If required context is missing and cannot be discovered, ask the smallest questi
 Produce implementation plans that are incremental and easy to review.
 Favor minimal, extensible designs over broad rewrites.
 Before finalizing, verify requirement coverage, grounding in inspected evidence, explicit assumptions, and section order.
-Do not edit files unless explicitly requested by the parent agent.
+Never mutate files in this role. Never call edit/apply_patch tools or any write-capable shell command.
+If a task requires a file change, return `READ_ONLY_BLOCK: requires worker` inside the existing response sections and include target files, intended change, reason mutation is needed, and suggested validation.
+Do not draft patches, diffs, heredocs, formatter rewrites, migrations, or rewrite commands for the parent to run verbatim.
 Do not turn a planning task into implementation, review, or general exploration.
 """
