@@ -3,8 +3,9 @@ sandbox_mode = "workspace-write"
 
 # Single-writer model:
 # - `worker` is the only role that may mutate repo-tracked files.
-# - `explorer`, `architect`, `reviewer`, `docs_researcher`, `monitor`, and
-#   `validator` are non-mutating even if the parent session is writable.
+# - `default`, `explorer`, `architect`, `reviewer`, `docs_researcher`,
+#   `monitor`, and `validator` must not edit, create, delete, rename, or
+#   rewrite files even if the parent session is writable.
 
 model = "gpt-5.4"
 model_reasoning_effort = "medium"
@@ -20,35 +21,41 @@ multi_agent = true
 max_threads = 6
 max_depth = 1
 
-# Read-heavy sidecar roles stay on gpt-5.3-codex-spark for lower latency/cost.
-# Main execution and planning continue to use gpt-5.4.
+# Core roles handle default routing, exploration, planning, implementation, and
+# review. Support roles are opt-in specialists for docs, validation, and
+# monitoring. Read-heavy roles stay on gpt-5.3-codex-spark for lower
+# latency/cost. Main execution and planning continue to use gpt-5.4.
+
+[agents.default]
+description = "Core read-only triage role for ambiguous or mixed requests. Classify work, delegate to the best specialist, and route all mutations to worker."
+config_file = "agents/default.toml"
 
 [agents.explorer]
-description = "Read-only, non-mutating codebase explorer for repo-aware evidence gathering, impact hints, and validation path discovery. Escalate edits to worker."
+description = "Core read-only codebase explorer for repo facts, execution paths, affected files, and validation hints. Escalate planning to architect and edits to worker."
 config_file = "agents/explorer.toml"
 
 [agents.architect]
-description = "Read-only, non-mutating planning specialist for grounded requirements analysis, interface impact, sequencing, and acceptance criteria. Escalate edits to worker."
+description = "Core read-only planner for grounded requirements analysis, interface impact, sequencing, and acceptance criteria after exploration."
 config_file = "agents/architect.toml"
 
 [agents.worker]
-description = "Implementation-focused sole writer for minimal code changes with prerequisite inspection and focused verification."
+description = "Core implementation-focused sole writer for minimal code changes with prerequisite inspection and focused verification."
 config_file = "agents/worker.toml"
 
 [agents.reviewer]
-description = "Read-only, non-mutating reviewer focused on correctness, regressions, config or docs drift, and missing tests. Escalate edits to worker."
+description = "Core read-only reviewer for correctness, regressions, security, drift, and missing tests after a change or diff."
 config_file = "agents/reviewer.toml"
 
 [agents.docs_researcher]
-description = "Read-only, non-mutating documentation researcher for official docs, API options, and version-behavior verification. Escalate edits to worker."
+description = "Support read-only documentation specialist for official docs, API options, and version-specific behavior."
 config_file = "agents/docs-researcher.toml"
 
 [agents.monitor]
-description = "Read-only, non-mutating monitor for long-running tasks, retries, blocked progress, and status transitions. Escalate edits to worker."
+description = "Support read-only monitor for long-running commands, retries, stalls, blocked progress, and status transitions."
 config_file = "agents/monitor.toml"
 
 [agents.validator]
-description = "Read-only, non-mutating validation specialist for test execution, acceptance checks, and regression confirmation. Escalate edits to worker."
+description = "Support read-only validator for targeted tests, acceptance checks, reproductions, and regression confirmation."
 config_file = "agents/validator.toml"
 
 [tui]
