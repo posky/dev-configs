@@ -1,0 +1,7 @@
+interface:
+  display_name: "NestJS Swagger JSDoc"
+  short_description: "NestJS Swagger와 JSDoc 작성 규칙"
+  default_prompt: "Use $nestjs-swagger-jsdoc to add or refine Swagger decorators and JSDoc in a NestJS codebase, asking which target to document first when the user does not specify a file, symbol, or endpoint, and verifying the runtime response shape when wrappers, interceptors, or shared envelopes are involved."
+
+policy:
+  allow_implicit_invocation: false
