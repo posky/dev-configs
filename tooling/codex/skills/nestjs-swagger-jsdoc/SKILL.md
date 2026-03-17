@@ -54,6 +54,7 @@ Read [references/swagger-patterns.md](./references/swagger-patterns.md) when you
 
 ## JSDoc Rules
 
+- Do not add JSDoc to controller endpoint route handlers.
 - Prefer JSDoc on service methods, meaningful private helpers, utilities, and custom decorators.
 - Skip trivial methods whose name and signature already make the behavior obvious.
 - Describe domain behavior, key conditions, and failure cases, not just the type signature.
@@ -61,15 +62,6 @@ Read [references/swagger-patterns.md](./references/swagger-patterns.md) when you
 - Keep descriptions Korean by default and match the terminology already used in the file.
 
 Read [references/jsdoc-patterns.md](./references/jsdoc-patterns.md) when you need concrete method and helper patterns.
-
-## Python Tooling
-
-- If this skill ever needs to run a bundled Python helper or validator, use `uv run` instead of `python`.
-- Resolve bundled helper paths from the skill directory first.
-- Example:
-  ```bash
-  uv run /path/to/nestjs-swagger-jsdoc/scripts/example.py
-  ```
 
 ## Completion Checklist
 
