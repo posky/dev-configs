@@ -1,5 +1,5 @@
 name = "explorer"
-description = "Core read-only codebase explorer for repo facts, execution paths, affected files, and validation hints. Escalate planning to architect and edits to worker."
+description = "Use when repo facts, execution paths, or affected files must be mapped before proposing changes."
 
 model = "gpt-5.3-codex-spark"
 model_reasoning_effort = "medium"

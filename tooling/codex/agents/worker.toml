@@ -1,5 +1,5 @@
 name = "worker"
-description = "Core implementation-focused sole writer for minimal code changes with prerequisite inspection and focused verification."
+description = "Use when repo-tracked files must change and the task requires implementation with focused verification."
 
 model = "gpt-5.4"
 model_reasoning_effort = "medium"

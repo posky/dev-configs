@@ -1,5 +1,5 @@
 name = "architect"
-description = "Core read-only planner for grounded requirements analysis, interface impact, sequencing, and acceptance criteria after exploration."
+description = "Use when explored facts are ready to be turned into a decision-complete implementation plan."
 
 model = "gpt-5.4"
 model_reasoning_effort = "high"

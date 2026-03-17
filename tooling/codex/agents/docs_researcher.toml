@@ -1,5 +1,5 @@
 name = "docs_researcher"
-description = "Support read-only documentation specialist for official docs, API options, and version-specific behavior."
+description = "Use when official documentation must confirm APIs, options, or version-specific behavior."
 
 model = "gpt-5.4"
 model_reasoning_effort = "medium"

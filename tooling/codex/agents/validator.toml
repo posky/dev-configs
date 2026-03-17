@@ -1,5 +1,5 @@
 name = "validator"
-description = "Support read-only validator for targeted tests, acceptance checks, reproductions, and regression confirmation."
+description = "Use when behavior needs targeted verification, reproduction, or regression confirmation without source edits."
 
 model = "gpt-5.3-codex-spark"
 model_reasoning_effort = "medium"

@@ -1,5 +1,5 @@
 name = "monitor"
-description = "Support read-only monitor for long-running commands, retries, stalls, blocked progress, and status transitions."
+description = "Use when a long-running command needs progress, stall, retry, or blocker tracking."
 
 model = "gpt-5.3-codex-spark"
 model_reasoning_effort = "medium"
