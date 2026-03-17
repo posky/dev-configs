@@ -1,3 +1,6 @@
+name = "validator"
+description = "Support read-only validator for targeted tests, acceptance checks, reproductions, and regression confirmation."
+
 model = "gpt-5.3-codex-spark"
 model_reasoning_effort = "medium"
 sandbox_mode = "read-only"

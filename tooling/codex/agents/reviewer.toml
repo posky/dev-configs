@@ -1,3 +1,6 @@
+name = "reviewer"
+description = "Core read-only reviewer for correctness, regressions, security, drift, and missing tests after a change or diff."
+
 model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "read-only"

@@ -14,49 +14,9 @@ plan_mode_reasoning_effort = "high"
 web_search = "live"
 personality = "pragmatic"
 
-[features]
-multi_agent = true
-
 [agents]
 max_threads = 6
 max_depth = 1
-
-# Core roles handle default routing, exploration, planning, implementation, and
-# review. Support roles are opt-in specialists for docs, validation, and
-# monitoring. Read-heavy roles stay on gpt-5.3-codex-spark for lower
-# latency/cost. Main execution and planning continue to use gpt-5.4.
-
-[agents.default]
-description = "Core read-only triage role for ambiguous or mixed requests. Classify work, delegate to the best specialist, and route all mutations to worker."
-config_file = "agents/default.toml"
-
-[agents.explorer]
-description = "Core read-only codebase explorer for repo facts, execution paths, affected files, and validation hints. Escalate planning to architect and edits to worker."
-config_file = "agents/explorer.toml"
-
-[agents.architect]
-description = "Core read-only planner for grounded requirements analysis, interface impact, sequencing, and acceptance criteria after exploration."
-config_file = "agents/architect.toml"
-
-[agents.worker]
-description = "Core implementation-focused sole writer for minimal code changes with prerequisite inspection and focused verification."
-config_file = "agents/worker.toml"
-
-[agents.reviewer]
-description = "Core read-only reviewer for correctness, regressions, security, drift, and missing tests after a change or diff."
-config_file = "agents/reviewer.toml"
-
-[agents.docs_researcher]
-description = "Support read-only documentation specialist for official docs, API options, and version-specific behavior."
-config_file = "agents/docs-researcher.toml"
-
-[agents.monitor]
-description = "Support read-only monitor for long-running commands, retries, stalls, blocked progress, and status transitions."
-config_file = "agents/monitor.toml"
-
-[agents.validator]
-description = "Support read-only validator for targeted tests, acceptance checks, reproductions, and regression confirmation."
-config_file = "agents/validator.toml"
 
 [tui]
 status_line = [

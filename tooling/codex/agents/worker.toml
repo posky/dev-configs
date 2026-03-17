@@ -1,3 +1,6 @@
+name = "worker"
+description = "Core implementation-focused sole writer for minimal code changes with prerequisite inspection and focused verification."
+
 model = "gpt-5.4"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
