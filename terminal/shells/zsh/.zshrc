@@ -12,7 +12,6 @@ setopt HIST_REDUCE_BLANKS       # 불필요 공백 줄이기
 setopt HIST_EXPIRE_DUPS_FIRST   # 히스토리 넘칠 때 중복부터 삭제
 setopt HIST_VERIFY             # !! 등의 확장 결과를 실행 전 보여줌
 setopt SHARE_HISTORY           # 여러 세션에서 히스토리 공유(취향)
-setopt INC_APPEND_HISTORY      # 실행 즉시 히스토리 파일에 반영
 setopt HIST_FCNTL_LOCK
 setopt EXTENDED_HISTORY        # 타임스탬프 포함
 
@@ -137,7 +136,9 @@ zstyle ':fzf-tab:*' fzf-flags \
   --preview-window=right:55%:wrap
 zstyle ':fzf-tab:*' fzf-pad 4
 zstyle ':fzf-tab:*' fzf-min-height 15
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+if command -v eza >/dev/null 2>&1; then
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+fi
 
 # =========================
 # Alias / 기본 유틸
@@ -207,7 +208,7 @@ esac
 # starship
 # =========================
 case $- in
-  *i*) eval "$(starship init zsh)" ;;
+  *i*) command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)" ;;
 esac
 
 # zsh-syntax-highlighting
