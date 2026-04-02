@@ -37,7 +37,8 @@ KEYTIMEOUT=1   # ESC 지연 줄여서 vi 모드 반응 개선
 
 export PATH="$HOME/.local/bin:$PATH"
 
-[[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env" 2>/dev/null || true
+# [[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env" 2>/dev/null || true
+[[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
 
 export LANG=en_US.UTF-8
 
@@ -71,6 +72,9 @@ fi
 if command -v but >/dev/null 2>&1 && [[ ! -s "$ZSH_COMPLETIONS_DIR/_but" ]]; then
   but completions zsh >| "$ZSH_COMPLETIONS_DIR/_but"
 fi
+if command -v codex >/dev/null 2>&1 && [[ ! -s "$ZSH_COMPLETIONS_DIR/_codex" ]]; then
+  codex completion zsh >| "$ZSH_COMPLETIONS_DIR/_codex"
+fi
 
 
 ### Added by Zinit's installer
@@ -83,8 +87,11 @@ if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
 fi
 
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-# autoload -Uz _zinit
-# (( ${+_comps} )) && _comps[zinit]=_zinit
+autoload -Uz compinit
+compinit
+
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
@@ -98,14 +105,39 @@ zinit light-mode for \
 
 
 # zsh-autocomplete (must be before compdef)
-zinit light marlonrichert/zsh-autocomplete
-zstyle ':autocomplete:*' delay 0.2
-zstyle ':autocomplete:*' timeout 1.0
-zstyle ':autocomplete:*' append-semicolon no
-zstyle ':autocomplete:*' min-input 2
-zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
-zstyle ':autocomplete:*history*:*' insert-unambiguous yes
+# zinit light marlonrichert/zsh-autocomplete
+# zstyle ':autocomplete:*' delay 0.2
+# zstyle ':autocomplete:*' timeout 1.0
+# zstyle ':autocomplete:*' append-semicolon no
+# zstyle ':autocomplete:*' min-input 2
+# zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
+# zstyle ':autocomplete:*history*:*' insert-unambiguous yes
 
+# fzf-tab
+zinit light Aloxaf/fzf-tab
+zstyle ':completion:*' matcher-list \
+  '' \
+  'm:{a-z}={A-Za-z}' \
+  'r:|[._-]=* r:|=*' \
+  'l:|=* r:|=*'
+zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' menu no
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':fzf-tab:*' show-group brief
+zstyle ':fzf-tab:*' switch-group '<' '>'
+zstyle ':fzf-tab:*' continuous-trigger '/'
+zstyle ':fzf-tab:*' query-string input
+zstyle ':fzf-tab:*' fzf-flags \
+  --height=60% \
+  --layout=reverse \
+  --border \
+  --info=inline \
+  --preview-window=right:55%:wrap
+zstyle ':fzf-tab:*' fzf-pad 4
+zstyle ':fzf-tab:*' fzf-min-height 15
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 
 # =========================
 # Alias / 기본 유틸
@@ -155,6 +187,14 @@ ta() {
   fi
 }
 
+# yazi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
 
 # =========================
 # fastfetch
