@@ -1,4 +1,0 @@
-interface:
-  display_name: "Conventional Commits"
-  short_description: "Write commits with Conventional Commits"
-  default_prompt: "Use $conventional-commits to inspect current Git changes, review the changed files or requested scope, split logical commits, and draft Conventional Commit messages."
