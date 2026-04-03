@@ -36,7 +36,6 @@ KEYTIMEOUT=1   # ESC 지연 줄여서 vi 모드 반응 개선
 
 export PATH="$HOME/.local/bin:$PATH"
 
-# [[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env" 2>/dev/null || true
 [[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
 
 export LANG=en_US.UTF-8
@@ -44,10 +43,6 @@ export LANG=en_US.UTF-8
 if command -v fnm >/dev/null 2>&1; then
   eval "$(fnm env --use-on-cd --shell zsh --corepack-enabled)"
 fi
-
-# psql (postgresql)
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-
 
 
 # =========================
@@ -68,15 +63,14 @@ fi
 if command -v fnm >/dev/null 2>&1 && [[ ! -s "$ZSH_COMPLETIONS_DIR/_fnm" ]]; then
   fnm completions --shell zsh >| "$ZSH_COMPLETIONS_DIR/_fnm"
 fi
-if command -v but >/dev/null 2>&1 && [[ ! -s "$ZSH_COMPLETIONS_DIR/_but" ]]; then
-  but completions zsh >| "$ZSH_COMPLETIONS_DIR/_but"
-fi
 if command -v codex >/dev/null 2>&1 && [[ ! -s "$ZSH_COMPLETIONS_DIR/_codex" ]]; then
   codex completion zsh >| "$ZSH_COMPLETIONS_DIR/_codex"
 fi
 
 
-### Added by Zinit's installer
+# =========================
+# Added by Zinit's installer
+# =========================
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
     command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
@@ -100,10 +94,7 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-rust
 
-### End of Zinit's installer chunk
-
-
-# zsh-autocomplete (must be before compdef)
+# zsh-autocomplete (must be before compinit/compdef)
 # zinit light marlonrichert/zsh-autocomplete
 # zstyle ':autocomplete:*' delay 0.2
 # zstyle ':autocomplete:*' timeout 1.0
@@ -139,6 +130,8 @@ zstyle ':fzf-tab:*' fzf-min-height 15
 if command -v eza >/dev/null 2>&1; then
   zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 fi
+
+### End of Zinit's installer chunk
 
 # =========================
 # Alias / 기본 유틸
@@ -196,6 +189,7 @@ function y() {
 	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
 	rm -f -- "$tmp"
 }
+
 
 # =========================
 # fastfetch
