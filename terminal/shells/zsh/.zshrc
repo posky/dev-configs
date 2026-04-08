@@ -105,11 +105,13 @@ zinit light-mode for \
 
 # fzf-tab
 zinit light Aloxaf/fzf-tab
+zstyle ':completion:*' completer _complete _ignored
 zstyle ':completion:*' matcher-list \
-  '' \
-  'm:{a-z}={A-Za-z}' \
-  'r:|[._-]=* r:|=*' \
-  'l:|=* r:|=*'
+  'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' \
+  '+r:|[._-]=**' \
+  '+l:|=*' \
+  '+r:|=*' \
+  'm:{[:lower:][:upper:]}={[:upper:][:lower:]} r:?||?=**'
 zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' verbose yes
