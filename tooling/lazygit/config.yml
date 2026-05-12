@@ -1,6 +1,12 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jesseduffield/lazygit/master/schema/config.json
+
 gui:
   language: "en"
   nerdFontsVersion: "3"
+  filterMode: fuzzy
+  showNumstatInFilesView: true
+  showDivergenceFromBaseBranch: arrowAndNumber
+  showRandomTip: false
   theme:
     activeBorderColor:
       - "#A7C080"
