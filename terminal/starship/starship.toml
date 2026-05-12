@@ -1,5 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+scan_timeout = 20
+command_timeout = 500
 palette = "everforest"
 right_format = """
 $memory_usage\
@@ -89,6 +91,9 @@ symbol = " "
 
 [julia]
 symbol = " "
+
+[jobs]
+symbol = " "
 
 [kotlin]
 symbol = " "
