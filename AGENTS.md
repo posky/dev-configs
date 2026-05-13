@@ -1,68 +1,96 @@
-# AGENTS.md
+# Repository Guidelines
 
-Problem definition → small, safe change → change review → refactor — repeat the loop.
+## Overview
 
-## Mandatory Rules
+`dev-configs` manages personal development environment configuration as tool-oriented packages.
 
-- Before changing anything, read the relevant files end to end, including all call/reference paths.
-- Keep tasks, commits, and PRs small.
-- If you make assumptions, record them in the Issue/PR/ADR.
-- Never commit or log secrets; validate all inputs and encode/normalize outputs.
-- Avoid premature abstraction and use intention-revealing names.
-- Compare at least two options before deciding.
+Primary invariant: protect local user configuration from accidental destructive overwrite, deletion, or unreviewed path drift.
 
-## Mindset
+This repository does not define a package manager or automated install workflow. Do not introduce lockfiles, generated dependency state, or broad automation unless a task explicitly approves it.
 
-- Think like a senior engineer.
-- Don’t jump in on guesses or rush to conclusions.
-- Always evaluate multiple approaches; write one line each for pros/cons/risks, then choose the simplest solution.
+Core stack:
 
-## Code & File Reference Rules
+- Tool-specific dotfiles, editor settings, terminal settings, themes, and maintenance scripts
+- Manual copy, backup, compare, and apply workflows documented in package `README.md` files
+- Cross-platform notes where individual tools require macOS, Windows, PowerShell, or shell-specific commands
 
-- Read files thoroughly from start to finish (no partial reads).
-- Before changing code, locate and read definitions, references, call sites, related tests, docs/config/flags.
-- Do not change code without having read the entire file.
-- Before modifying a symbol, run a global search to understand pre/postconditions and leave a 1–3 line impact note.
+## Structure
 
-## Required Coding Rules
+```text
+packages/<tool>/       Tool, runtime, editor, terminal, or shared configuration package
+packages/shared-scripts/   Shared maintenance scripts not owned by one tool
+packages/shared-themes/    Theme references shared across tools
+tasks/<slug>/          Planning, implementation, and review documents for non-trivial work
+README.md              Repository structure, package rules, and change-safety notes
+```
 
-- Before coding, write a Problem 1-Pager: Context / Problem / Goal / Non-Goals / Constraints.
-- Enforce limits: file ≤ 300 LOC, function ≤ 50 LOC, parameters ≤ 5, cyclomatic complexity ≤ 10. If exceeded, split/refactor.
-- Prefer explicit code; no hidden “magic.”
-- Follow DRY, but avoid premature abstraction.
-- Isolate side effects (I/O, network, global state) at the boundary layer.
-- Catch only specific exceptions and present clear user-facing messages.
-- Use structured logging and do not log sensitive data (propagate request/correlation IDs when possible).
-- Account for time zones and DST.
+## Key Docs
 
-## Testing Rules
+- `README.md`: repository structure, package ownership rules, and current package list.
+- `packages/*/README.md`: package-specific files, manual apply/backup steps, and comparison guidance.
+- `tasks/<slug>/spec.md`, `tasks/<slug>/plan.md`, `tasks/<slug>/review.md`: source of truth for planned work.
 
-- New code requires new tests; bug fixes must include a regression test (write it to fail first).
-- Tests must be deterministic and independent; replace external systems with fakes/contract tests.
-- Include ≥1 happy path and ≥1 failure path in e2e tests.
-- Proactively assess risks from concurrency/locks/retries (duplication, deadlocks, etc.).
+Keep this file concise. Put detailed package runbooks and tool-specific procedures in the relevant package `README.md`.
 
-## Security Rules
+## Commands
 
-- Never leave secrets in code/logs/tickets.
-- Validate, normalize, and encode inputs; use parameterized operations.
-- Apply the Principle of Least Privilege.
+There is no repository-wide install, lint, test, or build command.
 
-## Clean Code Rules
+Use the smallest package-level check that proves the change. Prefer dry inspection and comparison commands before copying into live configuration locations.
 
-- Use intention-revealing names.
-- Each function should do one thing.
-- Keep side effects at the boundary.
-- Prefer guard clauses first.
-- Symbolize constants (no hardcoding).
-- Structure code as Input → Process → Return.
-- Report failures with specific errors/messages.
-- Make tests serve as usage examples; include boundary and failure cases.
+Examples from package docs include:
 
-## Anti-Pattern Rules
+```bash
+code --diff <repo-file> <local-config-file>
+vim -d <repo-file> <local-config-file>
+git diff -- packages/<tool>/
+```
 
-- Don’t modify code without reading the whole context.
-- Don’t expose secrets.
-- Don’t ignore failures or warnings.
-- Don’t introduce unjustified optimization or abstraction.
-- Don’t overuse broad exceptions.
+Do not run destructive commands such as `rm -rf`, overwrite copies, symlink replacement, or global tool configuration changes unless the task explicitly calls for them and the target path has been checked.
+
+## Non-Negotiables
+
+- Preserve existing local configuration unless the user explicitly asks to overwrite it.
+- Back up live config files before applying repository files to user locations.
+- Check every destructive or overwrite target path twice before running a command.
+- Keep changes inside the relevant `packages/<tool>/` subtree unless the task requires repository-level coordination.
+- Do not treat `.DS_Store`, generated outputs, caches, or tool state as configuration packages.
+- Leave unrelated dirty worktree changes untouched.
+- Do not silently overwrite or silently merge `AGENTS.md`; use the canonical command contract for confirmation-first init/update behavior.
+
+## Planning
+
+For non-trivial, ambiguous, risky, cross-package, or destructive work, create task documents first:
+
+```text
+tasks/<slug>/
+  spec.md
+  plan.md
+  review.md
+```
+
+For small and obvious changes, a compact plan inside `spec.md` is acceptable.
+
+## Code Quality
+
+- Read the relevant package `README.md` and surrounding files before editing.
+- Preserve documented manual workflows unless a task explicitly changes them.
+- Keep examples copy-pasteable and quote paths that may contain spaces.
+- Prefer clear, reversible file updates over broad reorganization.
+- Keep scripts conservative: validate paths, avoid hidden destructive side effects, and document assumptions.
+- Consider platform differences in paths, shells, encodings, and config locations.
+
+## Verification
+
+- Match validation depth to risk and package scope.
+- For documentation-only changes, re-read rendered source and check paths/commands against the package tree.
+- For config changes, inspect diffs and use the owning tool's validation command when one is documented.
+- For scripts, check shebangs, permissions, relative paths, and shell assumptions before suggesting execution.
+- Report what was run, what was not run, and remaining risks.
+
+## Git And PR
+
+- Keep commits small, focused, and reversible.
+- Stage only files relevant to the current task.
+- Do not rewrite history or force-push unless explicitly requested.
+- Describe configuration impact, local overwrite risk, and verification evidence in PRs.
